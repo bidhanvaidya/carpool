@@ -1,0 +1,35 @@
+<% matches = 0 %>
+	<%for start_location in @start_locations%>
+      <% if !@end_locations.find_by_id(start_location.post.finish.id).nil? %>
+		
+					Start: <%=start_location.address%>=>
+					End: <%=start_location.post.finish.address%><br>
+          <%= link_to "go to Post", post_path(start_location.post), :method => :get%>
+					<% matches = matches + 1%>
+      <%end%>
+      <% if !@stops2.find_by_id(start_location.post.finish.id).nil? %>
+		
+					Start: <%=start_location.address%>=>
+					End: <%=start_location.post.finish.address%><br>
+          <%= link_to "go to Post", post_path(start_location.post), :method => :get%>
+					<% matches = matches + 1%>
+			<%end%>
+		<%end%>
+    <%for stops1 in @stops1%>
+          <% if !@end_locations.find_by_id(stops1.post.finish.id).nil? %>
+		
+					    Start: <%=stops1.post.start.address%>=>
+					    End: <%=stops1.post.finish.address%><br>
+              <%= link_to "go to Post", post_path(stops1.post), :method => :get%>
+					    <% matches = matches + 1%>
+          <%end%>
+          <% if !@stops2.find_by_id(stops1.post.finish.id).nil? %>
+		
+					     Start: <%=stops1.post.start.address%>=>
+					    End: <%=stops1.post.finish.address%><br>
+              <%= link_to "go to Post", post_path(stops1.post), :method => :get%>
+					    <% matches = matches + 1%>
+			    <%end%>
+		 <%end%>
+		<%="No matches" if matches == 0%>
+ 	

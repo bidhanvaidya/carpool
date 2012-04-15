@@ -24,27 +24,18 @@
 <table border bgcolor= "f1f1c2"><tr><td>
 <%= form_tag posts_path, :method => :get do %>
   <p>From
-    <%= text_field_tag :search, params[:search]%> To
-    <%= text_field_tag :a, params[:a] %>
+    <%= text_field_tag :start, params[:start]%> To
+    <%= text_field_tag :finish, params[:finish] %>
     <%= submit_tag "Search Near", :name => nil %>
   </p>
 </td></tr>
 <tr><td>Search results</td></tr>
 <tr><td>
   <%if !@start_locations.nil?%>
-  <% matches = 0 %>
-		<%for start_location in @start_locations%>
-      <% if !@end_locations.find_by_id(start_location.post.finish.id).nil? %>
-		
-					Start: <%=start_location.address%>=>
-					End: <%=start_location.post.finish.address%><br>
-          <%= link_to "go to Post", post_path(start_location.post), :method => :get%>
-					<% matches = matches + 1%>
-				
-			<%end%>
-		<%end%>
-		<%="No matches" if matches == 0%>
-	<%else%>
+  
+	<%=render "search"%>
+  <%else%>
+    
   <%="Empty search"%><br>
   <%end%>
 <% end %>

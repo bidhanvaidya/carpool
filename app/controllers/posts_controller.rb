@@ -2,11 +2,12 @@ class PostsController < ApplicationController
 before_filter :authenticate_user, :except=> [:show, :index]
   def index
     @posts = Post.all
-      if params[:search].present? || params[:a].present?
+      if params[:start].present? && params[:finish].present?
       #@post_with_location= Post.find_by_sql("select * from posts inner join locations on locations.post_id=posts.id")
-      @start_locations= Start.near(params[:search], 1, :order => :distance).includes(:post)
-  		@end_locations= Finish.near(params[:a], 1, :order => :distance).includes(:post)
-    		
+      @start_locations= Start.near(params[:start], 1, :order => :distance).includes(:post)
+  		@end_locations= Finish.near(params[:finish], 1, :order => :distance).includes(:post)
+    		@stops1= Stop.near(params[:start], 1, :order => :distance).includes(:post)
+        @stops2= Stop.near(params[:finish], 1, :order => :distance).includes(:post)
   else
     @start_locations = nil
   end
@@ -16,7 +17,9 @@ before_filter :authenticate_user, :except=> [:show, :index]
     @post = Post.find(params[:id])
     
    	@friends = @post.user.friends.all
-   	
+   	@start=@post.start
+    @stops= @post.stops.all
+    @finish= @post.finish
 
    	
    	

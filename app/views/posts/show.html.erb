@@ -1,5 +1,6 @@
-<h2><%=  @post.start.address  %> to <%= @post.finish.address %></h2>
-
+<h3><%=  @start.address  %> to <%= @finish.address %></h3>
+<b>through</b>
+ <%= @stops.collect {|member| member.address}.to_sentence%>
 <p>
   <strong>Starttime:</strong>
   <%= @post.starttime %>
@@ -23,8 +24,8 @@
     You have <%=mutual_friend%> mutual friends with <%= @post.user.name%>
   <%end%>
 </p> 
- The distance between <%=@post.startLocation%> and <%= @post.endLocation%> is 
-<%= Geocoder::Calculations.distance_between(@post.start.address, @post.finish.address)  %>miles
+ The distance between <b><%=@start.address%></b> and <b><%= @finish.address%></b> is 
+<b><%= Geocoder::Calculations.distance_between(@start.address, @finish.address)%></b>miles
 
 <p>
   <%= link_to "Edit", edit_post_path(@post) %> |<%= link_to "View All", posts_path %>
