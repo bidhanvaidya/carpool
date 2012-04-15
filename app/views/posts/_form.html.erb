@@ -1,0 +1,32 @@
+
+<%= form_for @post do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :starttime %><br />
+    <%= f.datetime_select :starttime %>
+  </p>
+  <p>
+    <%= f.label :endtime %><br />
+    <%= f.datetime_select :endtime %>
+  </p>
+ 
+ 
+     <%= f.fields_for :start do |builder| %>
+    <%= render "start_fields", :f => builder %>
+  <% end %>
+  TO
+ <%= f.fields_for :finish do |builder| %>
+    <%= render "finish_fields", :f => builder %>
+  <% end %>
+ 
+
+<%= f.fields_for :stops do |builder| %>
+  
+<%= render "stop_fields", :f => builder %>
+<% end %>
+<p><%= link_to_add_association 'add stop', f, :stops %></p>
+
+
+  <p><%= f.submit %></p>
+<% end %>
+

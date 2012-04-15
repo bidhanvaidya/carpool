@@ -1,0 +1,54 @@
+<% title "Posts" %>
+<p><%= link_to "Create a New Post", new_post_path %></p>
+<table border bgcolor= "f1f1f1">
+  <tr>
+    <th>Starttime</th>
+    <th>Start Location</th>
+    <th>End Location</th>
+    <th>User</th>
+  </tr>
+  <% for post in @posts %>
+    <tr>
+      <td><%= post.starttime %></td>
+      <td><%= post.start.address %></td>
+      <td><%= post.finish.address %></td>
+      
+      <td><%= post.user.name %></td>
+      
+      <td><%= link_to "Show", post %></td>
+      
+    </tr>
+  <% end %>
+</table>
+<br>
+<table border bgcolor= "f1f1c2"><tr><td>
+<%= form_tag posts_path, :method => :get do %>
+  <p>From
+    <%= text_field_tag :search, params[:search]%> To
+    <%= text_field_tag :a, params[:a] %>
+    <%= submit_tag "Search Near", :name => nil %>
+  </p>
+</td></tr>
+<tr><td>Search results</td></tr>
+<tr><td>
+  <%if !@start_locations.nil?%>
+  <% matches = 0 %>
+		<%for start_location in @start_locations%>
+      <% if !@end_locations.find_by_id(start_location.post.finish.id).nil? %>
+		
+					Start: <%=start_location.address%>=>
+					End: <%=start_location.post.finish.address%><br>
+          <%= link_to "go to Post", post_path(start_location.post), :method => :get%>
+					<% matches = matches + 1%>
+				
+			<%end%>
+		<%end%>
+		<%="No matches" if matches == 0%>
+	<%else%>
+  <%="Empty search"%><br>
+  <%end%>
+<% end %>
+</td>
+</tr>
+</table>
+Your Ip address is <%= request.ip%>

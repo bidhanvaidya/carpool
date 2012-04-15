@@ -1,0 +1,33 @@
+<h2><%=  @post.start.address  %> to <%= @post.finish.address %></h2>
+
+<p>
+  <strong>Starttime:</strong>
+  <%= @post.starttime %>
+</p>
+<p>
+  <strong>Endtime:</strong>
+  <%= @post.endtime %>
+</p>
+<p>
+  <strong>Post created by : </strong>
+ <%= @post.user.name %>
+  <%if current_user && current_user != @post.user%>
+    <% mutual_friend = 0%>
+   
+    <% for friend in @friends%>
+      <% if !current_user.friends.find_by_uid(friend.uid).nil?%>
+       <%	mutual_friend = mutual_friend + 1 %>
+      <%end%>
+    <%end%>
+    <br>
+    You have <%=mutual_friend%> mutual friends with <%= @post.user.name%>
+  <%end%>
+</p> 
+ The distance between <%=@post.startLocation%> and <%= @post.endLocation%> is 
+<%= Geocoder::Calculations.distance_between(@post.start.address, @post.finish.address)  %>miles
+
+<p>
+  <%= link_to "Edit", edit_post_path(@post) %> |<%= link_to "View All", posts_path %>
+  <%= button_to "Destroy", @post, :confirm => 'Are you sure?', :method => :delete %> 
+  
+</p>
