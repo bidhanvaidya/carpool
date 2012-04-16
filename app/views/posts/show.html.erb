@@ -26,7 +26,7 @@
 </p> 
  The distance between <b><%=@start.address%></b> and <b><%= @finish.address%></b> is 
 <b><%= Geocoder::Calculations.distance_between(@start.address, @finish.address)%></b>miles
-
+<%= @finish.bearing_from(@start)%>
 <p>
   <%= link_to "Edit", edit_post_path(@post) %> |<%= link_to "View All", posts_path %>
   <%= button_to "Destroy", @post, :confirm => 'Are you sure?', :method => :delete %> 
