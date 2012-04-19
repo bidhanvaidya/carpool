@@ -7,7 +7,7 @@ gem 'rails', '3.1.0'
 gem 'geocoder'
 gem "nifty-generators", :group => :development
 gem 'pg'
-
+gem 'twitter-bootstrap-rails', :git => "git://github.com/seyhunak/twitter-bootstrap-rails"
 gem 'execjs'
 gem 'therubyracer'
 # Gems used only for assets and not required
@@ -16,7 +16,7 @@ group :assets do
   gem 'sass-rails', "  ~> 3.1.0"
   gem 'coffee-rails', "~> 3.1.0"
   gem 'uglifier'
-  gem 'twitter-bootstrap-rails', :git => "git://github.com/seyhunak/twitter-bootstrap-rails"
+  
 end
 gem 'heroku'
 gem 'jquery-rails'
