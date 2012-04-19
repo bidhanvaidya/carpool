@@ -49,9 +49,9 @@
     
   
  
-    <div>
+    
     <%= link_to_add_association 'Add Stop', f, :stops , class: 'btn'%>
-   </div>
+   
    
     
     

@@ -2,7 +2,7 @@
   <div class="control-group">
     <%= f.label :address, "Start", :class => 'control-label'%>
     <div class="controls">
-      <%= f.text_field :address, class: 'span5' %>
+      <%= f.text_field :address %>
     </div>
   </div>
 

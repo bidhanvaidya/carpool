@@ -55,7 +55,7 @@ end
 
   def edit
     @post = Post.find(params[:id])
-  
+   @stops = @post.stops.new
   end
 
   def update

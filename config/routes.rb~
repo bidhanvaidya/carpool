@@ -1,6 +1,6 @@
 Ozride::Application.routes.draw do
-  resources :profiles
-  resources :posts do
+  resources :posts
+  resources :profiles do
       collection do
         get 'search'
       end

@@ -1,34 +1,32 @@
-<h3><%=  @start.address  %> to <%= @finish.address %></h3>
-<b>through</b>
- <%= @stops.collect {|member| member.address}.to_sentence%>
+<h1>/Post</h1>
+
 <p>
-  <strong>Starttime:</strong>
+  <b>Starttime</b><br>
   <%= @post.starttime %>
 </p>
+
 <p>
-  <strong>Endtime:</strong>
+  <b>Endtime</b><br>
   <%= @post.endtime %>
 </p>
+
 <p>
-  <strong>Post created by : </strong>
- <%= @post.user.name %>
-  <%if current_user && current_user != @post.user%>
-    <% mutual_friend = 0%>
-   
-    <% for friend in @friends%>
-      <% if !current_user.friends.find_by_uid(friend.uid).nil?%>
-       <%	mutual_friend = mutual_friend + 1 %>
-      <%end%>
-    <%end%>
-    <br>
-    You have <%=mutual_friend%> mutual friends with <%= @post.user.name%>
-  <%end%>
-</p> 
- The distance between <b><%=@start.address%></b> and <b><%= @finish.address%></b> is 
-<b><%= Geocoder::Calculations.distance_between(@start.address, @finish.address)%></b>miles
-<%= @finish.bearing_from(@start)%>
-<p>
-  <%= link_to "Edit", edit_post_path(@post) %> |<%= link_to "View All", posts_path %>
-  <%= button_to "Destroy", @post, :confirm => 'Are you sure?', :method => :delete %> 
-  
+  <b>User</b><br>
+  <%= @post.user_id %>
 </p>
+
+<p>
+  <b>Startlocation</b><br>
+  <%= @post.startLocation %>
+</p>
+
+<p>
+  <b>Endlocation</b><br>
+  <%= @post.endLocation %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', posts_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_post_path(@post), :class => 'btn' %>
+  <%= link_to 'Delete', post_path(@post), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

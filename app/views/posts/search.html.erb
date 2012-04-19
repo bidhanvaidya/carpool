@@ -1,0 +1,24 @@
+
+<table><tr><td>
+<%= form_tag search_posts_path, :class => 'well form-search', :method => :get do%>
+  <p>From
+    <%= text_field_tag :start, params[:start], class: 'input-medium search-query'%> To
+    <%= text_field_tag :finish, params[:finish], class: 'input-medium search-query' %>
+    <%= submit_tag "Search Near", :name => nil %>
+  </p>
+</td></tr>
+<tr><td>Search results</td></tr>
+<tr><td>
+  <%if !@start_locations.nil?%>
+   
+    <%=render "search"%>
+  
+  <%else%>
+     
+  <%="Empty search"%><br>
+  <%end%>
+<% end %>
+</td>
+</tr>
+</table>
+
