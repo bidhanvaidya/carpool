@@ -1,12 +1,8 @@
 class PostsController < ApplicationController
-before_filter :authenticate_user, :except=> [:show, :index]
+before_filter :authenticate_user, :except=> [:show, :index, :search]
   def index
     @posts = Post.all
-      
-  end
 
-def search
-@posts = Post.all
 if params[:start].present? && params[:finish].present?
       #@post_with_location= Post.find_by_sql("select * from posts inner join locations on locations.post_id=posts.id")
       @start_locations= Start.near(params[:start], 1, :order => :distance).includes(:post)
@@ -16,6 +12,11 @@ if params[:start].present? && params[:finish].present?
   else
     @start_locations = nil
   end
+      
+  end
+
+def search
+@posts = Post.all
 end
 
   def show
