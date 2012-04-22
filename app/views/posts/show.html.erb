@@ -1,4 +1,36 @@
-<h1>/Post</h1>
+<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDqWLscHGWh6uk6zlpMat3AUb7lCwWnB24&sensor=false&region=AU">
+</script>
+var start = new google.maps.LatLng(-33.790925, 151.092722),
+var end = new google.maps.LatLng(-37.9268158, 145.1195568),
+<div id="map" style="width:400px; height:300px;"></div>
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		var start = new google.maps.LatLng(-33.790925, 151.092722);
+		var end = new google.maps.LatLng(-37.9268158, 145.1195568);
+		var myOptions = {
+			center:start,
+    	zoom: 5,
+    	mapTypeId: google.maps.MapTypeId.ROADMAP
+  	};
+    var map = new google.maps.Map(document.getElementById("map"),myOptions);
+
+		var marker = new google.maps.Marker({
+			position: start,
+			map: map,
+			title:"start"
+		});
+		var marker = new google.maps.Marker({
+			position: end,
+			map: map,
+			title:"start"
+		});
+
+
+      })
+    </script>
+<h1>Post</h1>
 
 <p>
   <b>Starttime</b><br>
@@ -16,13 +48,13 @@
 </p>
 
 <p>
-  <b>Startlocation</b><br>
-  <%= @post.startLocation %>
+  <b>Start location</b><br>
+  <%= @post.start.address %>
 </p>
 
 <p>
-  <b>Endlocation</b><br>
-  <%= @post.endLocation %>
+  <b>End location</b><br>
+  <%= @post.finish.address %>
 </p>
 
 <div class="form-actions">
