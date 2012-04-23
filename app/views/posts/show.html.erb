@@ -34,33 +34,37 @@
     </script>
 <h1>Post</h1>
 
+<div class = "controls"><h3><%=@post.start.address%>
+<i class = "icon-resize-horizontal"></i><%=" " +@post.finish.address%></h3>
+
+
 <p>
-  <b>Starttime</b><br>
+  <b>Starttime:</b>
   <%= @post.starttime %>
 </p>
 
 <p>
-  <b>Endtime</b><br>
-  <%= @post.endtime %>
-</p>
+ <strong>This ride goes through the following places</strong><br>
 
+  <% @post.stops.each do |stop|  %>
+
+
+  <%= stop.address %> <br>
+<%end%>
+</p>
 <p>
   <b>User</b><br>
-  <%= @post.user_id %>
+  <%= @post.user.name %>
 </p>
 
-<p>
-  <b>Start location</b><br>
-  <%= @post.start.address %>
-</p>
 
-<p>
-  <b>End location</b><br>
-  <%= @post.finish.address %>
-</p>
+
 
 <div class="form-actions">
   <%= link_to 'Back', posts_path, :class => 'btn'  %>
+<% if @post.user == current_user %>
   <%= link_to 'Edit', edit_post_path(@post), :class => 'btn' %>
   <%= link_to 'Delete', post_path(@post), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+ <%end%>
+</div>
 </div>

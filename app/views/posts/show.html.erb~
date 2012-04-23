@@ -1,0 +1,32 @@
+<div class = "controls"><h3><address><%=@post.start.address%></address>
+<i class = "icon-resize-horizontal"></i><%=" " +@post.finish.address%></h3>
+
+<p>
+  <b>Starttime:</b>
+  <%= @post.starttime %>
+</p>
+
+<p>
+ <strong>This ride goes through the following places</strong><br>
+
+  <% @post.stops.each do |stop|  %>
+
+
+  <%= stop.address %> <br>
+<%end%>
+</p>
+<p>
+  <b>User</b><br>
+  <%= @post.user.name %>
+</p>
+
+
+
+<div class="form-actions">
+  <%= link_to 'Back', posts_path, :class => 'btn'  %>
+<% if @post.user == current_user %>
+  <%= link_to 'Edit', edit_post_path(@post), :class => 'btn' %>
+  <%= link_to 'Delete', post_path(@post), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+ <%end%>
+</div>
+</div>

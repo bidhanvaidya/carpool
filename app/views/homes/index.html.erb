@@ -6,12 +6,16 @@
   <%= link_to "Sign in with Facebook", "/auth/facebook" %>
 <% end %>
 <%= form_tag posts_path, :class => 'well form-search', :method => :get do%>
-  <p>From
-    <%= text_field_tag :start, params[:start], class: 'input-medium search-query'%> To
-    <%= text_field_tag :finish, params[:finish], class: 'input-medium search-query' %>
-    <%= submit_tag "Search Near", :name => nil %>
-  </p>
-</td></tr>
-
+  <div class= "row">
+    <div class= "span4">
+      <%= text_field_tag :start, params[:start], class: 'input-long search-query span4', placeholder: "Start"%> 
+     </div>
+    <div class= "span4">
+      <%= text_field_tag :finish, params[:finish], class: 'input-long search-query span4', placeholder: "Finish" %>
+     </div>
+    <div class= "span4">
+      <%= submit_tag "Search Near", :name => nil %>
+    </div>
+   </div>  
 <% end %>
 
