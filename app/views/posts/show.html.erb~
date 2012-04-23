@@ -1,4 +1,4 @@
-<div class = "controls"><h3><%=@post.start.address%>
+<div class = "controls"><h3><address><%=@post.start.address%></address>
 <i class = "icon-resize-horizontal"></i><%=" " +@post.finish.address%></h3>
 
 <p>
