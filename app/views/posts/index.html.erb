@@ -1,8 +1,4 @@
-<div class= "row">
-<div class= "span6"><h1>Posts</h1></div>
-<div class= "span6" align = "right">
-<%= link_to 'Make a new Post', new_post_path, :class => 'btn btn-primary' %></div>
-</div>
+
 
 <%= form_tag posts_path, :class => 'well form-search', :method => :get do%>
   <div class= "row">
@@ -17,7 +13,12 @@
     </div>
    </div>  
 <% end %>
-Search results
+
+<div class= "row">
+<div class= "span6">Posts</div>
+<div class= "span6" align = "right">
+<%= link_to 'Make a new Post', new_post_path, :class => 'btn btn-primary' %></div>
+</div>
 <table class="table table-striped">
   <thead>
     <tr>

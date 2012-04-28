@@ -1,10 +1,14 @@
+<div class="homeTop">
+	<br />
+	<br />
 <% if current_user %>
   Welcome <%= current_user.name %>!
   <%= link_to "Sign Out", signout_path %>
- 
 <% else %>
   <%= link_to "Sign in with Facebook", "/auth/facebook" %>
 <% end %>
+
+
 <%= form_tag posts_path, :class => 'well form-search', :method => :get do%>
   <div class= "row">
     <div class= "span4">
@@ -17,5 +21,6 @@
       <%= submit_tag "Search Near", :name => nil %>
     </div>
    </div>  
+</div>
 <% end %>
 
