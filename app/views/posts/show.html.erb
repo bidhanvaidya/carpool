@@ -3,13 +3,14 @@
 </script>
 
 <div id="map" style="width:400px; height:300px;"></div>
+
 <script type="text/javascript">	
 	$(document).ready(function() {
 		//ini a directions service.
 		//directionsService = new google.maps.DirectionsService();
 		
-		var start = new google.maps.LatLng(-33.790925, 151.092722);
-		var end = new google.maps.LatLng(-37.9268158, 145.1195568);
+		var start = new google.maps.LatLng(<%=@post.start.latitude%>, <%=@post.start.longitude%>);
+		var end = new google.maps.LatLng(<%=@post.finish.latitude%>, <%=@post.finish.longitude%>);
 		
 		var myOptions = {
 			center:start,
