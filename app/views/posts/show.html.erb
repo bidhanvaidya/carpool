@@ -38,7 +38,8 @@
 <div class = "controls"><h3><%=@post.start.address%>
 <i class = "icon-resize-horizontal"></i><%=" " +@post.finish.address%></h3>
 
-
+<%result=Geocoder.search(@post.start.address)  %>
+<%= result.first.address%>
 <p>
   <b>Starttime:</b>
   <%= @post.starttime %>

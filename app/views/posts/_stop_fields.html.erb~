@@ -1,8 +1,0 @@
-
-<div class="control-group">
-  <%= f.label :address, "Stop", :class => 'control-label' %>
-<div class="controls">
-  <%= f.text_field :address, class: 'span5'  %>
-<%= link_to_remove_association 'remove stop', f, posts_path %>
-</div>
-</div>
