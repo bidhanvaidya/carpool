@@ -14,50 +14,35 @@
 <% end %>
 
 <div class= "row">
-<div class= "span6">Posts</div>
-<div class= "span6" align = "right">
-<%= link_to 'Make a new Post', new_post_path, :class => 'btn btn-primary' %></div>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Starttime</th>
-      <th>Start</th>
-      <th>Finish</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-
-  <%if !@start_locations.nil?%>
-   
-    <%=render "search"%>
-  
-  <%else%>
-     
- 
-  <tbody>
-    <% @posts.each do |post| %>
-      <a><tr>
-        <td><%= post.id %></td>
-        <td><%= link_to post.starttime, post_path(post) %></td>
-        <td><%= post.start.city %></td>
-        <td><%= post.finish.city %></td>
-        <td>
-          <%= link_to 'Edit', edit_post_path(post), :class => 'btn btn-mini' %>
-          <%= link_to 'Destroy', post_path(post), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-        </td>
-      </tr></a>
-</tbody>   
- <% end %>
-  
-  <%end%>
-</table>
-
-
-
-
-
-
-<%= link_to 'New', new_post_path, :class => 'btn btn-primary' %>
+	<div class= "span6" align = "left">
+		<%= link_to 'Post a new ride', new_post_path, :class => 'btn btn-primary' %></div>
+	</div>
+	<table class="table table-striped" style="width:700px;">
+  	<%if !@start_locations.nil?%>
+    	<%=render "search"%>
+ 		<%else%>
+    	<tbody>
+    		<% @posts.each do |post| %>
+      		<a>
+						<tr height="80px;">
+        			<td width="80px;">
+								<!- EDIT this with correct facebook profile pictures->
+								<img src="http://graph.facebook.com/100000091986399/picture" class="postindexProfilepic">
+							</td>
+        			<td>
+								<div style="font-size:20px;margin-top:8px;">
+									<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
+								</div>
+								<br><%= link_to post.starttime, post_path(post) %>
+							</td>
+        			<td>
+          			<%= link_to 'Edit', edit_post_path(post), :class => 'btn btn-mini' %>
+          			<%= link_to 'Destroy', post_path(post), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        			</td>
+      			</tr>
+					</a>
+				</tbody>   
+ 			<% end %>
+  	<%end%>
+	</table>
 </div>
