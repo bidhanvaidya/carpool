@@ -1,3 +1,4 @@
+	<div id="midcontainer">
 <strong> This is profile page</strong><br>
 
 <%=@user.first_name%><br>
@@ -18,3 +19,4 @@ To: <%=ride.finish.address%><br>
 <%= link_to 'Edit', edit_post_path(ride), :class => 'btn' %>
   <%= link_to 'Delete', post_path(ride), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
 <%end%>
+</div>

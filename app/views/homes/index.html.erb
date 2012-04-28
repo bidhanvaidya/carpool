@@ -1,26 +1,32 @@
 <div class="homeTop">
 	<br />
 	<br />
-<% if current_user %>
-  Welcome <%= current_user.name %>!
-  <%= link_to "Sign Out", signout_path %>
-<% else %>
-  <%= link_to "Sign in with Facebook", "/auth/facebook" %>
-<% end %>
-
-
-<%= form_tag posts_path, :class => 'well form-search', :method => :get do%>
-  <div class= "row">
-    <div class= "span4">
-      <%= text_field_tag :start, params[:start], class: 'input-long search-query span4', placeholder: "Start"%> 
-     </div>
-    <div class= "span4">
-      <%= text_field_tag :finish, params[:finish], class: 'input-long search-query span4', placeholder: "Finish" %>
-     </div>
-    <div class= "span4">
-      <%= submit_tag "Search Near", :name => nil %>
-    </div>
-   </div>  
+	<div id="midcontainer">
+		<div style="width:400px; padding-left:40px; padding-top: 40px; float:left;">
+		<%= form_tag posts_path, :class => 'welledited form-search', :method => :get do%>
+  		<div class= "row" style="width=400px;">
+    		<div class= "span4edited">
+      		<%= text_field_tag :start, params[:start], class: 'input-long search-query span4edited', placeholder: "From"%> 
+     		</div>
+			</div>
+			<div class= "row">
+    		<div class= "span4edited" style="padding-top:10px;">
+      		<%= text_field_tag :finish, params[:finish], class: 'input-long search-query span4edited', placeholder: "To" %>
+     		</div>
+    	</div>
+			<div class= "row">	
+				<div class= "span4edited" style="padding-top:10px;">
+      		<%= submit_tag "Search Near", :name => nil %>
+    		</div>
+   		</div> 
+		</div>
+		
+		
+		<div class="frontpageText">
+			Home page texts, edit later.<br /><br />
+			Subtitle/ slogan goes here.
+		</div> 
+	</div>
 </div>
 <% end %>
 

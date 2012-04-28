@@ -11,6 +11,8 @@
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
 
+<link href='http://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
@@ -41,7 +43,7 @@
                   </a>
                   <ul class="dropdown-menu pull-right">
                     
-                    <li><%=link_to "Profile", profiles_path%></li>
+                    <li><%=link_to "View / edit profile", profiles_path%></li>
                     <li><a href="#">Your Posts</a></li>
                     <li class="divider"></li>
                     <li><%= link_to "Sign Out", signout_path%></li>
@@ -58,7 +60,9 @@
 
   </div>
     <div id="homepageSearchbox">
-      <%= yield %>
+
+      	<%= yield %>
+
     </div>
   </body>
 </html>
