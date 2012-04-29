@@ -31,6 +31,12 @@
 				var request = {
 					origin:start,
 					destination:end,
+					/*Show the waypoints*/
+					waypoints:[					
+					  <% @post.stops.each do |stop|  %>
+							{location: "<%= stop.address %>"},
+						<%end%>	
+					],
 					travelMode: google.maps.TravelMode[mode]
 				};
 				directionsService.route(request, function(result, status) {
@@ -66,7 +72,7 @@
 <%result=Geocoder.search(@post.start.address)  %>
 <%= result.first.address%>
 <p>
-  <b>Starttime:</b>
+  <b>Time:</b>
   <%= @post.starttime %>
 </p>
 
