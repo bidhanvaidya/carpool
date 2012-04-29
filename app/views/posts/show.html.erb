@@ -54,25 +54,43 @@
 	</script>
 
 <div id="midcontainer">
-<h1>Post</h1>
+	<div id="postShowStripe"><%=@post.start.city%> <%= image_tag "arrow_right.png" %> <%=@post.finish.city%></div>
 
 
-<div id="postMap">
-	<div style="height:17px;"> </div>
-	<div id="map" style="width:664px; height:316px; margin-left:18px; padding-top:18px;"></div>
-</div>
+<table>
+	<tr height="20px"></tr>
+	<tr>
+		<td>
+			<div id="postMap">
+				<div style="height:17px;"> </div>
+				<div id="map" style="width:664px; height:316px; margin-left:18px; padding-top:18px;"></div>
+			</div>
+		</td>
+		<td width="17px"></td>
+		<td>
+			<div style="display:inline;">
+				<div class="panelprofile" style="height:392px;">
+
+				<!- profile picture   edit the link with correct facebook user ID ->
+				<div class="circle-image-one-fourth" style="margin-left:10px;">
+					<img class="aligncenter" src="http://graph.facebook.com/100000091986399/picture&type=large">
+				</div>
+				
+				<%= @post.user.name %>
+			</div>
+		</td>
+	</tr>
+</table>
 
 
-
-
-
-<div class = "controls"><h3><%=@post.start.address%>
-<i class = "icon-resize-horizontal"></i><%=" " +@post.finish.address%></h3>
+<div class = "controls">
+	<h3><%=@post.start.city%>, <%=@post.start.state%>
+<%= image_tag "arrow_right.png" %> <%=" " +@post.finish.city%>, <%=@post.finish.state%></h3>
 
 <%result=Geocoder.search(@post.start.address)  %>
 <%= result.first.address%>
 <p>
-  <b>Time:</b>
+  <b>Departs at </b>
   <%= @post.starttime %>
 </p>
 
@@ -80,14 +98,8 @@
  <strong>This ride goes through the following places</strong><br>
 
   <% @post.stops.each do |stop|  %>
-
-
-  <%= stop.address %> <br>
-<%end%>
-</p>
-<p>
-  <b>User</b><br>
-  <%= @post.user.name %>
+  	<%= stop.city %>, <%= stop.state %> <br>
+	<%end%>
 </p>
 
 
