@@ -1,39 +1,52 @@
 <script type="text/javascript"
-	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDqWLscHGWh6uk6zlpMat3AUb7lCwWnB24&sensor=false&region=AU">
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDqWLscHGWh6uk6zlpMat3AUb7lCwWnB24&sensor=false">
 </script>
 
-<div id="map" style="width:400px; height:300px;"></div>
-
-<script type="text/javascript">	
-	$(document).ready(function() {
-		//ini a directions service.
-		//directionsService = new google.maps.DirectionsService();
-		
-		var start = new google.maps.LatLng(<%=@post.start.latitude%>, <%=@post.start.longitude%>);
-		var end = new google.maps.LatLng(<%=@post.finish.latitude%>, <%=@post.finish.longitude%>);
-		
-		var myOptions = {
-			center:start,
-    	zoom: 5,
-    	mapTypeId: google.maps.MapTypeId.ROADMAP
-  	};
-
+<script type="text/javascript">   
+    $(document).ready(function() {
+        //ini a directions service.
+        //directionsService = new google.maps.DirectionsService();
+         
+        var start = new google.maps.LatLng(<%=@post.start.latitude%>, <%=@post.start.longitude%>);
+        var end = new google.maps.LatLng(<%=@post.finish.latitude%>, <%=@post.finish.longitude%>);
+         
+        var myOptions = {
+            center:start,
+        zoom: 5,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+  
     var map = new google.maps.Map(document.getElementById("map"),myOptions);
-
-		 var marker = new google.maps.Marker({
-			position: start,
-			map: map,
-			title:"start"
-		});
-		var marker = new google.maps.Marker({
-			position: end,
-			map: map,
-			title:"start"
-		}); 
-	}
+  
+         var marker = new google.maps.Marker({
+            position: start,
+            map: map,
+            title:"start"
+        });
+        var marker = new google.maps.Marker({
+            position: end,
+            map: map,
+            title:"start"
+        }); 
+    }
 )
     </script>
+
+
+
+
+<div id="midcontainer">
 <h1>Post</h1>
+
+
+<div id="postMap">
+	<div style="height:17px;"> </div>
+	<div id="map" style="width:664px; height:316px; margin-left:18px; padding-top:18px;"></div>
+</div>
+
+
+
+
 
 <div class = "controls"><h3><%=@post.start.address%>
 <i class = "icon-resize-horizontal"></i><%=" " +@post.finish.address%></h3>
@@ -67,5 +80,6 @@
   <%= link_to 'Edit', edit_post_path(@post), :class => 'btn' %>
   <%= link_to 'Delete', post_path(@post), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
  <%end%>
+</div>
 </div>
 </div>
