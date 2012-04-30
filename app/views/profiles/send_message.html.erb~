@@ -1,0 +1,5 @@
+
+<%= form_tag user_profiles_path, :class => 'well form-search', :method => :get do%>
+  <%= text_field_tag :body, params[:start], class: 'input-long search-query span3', placeholder: "From"%>
+<%=submit_tag%>
+<%end%>

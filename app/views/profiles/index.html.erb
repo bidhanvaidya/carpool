@@ -1,3 +1,4 @@
+
 <div id="midcontainer">
 <br />
 <br />
@@ -8,18 +9,19 @@
 				
 			<!- profile picture   edit the link with correct facebook user ID ->
 			<div class="circle-image-one-fourth" style="margin-left:10px;">
-				<img class="aligncenter" src="http://graph.facebook.com/100000091986399/picture&type=large">
+				<img class="aligncenter" src=<%= photo=@page.picture + "&type=large"%>>
+
 			</div>
 			
 			<div>
 			<table style="margin-left:auto; margin-right: auto; line-height:20px; font-size: 15px;">
 				<tr>
 					<td><%= image_tag "house.png" %></td>
-					<td>Hometown</td>
+					<td><%=@user.hometown%></td>
 				</tr>
 				<tr>
 					<td><%= image_tag "crosshair.png" %></td>
-					<td>Current Location</td>
+					<td><%=@user.current_location%></td>
 				</tr>
 			</table>
 			</div>
@@ -72,12 +74,14 @@
 								<tr height="80px;">
 			      			<td width="80px;">
 										<!- EDIT this with correct facebook profile pictures from ride's poster's id->
-										<img src="http://graph.facebook.com/100000091986399/picture&type=small">
+
+
+										<img src=<%=@page.picture%>>
 									</td>
 			      			<td>
 										<div style="font-size:20px;margin-top:8px;">
 											<%=ride.start.city%>  <%= image_tag "arrow_right.png" %> <%=ride.finish.city%>
-											<br><div style="font-size:14px; color:#16949c"><%= image_tag "calendar.png" %> Departs at ride.start.starttime.(fix)</div>
+											<br><div style="font-size:14px; color:#16949c"><%= image_tag "calendar.png" %> Departs at <%= ride.starttime %></div>
 										</div>
 									</td>
 			      			<td>
@@ -102,11 +106,94 @@
 
 
 
+<%if current_user == @user.user%>
+
+<b>Inbox</b><br>
+<% @user.mailbox.inbox.each do |message|%>
+<%= message.subject%><a data-toggle="modal" href=#<%=message.hash%> class="btn btn-primary">show</a><br>
+          <div class="modal hide fade" id=<%=message.hash%>>
+            <div class="modal-header">
+              <a class="close" data-dismiss="modal">×</a>
+              <h3><%= message.subject%></h3>
+            </div>
+            <div class="modal-body">
+              <p>
+                <%=message.receipts.last.message.body%></p>
+
+ <%=form_tag reply_message_user_profiles_path(@user.user), method: :get do %>
+<%= hidden_field_tag 'receipt', message.receipts.last.id%> 
+
+</div>
+<div class = "modal-header">
+<h3>Reply</h3>
+</div>
+<div class = "modal-body">
+         <%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br> </p>
+    
+        
+     
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn", data-dismiss="modal">Close</a>
+              <%= submit_tag "Reply", :name => nil, class: "btn btn-primary" %>
+               <%end%>
+             </div>
+
+          </div>
+    
+<%end%><br>
+<b>Sent Item</b><br>
+<% @user.mailbox.sentbox.each do |message|%>
+<%= message.subject %>
+<a data-toggle="modal" href=#<%=message.hash%> class="btn btn-primary">show</a><br>
+          <div class="modal hide fade" id=<%=message.hash%>>
+            <div class="modal-header">
+              <a class="close" data-dismiss="modal">×</a>
+              <h3><%= message.subject%></h3>
+            </div>
+            <div class="modal-body">
+              <p>
+                <%=message.receipts.last.message.body%></p>
+
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn", data-dismiss="modal">Close</a>
+           
+             </div>
+
+          </div>
+<%end%><br>
+
+<br>
+trash
+
+<% @user.mailbox.trash.each do |message|%>
+<%= message.subject%>
+<%end%>
 
 
 
+<%else%>
+<a data-toggle="modal" href=#send_message class="btn btn-primary">show</a><br>
+<div class="modal hide fade" id="send_message">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+     <h3>Send Message</h3>
+  </div>
+  <div class="modal-body">
+    <p><%=form_tag send_message_user_profiles_path(@user.user), method: :get do %>
 
+         <%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br> </p>
+  
+        <div class="modal-footer">
+          <a href="#" class="btn", data-dismiss="modal">Close</a>
+          <%= submit_tag "Send", :name => nil, class: "btn" %>
+        </div>
+      <%end%>
+ </div>
 
+</div>
+<%end%>
 
 
 
@@ -116,8 +203,6 @@
 <br>
 <br>
 <p>content below are for references,will delete later.</p>
-
-
 
 
 

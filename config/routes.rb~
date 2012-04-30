@@ -2,7 +2,7 @@ Ozride::Application.routes.draw do
 resources :users do  
 resources :profiles do
   collection do
-        get 'message'
+        get 'send_message'
       end
 end
 end

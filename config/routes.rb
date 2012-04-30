@@ -3,6 +3,7 @@ resources :users do
 resources :profiles do
   collection do
         get 'send_message'
+        get 'reply_message'
       end
 end
 end

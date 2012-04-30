@@ -1,62 +1,48 @@
-<div class= "row">
-<div class= "span6"><h1>Posts</h1></div>
-<div class= "span6" align = "right">
-<%= link_to 'Make a new Post', new_post_path, :class => 'btn btn-primary' %></div>
-</div>
-
-<%= form_tag posts_path, :class => 'well form-search', :method => :get do%>
+<div id="midcontainer">
+	<%= form_tag posts_path, :class => 'well form-search', :method => :get do%>
   <div class= "row">
-    <div class= "span4">
-      <%= text_field_tag :start, params[:start], class: 'input-long search-query span4', placeholder: "Start"%> 
+    <div class= "span3">
+      <%= text_field_tag :start, params[:start], class: 'input-long search-query span3', placeholder: "From"%> 
      </div>
-    <div class= "span4">
-      <%= text_field_tag :finish, params[:finish], class: 'input-long search-query span4', placeholder: "Finish" %>
+    <div class= "span3">
+      <%= text_field_tag :finish, params[:finish], class: 'input-long search-query span3', placeholder: "To" %>
      </div>
-    <div class= "span4">
+    <div class= "span3">
       <%= submit_tag "Search Near", :name => nil %>
     </div>
    </div>  
 <% end %>
-Search results
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Starttime</th>
-      <th>Start</th>
-      <th> Finish</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
 
-  <%if !@start_locations.nil?%>
-   
-    <%=render "search"%>
-  
-  <%else%>
-     
- 
-  <tbody>
-    <% @posts.each do |post| %>
-      <a><tr>
-        <td><%= post.id %></td>
-        <td><%= link_to post.starttime, post_path(post) %></td>
-        <td><%= post.start.address %></td>
-        <td><%= post.finish.address %></td>
-        <td>
-          <%= link_to 'Edit', edit_post_path(post), :class => 'btn btn-mini' %>
-          <%= link_to 'Destroy', post_path(post), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-        </td>
-      </tr></a>
-</tbody>   
- <% end %>
-  
-  <%end%>
-</table>
-
-
-
-
-
-
-<%= link_to 'New', new_post_path, :class => 'btn btn-primary' %>
+<div class= "row">
+	<div class= "span6" align = "left">
+		<%= link_to 'Post a new ride', new_post_path, :class => 'btn btn-primary' %></div>
+	</div>
+	<table class="table table-striped" style="width:700px;">
+  	<%if !@start_locations.nil?%>
+    	<%=render "search"%>
+ 		<%else%>
+    	<tbody>
+    		<% @posts.each do |post| %>
+      		<a>
+						<tr height="80px;">
+        			<td width="80px;">
+								<!- EDIT this with correct facebook profile pictures->
+								<img src="http://graph.facebook.com/100000091986399/picture" class="postindexProfilepic">
+							</td>
+        			<td>
+								<div style="font-size:20px;margin-top:8px;">
+									<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
+								</div>
+								<br><%= link_to post.starttime, post_path(post) %>
+							</td>
+        			<td>
+          			<%= link_to 'Edit', edit_post_path(post), :class => 'btn btn-mini' %>
+          			<%= link_to 'Destroy', post_path(post), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        			</td>
+      			</tr>
+					</a>
+				</tbody> 
+ 			<% end %>
+  	<%end%>
+	</table>
+</div>
