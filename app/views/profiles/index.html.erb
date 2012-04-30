@@ -1,4 +1,125 @@
-<strong> This is profile page</strong><br>
+<div id="midcontainer">
+<br />
+<br />
+<table border="0">
+	<tr>
+		<td width="230px" rowspan="2">
+			<div class="panelprofile">
+				
+			<!- profile picture   edit the link with correct facebook user ID ->
+			<div class="circle-image-one-fourth" style="margin-left:10px;">
+				<img class="aligncenter" src="http://graph.facebook.com/100000091986399/picture&type=large">
+			</div>
+			
+			<div>
+			<table style="margin-left:auto; margin-right: auto; line-height:20px; font-size: 15px;">
+				<tr>
+					<td><%= image_tag "house.png" %></td>
+					<td>Hometown</td>
+				</tr>
+				<tr>
+					<td><%= image_tag "crosshair.png" %></td>
+					<td>Current Location</td>
+				</tr>
+			</table>
+			</div>
+			
+			 
+			</div>
+		</td>
+		<td width="700px" height="60px">
+			<div class="profileName"> <%=@user.first_name%> <%=@user.last_name%></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			
+			<table>
+				<tr height="40px;">
+					<td colspan="2">About me</td>
+				</tr>
+				<tr height="40px;">
+					<td width="100px;">Music</td>
+					<td>data</td>
+				</tr>
+				<tr height="40px;">
+					<td>Interests</td>
+					<td>data</td>
+				</tr>
+				<tr height="40px;">
+					<td>Work</td>
+					<td>data</td>
+				</tr>
+				<tr height="40px;">
+					<td>Education</td>
+					<td>data</td>
+				</tr>
+			</table>
+			
+			
+			
+		</td>
+	</tr>
+	<tr>
+		<td>test content</td>
+		<td>
+			<div><b>My rides</b></div>
+
+			<table class="table table-striped" style="width:700px;">
+			  	<tbody>
+			  		<%@user.user.posts.each do |ride|%>
+			    		<a>
+								<tr height="80px;">
+			      			<td width="80px;">
+										<!- EDIT this with correct facebook profile pictures from ride's poster's id->
+										<img src="http://graph.facebook.com/100000091986399/picture&type=small">
+									</td>
+			      			<td>
+										<div style="font-size:20px;margin-top:8px;">
+											<%=ride.start.city%>  <%= image_tag "arrow_right.png" %> <%=ride.finish.city%>
+											<br><div style="font-size:14px; color:#16949c"><%= image_tag "calendar.png" %> Departs at ride.start.starttime.(fix)</div>
+										</div>
+									</td>
+			      			<td>
+			 							<%= link_to 'Edit', edit_post_path(ride), :class => 'btn' %>
+										<%= link_to 'Delete', post_path(ride), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+			      			</td>
+			    			</tr>
+							</a>
+						</tbody>   
+					<% end %>
+			</table>
+		</td>
+	</tr>
+	
+	
+	
+	
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<p>content below are for references,will delete later.</p>
+
+
+
+
 
 <%=@user.first_name%><br>
 <%=@user.last_name%><br>
@@ -7,14 +128,7 @@
 <%=@user.verified%><br>
 <%=@user.date_of_birth%><br>
 <%=@user.current_location%><br>
-<%=@user.hometown%>
+<%=@user.hometown%><br>
 <br>
 
-<div  class= "row" style ="background-color: #049cbd;"><b>My rides</b></div>
-<br>
-<%@user.user.posts.each do |ride|%>
-From: <%=ride.start.address%>
-To: <%=ride.finish.address%><br>
-<%= link_to 'Edit', edit_post_path(ride), :class => 'btn' %>
-  <%= link_to 'Delete', post_path(ride), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
-<%end%>
+</div>

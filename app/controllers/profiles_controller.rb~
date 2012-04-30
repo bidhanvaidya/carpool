@@ -1,0 +1,9 @@
+class ProfilesController < ApplicationController
+def index
+  @user= User.find(params[:user_id]).profile
+end
+
+def send_message
+   @body=Conversation.find(params[:message]).receipts.last.message.body
+end
+end

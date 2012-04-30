@@ -11,9 +11,10 @@ def self.create_with_omniauth(auth)
     user.name = auth["info"]["name"]
     
   end
-  end
+  
+end
 def save_friends
-	user=FbGraph::User.fetch(self.uid, :access_token=>'AAAFKkl5Av5IBANBWZCOjfZBSdmZBKm9EBDkCFUO0zZBxZA2Mnz8bOnEqeaZAFwjXVcM8ESUzmVudtBXnoBprGD2Rg4vrztI6XhCZBxZCW8UNPQZDZD')
+	user=FbGraph::User.fetch(self.uid, :access_token=>'AAACEdEose0cBAG3mKnXVIxgq80bPZB1osa1WuvuvZBYDACEEWAsbj9bKuuhdIpMikk9hRkuD8G1pgomjeoMfFs963MZAq0rwApFUyXzKQZDZD')
 	Profile.create(:name=> user.name,
       :first_name=>user.first_name,
       :last_name=>user.last_name,

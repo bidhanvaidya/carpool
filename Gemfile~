@@ -18,7 +18,6 @@ group :assets do
   gem 'uglifier'
   
 end
-gem 'mailboxer'
 gem 'heroku'
 gem 'jquery-rails'
 gem "omniauth-facebook"
