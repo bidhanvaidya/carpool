@@ -45,7 +45,7 @@
 
                     <li><%=link_to "View / edit profile", user_profiles_path(current_user)%></li>
 
-                    <li><a href="#">Your Posts</a></li>
+                    <li><%=link_to "Your Posts", myposts_posts_path%></li>
                     <li class="divider"></li>
                     <li><%= link_to "Sign Out", signout_path%></li>
                   </ul>

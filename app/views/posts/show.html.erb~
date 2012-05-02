@@ -73,32 +73,40 @@
 
 				<!- profile picture   edit the link with correct facebook user ID ->
 				<div class="circle-image-one-fourth" style="margin-left:10px;">
-					<img class="aligncenter" src="http://graph.facebook.com/100000091986399/picture&type=large">
+					<img class="aligncenter" src=<%= "http://graph.facebook.com/"+@post.user.uid+"/picture"%>
 				</div>
 				
-				  <%= @post.user.name %>
-          <!- send message modal starts here ->
-          
-          <a data-toggle="modal" href=#send_message class="btn btn-primary">Send Message</a><br>
-          <div class="modal hide fade" id="send_message">
-            <div class="modal-header">
-              <a class="close" data-dismiss="modal">×</a>
-                <h3>Send Message</h3>
+				  <%= @post.user.name %><br>
+          <!- if post belongs to oneself, edit and destroy option->
+          <%if @post.user == current_user%>
+            <div class="form-actions">
+              <%= link_to 'Edit', edit_post_path(@post), :class => 'btn' %>
+              <%= link_to 'Delete', post_path(@post), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
             </div>
-            <div class="modal-body">
-              <p><%=form_tag send_message_user_profiles_path(@post.user), method: :get do %>
+          <%else%>
+            <!- orelse send message modal starts here ->
+            
+            <a data-toggle="modal" href=#send_message class="btn btn-primary">Send Message</a><br>
+            <div class="modal hide fade" id="send_message">
+              <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                  <h3>Send Message</h3>
+              </div>
+              <div class="modal-body">
+                <p><%=form_tag send_message_user_profiles_path(@post.user), method: :get do %>
 
-                  <%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br>
+                    <%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br>
 
-                  <div class="modal-footer">
-                    <a href="#" class="btn", data-dismiss="modal">Close</a>
-                    <%= submit_tag "Send", :name => nil, class: "btn" %>
-                  </div>
-                <%end%>
-             </p>
+                    <div class="modal-footer">
+                      <a href="#" class="btn", data-dismiss="modal">Close</a>
+                      <%= submit_tag "Send", :name => nil, class: "btn" %>
+                    </div>
+                  <%end%>
+               </p>
+              </div>
             </div>
-          </div>
-        <!- End of send Message->
+          <!- End of send Message->
+        <%end%>
 			</div>
 		</td>
 	</tr>
@@ -126,12 +134,6 @@
 
 
 
-<div class="form-actions">
-  <%= link_to 'Back', posts_path, :class => 'btn'  %>
-<% if @post.user == current_user %>
-  <%= link_to 'Edit', edit_post_path(@post), :class => 'btn' %>
-  <%= link_to 'Delete', post_path(@post), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
- <%end%>
-</div>
+
 </div>
 </div>	

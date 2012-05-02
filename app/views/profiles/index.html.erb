@@ -109,31 +109,32 @@
 <%if current_user == @user.user%>
 
 <b>Inbox</b><br>
-<% @user.mailbox.inbox.each do |message|%>
-<%= message.subject%><a data-toggle="modal" href=#<%=message.hash%> class="btn btn-primary">show</a><br>
-          <div class="modal hide fade" id=<%=message.hash%>>
+<% @inbox.each do |receipt|%>
+<%= receipt.message.subject%><a data-toggle="modal" href=#<%=receipt.hash%> class="btn btn-primary">show</a><br>
+          <div class="modal hide fade" id=<%=receipt.hash%>>
             <div class="modal-header">
               <a class="close" data-dismiss="modal">×</a>
-              <h3><%= message.subject%></h3>
+              <h3><%= receipt.message.subject%></h3>
             </div>
             <div class="modal-body">
               <p>
-                <%=message.receipts.last.message.body%></p>
+                <%=receipt.message.body%></p>
 
- <%=form_tag reply_message_user_profiles_path(@user.user), method: :get do %>
-<%= hidden_field_tag 'receipt', message.receipts.last.id%> 
+                 <%=form_tag reply_message_user_profiles_path(@user.user), method: :get do %>
+                <%= hidden_field_tag 'receipt', receipt.id%> 
 
-</div>
-<div class = "modal-header">
-<h3>Reply</h3>
-</div>
-<div class = "modal-body">
+            </div>
+            <div class = "modal-header">
+            <h3>Reply</h3>
+            </div>
+            <div class = "modal-body">
          <%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br> </p>
     
         
      
             </div>
             <div class="modal-footer">
+              <%= link_to 'Move To Trash', trash_user_profiles_path(@user.user, :receipt=> receipt), :method => 'get', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
               <a href="#" class="btn", data-dismiss="modal">Close</a>
               <%= submit_tag "Reply", :name => nil, class: "btn btn-primary" %>
                <%end%>
@@ -143,17 +144,17 @@
     
 <%end%><br>
 <b>Sent Item</b><br>
-<% @user.mailbox.sentbox.each do |message|%>
-<%= message.subject %>
-<a data-toggle="modal" href=#<%=message.hash%> class="btn btn-primary">show</a><br>
-          <div class="modal hide fade" id=<%=message.hash%>>
+<% @sentbox.each do |receipt|%>
+<%= receipt.message.subject %>
+<a data-toggle="modal" href=#<%=receipt.hash%> class="btn btn-primary">show</a><br>
+          <div class="modal hide fade" id=<%=receipt.hash%>>
             <div class="modal-header">
               <a class="close" data-dismiss="modal">×</a>
-              <h3><%= message.subject%></h3>
+              <h3><%= receipt.message.subject%></h3>
             </div>
             <div class="modal-body">
               <p>
-                <%=message.receipts.last.message.body%></p>
+                <%=receipt.message.body%></p>
 
             </div>
             <div class="modal-footer">
@@ -165,10 +166,10 @@
 <%end%><br>
 
 <br>
-trash
+<strong>Trash</strong><br>
 
-<% @user.mailbox.trash.each do |message|%>
-<%= message.subject%>
+<% @trash.each do |receipt|%>
+<%= receipt.message.subject%><br>
 <%end%>
 
 

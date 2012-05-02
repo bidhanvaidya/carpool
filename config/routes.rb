@@ -4,12 +4,13 @@ resources :profiles do
   collection do
         get 'send_message'
         get 'reply_message'
+        get 'trash'
       end
 end
 end
   resources :posts do
       collection do
-        get 'search'
+        get 'myposts'
       end
   end
 

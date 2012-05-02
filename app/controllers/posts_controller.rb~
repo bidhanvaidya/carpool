@@ -15,9 +15,8 @@ if params[:start].present? && params[:finish].present?
       
   end
 
-def myposts
-
-@posts = current_user.posts
+def search
+@posts = Post.all
 end
 
   def show
