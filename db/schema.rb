@@ -65,6 +65,8 @@ ActiveRecord::Schema.define(:version => 20120506043331) do
     t.string   "startLocation"
     t.string   "endLocation"
     t.string   "time"
+    t.boolean  "is_driving"
+
   end
 
   create_table "profiles", :force => true do |t|
@@ -82,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20120506043331) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
+    t.boolean  "smoking"
   end
 
   create_table "receipts", :force => true do |t|

@@ -2,41 +2,18 @@
 <%= form_for @post, :html => { :class => 'form-horizontal' } do |f| %>
   <fieldset>
     <legend>Post a <%= controller.action_name.capitalize %> ride</legend>
+<div class="control-group">
+      <%= f.label :starttime, :class => 'control-label' %>
+      <div class="controls">
+     <script> $(function(){
+        $("date").datepicker();
+      }); </script>
+           
+      <%= f.text_field :starttime, class: "date"%>  
+      </div>
+    </div>
 
-		<div class ="row">
-    <div class = "span4">
-				<div class="control-group">
-				 		 <%= f.label :date, :class => 'control-label' %>
-						<div class="controls">
-						  <%= f.datepicker :startdate %>
-						  
-						</div>
-					</div>
-		</div>
-		<div class = "span4">
-					<div class = "control-group">
-					<%= f.label :time, :class => 'control-label' %> 
-					<div class = "controls">
-					<%= f.select :time, options_for_select([
-					['Anytime','Anytime'],
-					['Early','Early'],					['Morning','Morning'],
-					['Evening','Evening'],					['Night','Night'],
-					['1 am','0100'],					['2 am','0200'],
-					['3 am','0300'],					['4 am','0400'],
-					['5 am','0500'],					['6 am','0600'],
-					['7 am','0700'],					['8 am','0800'],
-					['9 am','0900'],					['10 am','1000'],
-					['11 am','1100'],					['12 pm','1200'],
-					['1 pm','1300'],					['2 pm','1400'],
-					['3 pm','1500'],					['4 pm','1600'],
-					['5 pm','1700'],					['6 pm','1800'],
-					['7 pm','1900'],					['8 pm','2000'],
-					['9 pm','2100'],					['10 pm','2200'],
-					['11 pm','2300'],					['12 am','2400']			]) %>
-					</div>
-					</div>
-		</div>
-		</div>
+
  
     <%= f.fields_for :start do |builder| %>
         <%= render "start_fields", :f => builder %>
