@@ -25,7 +25,7 @@ gem "omniauth-facebook"
 gem 'fb_graph'
 # Use unicorn as the web server
 # gem 'unicorn'
-
+gem 'jquery_datepicker'
 gem "cocoon"
 
 # Deploy with Capistrano
