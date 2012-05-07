@@ -1,4 +1,5 @@
 <div id="midcontainer">
+
 	<%= form_tag posts_path, :class => 'well form-search', :method => :get do%>
   <div class= "row">
     <div class= "span3">
@@ -7,10 +8,26 @@
     <div class= "span3">
       <%= text_field_tag :finish, params[:finish], class: 'input-long search-query span3', placeholder: "To" %>
      </div>
-    <div class= "span3">
-      <%= submit_tag "Search Near", :name => nil %>
-    </div>
-   </div>  
+     <div class= "span3">
+				 <div class= "row">
+					 <div class = "span1 ">
+						<%= text_field_tag :date, params[:date], class: 'input-medium search-query',placeholder: Date.today %>
+				<script type="text/javascript">
+										//<![CDATA[
+										jQuery(document).ready(function(){jQuery('#date').datepicker({"dateFormat":"yy-mm-dd",
+										 minDate: -0, autoSize: true
+											
+										})});
+										//]]>
+					</script>
+					 </div>
+					<div class= "span1 offset1">
+						<%= submit_tag "Search Near", :name => nil, class:'btn' %>
+					</div>
+				</div>	
+   </div> 
+   </div> 
+
 <% end %>
 
 <div class= "row">
@@ -18,11 +35,8 @@
 		<%= link_to 'Post a new ride', new_post_path, :class => 'btn btn-primary' %></div>
 	</div>
 	<table class="table table-striped" style="width:700px;">
-  	<%if !@start_locations.nil?%>
-    	<%=render "search"%>
- 		<%else%>
-    	<tbody>
-    		<% @posts.each do |post| %>
+  	    	<tbody>
+    		<% @searchresults.each do |post| %>
       		<a>
 						<tr height="80px;">
         			<td width="80px;">
@@ -33,13 +47,14 @@
 								<div style="font-size:20px;margin-top:8px;">
 									<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
 								</div>
-								<br><%= link_to post.starttime, post_path(post) %>
+								<br><%= link_to post.startdate, post_path(post) %>
+								<br><%= link_to post.time, post_path(post) %>
 							</td>
         			
       			</tr>
 					</a>
 				</tbody> 
- 			<% end %>
+ 			
   	<%end%>
 	</table>
 </div>

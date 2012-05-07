@@ -13,7 +13,7 @@
 								<div style="font-size:20px;margin-top:8px;">
 									<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
 								</div>
-								<br><%= link_to post.starttime, post_path(post) %>
+								<br><%= link_to post.startdate, post_path(post) %>
 							</td>
         			<td>
           			<%= link_to 'Edit', edit_post_path(post), :class => 'btn btn-mini' %>

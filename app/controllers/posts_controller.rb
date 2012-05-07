@@ -1,16 +1,55 @@
 class PostsController < ApplicationController
 before_filter :authenticate_user, :except=> [:show, :index, :search]
   def index
-    @posts = Post.all
-
+    @posts = Post.where('startdate >?', Date.yesterday).order("startdate asc").all
+		@searchresults= []
+		@matches = 0
 if params[:start].present? && params[:finish].present?
       #@post_with_location= Post.find_by_sql("select * from posts inner join locations on locations.post_id=posts.id")
-      @start_locations= Start.near(params[:start], 1, :order => :distance).includes(:post)
-  		@end_locations= Finish.near(params[:finish], 1, :order => :distance).includes(:post)
-    		@stops1= Stop.near(params[:start], 1, :order => :distance).includes(:post)
-        @stops2= Stop.near(params[:finish], 1, :order => :distance).includes(:post)
+      
+				if params[:date]==""
+					@start_locations= Start.near(params[:start], 1, :order => :distance).includes(:post).where(post_id: @posts).all
+					@end_locations= Finish.near(params[:finish], 1, :order => :distance).includes(:post).where(post_id: @posts)
+					@stops1= Stop.near(params[:start], 1, :order => :distance).includes(:post).where(post_id: @posts)
+					@stops2= Stop.near(params[:finish], 1, :order => :distance).includes(:post).where(post_id: @posts)
+				else
+					post=Post.where('startdate = ?', params[:date]).all
+					@start_locations= Start.near(params[:start], 1, :order => :distance).joins(:post).where(post_id: post).all
+					@end_locations= Finish.near(params[:finish], 1, :order => :distance).joins(:post).where(post_id: post)
+					@stops1= Stop.near(params[:start], 1, :order => :distance).includes(:post).where(post_id: post)
+					@stops2= Stop.near(params[:finish], 1, :order => :distance).includes(:post).where(post_id: post)
+				end
+						
+						
+						for start_location in @start_locations
+							if !@end_locations.find_by_post_id(start_location.post.id).nil? 
+								post=start_location.post
+								@searchresults.push post		   
+								@matches = @matches + 1
+							end
+							if !@stops2.find_by_post_id(start_location.post.id).nil?
+								post=start_location.post	
+								@searchresults.push post	
+								@matches = @matches + 1
+							end
+						end
+						for stops1 in @stops1
+							if !@end_locations.find_by_post_id(stops1.post.id).nil? 
+								post= stops1.post
+								@searchresults.push post
+								@matches = @matches + 1
+							end
+							if !@stops2.find_by_post_id(stops1.post.id).nil? 
+								post= stops1.post
+								@searchresults.push post
+								@matches = @matches + 1
+							end
+						end
+       @searchresults= Post.where("id IN (?)", @searchresults).order(:startdate).collect()
   else
-    @start_locations = nil
+  
+   @searchresults= @posts
+   @searchresults
   end
       
   end

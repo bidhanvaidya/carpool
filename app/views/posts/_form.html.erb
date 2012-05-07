@@ -2,13 +2,13 @@
 <%= form_for @post, :html => { :class => 'form-horizontal' } do |f| %>
   <fieldset>
     <legend>Post a <%= controller.action_name.capitalize %> ride</legend>
-
+		
 		<div class ="row">
     <div class = "span4">
 				<div class="control-group">
 				 		 <%= f.label :date, :class => 'control-label' %>
 						<div class="controls">
-						  <%= f.datepicker :startdate %>
+						  <%= f.datepicker :startdate, :dateFormat => "yy-mm-dd" %>
 						  
 						</div>
 					</div>
@@ -37,7 +37,22 @@
 					</div>
 		</div>
 		</div>
- 
+ 		<div class = "control-group">
+ 		<div class = "row">
+ 				<div class = "span2">
+ 		<%= f.label :are_You, :class => 'control-label' %> 
+ 		
+ 		</div>
+ 			<div class = "controls">
+ 				
+ 				<div class = "span2">
+ 				Driving <%=radio_button(f, :is_driving, true)%>
+ 				</div>
+ 				<div class = "span2">
+ 				Passenger<%=radio_button(f, :is_driving, false)%>
+ 				</div>
+ 				</div>
+ 		</div>
     <%= f.fields_for :start do |builder| %>
         <%= render "start_fields", :f => builder %>
     <% end %>
