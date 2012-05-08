@@ -18,6 +18,7 @@ group :assets do
   gem 'uglifier'
   
 end
+gem "meta_search"
 gem 'mailboxer'
 gem 'heroku'
 gem 'jquery-rails'

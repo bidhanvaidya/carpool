@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(:version => 20120506043331) do
     t.string   "endLocation"
     t.string   "time"
     t.boolean  "is_driving"
-
   end
 
   create_table "profiles", :force => true do |t|

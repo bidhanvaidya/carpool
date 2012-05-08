@@ -46,6 +46,7 @@ if params[:start].present? && params[:finish].present?
 							end
 						end
        @searchresults= Post.where("id IN (?)", @searchresults).order(:startdate).collect()
+       
   else
   
    @searchresults= @posts
