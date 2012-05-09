@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120506043331) do
+ActiveRecord::Schema.define(:version => 20120509125930) do
 
   create_table "conversations", :force => true do |t|
     t.string   "subject",    :default => ""
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(:version => 20120506043331) do
     t.string   "endLocation"
     t.string   "time"
     t.boolean  "is_driving"
+    t.string   "note"
+    t.integer  "contribution"
   end
 
   create_table "profiles", :force => true do |t|

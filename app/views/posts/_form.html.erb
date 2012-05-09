@@ -64,6 +64,8 @@
     <%= f.fields_for :stops do |builder| %>
       <%= render "stop_fields", :f => builder %>
     <% end %>
+    
+		
      <div class="control-group">   
      <div class = "controls">       
      <a class="btn btn-info" data-toggle="modal" href="#myModal" >Add stop</a>
@@ -94,6 +96,23 @@
   </div>
 
 </div>
+<div class="control-group">
+			<%= f.label :note, "Notes", :class => 'control-label'%>
+			<div class="controls">
+				<%= f.text_area :note, class: 'input text-large', rows: '5', cols: '35' %>
+			</div>
+		</div>
+		<div class="control-group">
+			<%= f.label :contribution, "Contribution", :class => 'control-label'%>
+			<div class="controls">
+			<div class="input-prepend input-append">
+							<span class="add-on">$</span>
+                <%= f.text_field :contribution, class: "span1" %>
+                <span class="add-on">.00</span>
+              </div>
+				
+			</div>
+		</div>
     <div class="form-actions">
       <%= f.submit nil, :class => 'btn btn-primary' %>
       <%= link_to 'Cancel', posts_path, :class => 'btn' %>
