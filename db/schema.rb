@@ -64,8 +64,8 @@ ActiveRecord::Schema.define(:version => 20120509125930) do
     t.datetime "updated_at"
     t.string   "startLocation"
     t.string   "endLocation"
-    t.string   "time"
     t.boolean  "is_driving"
+    t.string   "time"
     t.string   "note"
     t.integer  "contribution"
   end
