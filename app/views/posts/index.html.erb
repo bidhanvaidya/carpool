@@ -30,7 +30,7 @@
 
 <% end %>
 
-	<!- Search Filter---------------------------->
+	<!------------------------ Search Filter---------------------------->
 	<div class= "filters">
 		<%if params[:is_driving]== 'false'%>
 			<%= link_to "Passenger", posts_path(is_driving: false), class: 'btn btn-success', :style=>'margin-left:15px;'%>
@@ -46,9 +46,7 @@
 			<%= link_to "All", posts_path, class: 'btn btn-success'%>
 		<%end%>
 		</div>
-	<!-----------End OF Search Filter----------->
-	
-	
+
 	<table class="table table-striped" style="width:700px; float:left;">
   	    	<tbody>
   	    	<%if params[:is_driving].nil?%>
@@ -57,8 +55,7 @@
     		<a>
 						<tr height="80px;">
         			<td width="80px;">
-								<!- EDIT this with correct facebook profile pictures->
-								<img src="http://graph.facebook.com/100000091986399/picture" class="postindexProfilepic">
+								<img src=<%= "http://graph.facebook.com/"+post.user.uid+"/picture&type=square"%> class="postindexProfilepic">
 							</td>
         			<td>
 								<div style="font-size:20px;margin-top:8px;">
@@ -67,20 +64,23 @@
 								<br><%= link_to post.startdate, post_path(post) %>
 								<br><%= link_to post.time, post_path(post) %>
 							</td>
-        			
+        			<td width="80px;">
+								<%if post.is_driving == true%> 
+								driving
+								<%else%> <%= post.user.name%> is a passenger <%end%>
+							</td>
       			</tr>
 					</a>
-				</tbody> 
- 			
+				</tbody> 		
   	<%end%>
   	<%else%>
-  	<!--------------For is_driving------------->
-    		<% Post.where(id: @searchresults).where(is_driving: params[:is_driving]).each do |post| %>
+<!--For is_driving-->
+
+   <% Post.where(id: @searchresults).where(is_driving: params[:is_driving]).each do |post| %>
       	  		<a>
 						<tr height="80px;">
         			<td width="80px;">
-								<!- EDIT this with correct facebook profile pictures->
-								<img src="http://graph.facebook.com/100000091986399/picture" class="postindexProfilepic">
+								<img src=<%= "http://graph.facebook.com/"+post.user.uid+"/picture&type=square"%> class="postindexProfilepic">
 							</td>
         			<td>
 								<div style="font-size:20px;margin-top:8px;">

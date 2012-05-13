@@ -74,8 +74,7 @@
 				<!- profile picture   edit the link with correct facebook user ID ->
 				<div class="circle-image-one-fourth" style="margin-left:10px;">
 					<img class="aligncenter" src=<%= "http://graph.facebook.com/"+@post.user.uid+"/picture&type=large"%>>
-				</div>
-				
+				</div>			
 				  <%= @post.user.name %><br>
           <!- if post belongs to oneself, edit and destroy option->
           <%if @post.user == current_user%>
