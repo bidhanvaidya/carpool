@@ -39,17 +39,17 @@
 		</div>
  		<div class = "control-group">
  		<div class = "row">
- 				<div class = "span2">
+ 				<div class = "span2" style="width:140px;">
  		<%= f.label :are_You, :class => 'control-label' %> 
  		
  		</div>
  			<div class = "controls">
  				
- 				<div class = "span2">
- 				Driving <%=f.radio_button :is_driving, true%>
+ 				<div class = "span2edit" id="selectDriver">
+ 					<p style="margin-top:70px;">Driving <%=f.radio_button :is_driving, true%></p>
  				</div>
- 				<div class = "span2">
- 				Passenger<%=f.radio_button :is_driving, false%>
+ 				<div class = "span2edit" id="selectPassenger">
+ 					<p style="margin-top:70px;">Passenger <%=f.radio_button :is_driving, false%></p>
  				</div>
  				</div>
  		</div>
