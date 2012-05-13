@@ -118,28 +118,26 @@
 	<tr>
 		<td>
 			<div class = "controls">
-				<h3><%=@post.start.city%>, <%=@post.start.state%>
-			<%= image_tag "arrow_right.png" %> <%=" " +@post.finish.city%>, <%=@post.finish.state%></h3>
-
-			<%result=Geocoder.search(@post.start.address)  %>
-			<%= result.first.address%>
-			<p>
-			  <b>Departs at </b>
-			  <%= @post.startdate %> at <%= @post.time%>
-			</p>
-
-			<p>
-			 <strong>This ride goes through the following places</strong><br>
-
-			  <% @post.stops.each do |stop|  %>
-			  	<%= stop.city %>, <%= stop.state %> <br>
-				<%end%>
-			</p>
+				<div class="frontpageText" style="font-size:20px;color:#333;padding-left:0px;padding-top:5px;padding-bottom:25px;line-height:25px;">
+					From: <p style="font-weight:10px;display:inline;font-size:17px;"><%result=Geocoder.search(@post.start.address)  %><%= result.first.address%></p>
+					<br>
+					To: <p style="font-weight:10px;display:inline;font-size:17px;"><%=" " +@post.finish.city%>, <%=@post.finish.state%></p>
+					<br>
+					Departs <%= @post.time%> <%= @post.startdate %>
+					<br>
+					This ride goes through the following places:
+						<% @post.stops.each do |stop|  %>
+				  		<span class="st_tag"><a><%= stop.city %></a></span>
+						<%end%>
+					<br>
+					Note: 
+					<br>
+					<p style="font-weight:10px;display:inline;font-size:17px;"><%= @post.note%></p>
+					</div>
 			</div>
 		</td>
 	</tr>
 </table>
 
-</div>	
-<!------------Note and Contribution Here---Find a plcae for this--->
-Note:<%= @post.note%>
+</div>
+

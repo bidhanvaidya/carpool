@@ -24,10 +24,43 @@
 		
 		
 		<div class="frontpageText">
-			Home page texts, edit later.<br /><br />
-			Subtitle/ slogan goes here.
+			Ozride Real-Time Ridesharing.<br /><br />
+			<p style="font-size:20px;">Share a ride whenever you want, from wherever you are.</p>
 		</div> 
 	</div>
 </div>
+
 <% end %>
 
+<div id="midcontainer">
+	<div class="frontpageText" style="color:#333;padding-left:0px;padding-top:25px;padding-bottom:25px;">Latest Rides</div>
+	<table class="table table-striped" style="width:550px; float:left;">
+		<tbody>
+	<% Post.last(4).each do |post| %>
+		<a>
+			<tr height="80px;">
+    		<td width="80px;">
+					<img src=<%= "http://graph.facebook.com/"+post.user.uid+"/picture&type=square"%> class="postindexProfilepic">
+				</td>
+    		<td>
+					<div style="font-size:20px;margin-top:8px;">
+						<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
+					</div>
+					<br>Departs <%= link_to post.time, post_path(post) %>, <%= link_to post.startdate, post_path(post) %>
+				</td>
+    		<td width="80px;">
+					<%if post.is_driving == true%> 
+						<div style="margin-top:7.5px;text-align:center;">
+							<%= image_tag "isDriver.png" %> <br>$<%= post.contribution%> per seat
+						</div>
+					<%else%>
+						<div style="margin-top:7.5px;text-align:center;">
+							<%= image_tag "isPassenger.png" %> <br>is passenger 
+					<%end%>
+						</div>
+					</td>
+  			</tr>
+			</a>
+	</tbody> 	
+	<%end%>
+</div>
