@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-before_filter :authenticate_user, :except=> [:show, :index, :search]
+before_filter :authenticate_user, :except=> [:show, :index, :search, :new, :create]
   def index
     @posts = Post.where('startdate >?', Date.yesterday).order("startdate").all
 		@searchresults= []
@@ -82,8 +82,9 @@ end
 
   def create
     @post = Post.new(params[:post])
-   
+   if current_user
    	@post.user= current_user
+   	
     if @post.save
      
           
@@ -92,6 +93,9 @@ end
       
     else
       render :action => 'new'
+    end
+    else
+    render :action => 'new'
     end
   end
 
@@ -117,7 +121,7 @@ end
   
   def authenticate_user
   if !current_user
-  redirect_to root_path, :notice => "You need to sign in before you can make a post"
+  redirect_to root_path, class: "alert alert-success", :notice => "You need to sign in before you can make a post"
   end
   end
   
