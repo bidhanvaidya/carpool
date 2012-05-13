@@ -89,7 +89,12 @@
 								<br><%= link_to post.startdate, post_path(post) %>
 								<br><%= link_to post.time, post_path(post) %>
 							</td>
-        			
+        			<td width="80px;">
+									<%if post.is_driving == true%> 
+										<div style="margin-top:7.5px;text-align:center;"><%= image_tag "isDriver.png" %> <br>$<%= post.contribution%> per seat</div>
+									<%else%>
+										<div style="margin-top:7.5px;text-align:center;"><%= image_tag "isPassenger.png" %> <br>is passenger <%end%></div>
+								</td>
       			</tr>
 					</a>
 				</tbody> 
