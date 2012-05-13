@@ -47,10 +47,10 @@
 	</div>
 
 	<table class="table table-striped" style="width:700px; float:left;">
-  	    	<tbody>
-  	    	<%if params[:is_driving].nil?%>
-					<!-------- For Show all---------------------->
-  	    <% Post.where(id: @searchresults).each do |post| %>
+  	<tbody>
+			<!-------- For Show all---------------------->
+  		<%if params[:is_driving].nil?%>
+				<% Post.where(id: @searchresults).each do |post| %>
     		<a>
 						<tr height="80px;">
         			<td width="80px;">
@@ -65,8 +65,9 @@
 							</td>
         			<td width="80px;">
 								<%if post.is_driving == true%> 
-								driving
-								<%else%> <%= post.user.name%> is a passenger <%end%>
+									<div style="margin-top:7.5px;text-align:center;"><%= image_tag "isDriver.png" %> <br>$<%= post.contribution%> per seat</div>
+								<%else%>
+									<div style="margin-top:7.5px;text-align:center;"><%= image_tag "isPassenger.png" %> <br>is passenger <%end%></div>
 							</td>
       			</tr>
 					</a>
