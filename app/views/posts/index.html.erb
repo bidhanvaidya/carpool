@@ -29,7 +29,6 @@
    </div> 
 
 <% end %>
-
 <div class= "row">
 	<div class= "span4">
 		<%= link_to 'Post a new ride', new_post_path, :class => 'btn btn-primary' %>
@@ -41,17 +40,17 @@
 
 <div class= "span4" align= "right">
 	<%if params[:is_driving]== 'false'%>
-		<%= link_to "Passenger", posts_path(is_driving: false), class: 'btn btn-success' %>
-		<%= link_to "Driving", posts_path(is_driving: true), class: 'btn' %>
-		<%= link_to "Show All", posts_path, class: 'btn'%>
+		<%= link_to "Passenger", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: false), class: 'btn btn-success' %>
+		<%= link_to "Driving", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: true), class: 'btn' %>
+		<%= link_to "Show All", posts_path(start: params[:start],finish: params[:finish],date: params[:date],), class: 'btn'%>
 	<%elsif params[:is_driving]== 'true'%>
-		<%= link_to "Passenger", posts_path(is_driving: false), class: 'btn' %>
-		<%= link_to "Driving", posts_path(is_driving: true), class: 'btn btn-success' %>
-		<%= link_to "Show All", posts_path, class: 'btn'%>
+		<%= link_to "Passenger", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: false), class: 'btn' %>
+		<%= link_to "Driving", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: true), class: 'btn btn-success' %>
+		<%= link_to "Show All", posts_path(start: params[:start],finish: params[:finish],date: params[:date],), class: 'btn'%>
 	<%else%>
-		<%= link_to "Passenger", posts_path(is_driving: false), class: 'btn' %>
-		<%= link_to "Driving", posts_path(is_driving: true), class: 'btn ' %>
-		<%= link_to "Show All", posts_path, class: 'btn btn-success'%>
+		<%= link_to "Passenger", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: false), class: 'btn' %>
+		<%= link_to "Driving", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: true), class: 'btn ' %>
+		<%= link_to "Show All", posts_path(start: params[:start],finish: params[:finish],date: params[:date]), class: 'btn btn-success'%>
 	<%end%>
 	</div>
 	<!-----------End OF Search Filter----------->

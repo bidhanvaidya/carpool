@@ -54,7 +54,12 @@
 				</tr>
 				<tr height="40px;">
 					<td>Education</td>
-					<td>data</td>
+					<td>
+							<% @user.user.educations.each do |education|%>
+							<%=education.name%>
+							<%=education.year %><br>
+							<%end%>
+					</td>
 				</tr>
 			</table>
 			
@@ -199,7 +204,6 @@
 
 
 
-
 <br>
 <br>
 <br>
@@ -215,6 +219,7 @@
 <%=@user.date_of_birth%><br>
 <%=@user.current_location%><br>
 <%=@user.hometown%><br>
+No of friends:<%=@user.user.friends.count%>
 <br>
 
 </div>

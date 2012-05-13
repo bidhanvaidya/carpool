@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 before_filter :authenticate_user, :except=> [:show, :index, :search]
   def index
-    @posts = Post.where('startdate >?', Date.yesterday).order("startdate asc").all
+    @posts = Post.where('startdate >?', Date.yesterday).order("startdate").all
 		@searchresults= []
 		@matches = 0
 if params[:start].present? && params[:finish].present?
@@ -45,8 +45,8 @@ if params[:start].present? && params[:finish].present?
 								@matches = @matches + 1
 							end
 						end
-       @searchresults= Post.where("id IN (?)", @searchresults).order(:startdate).collect()
-       
+       @searchresults
+    
   else
   
    @searchresults= @posts

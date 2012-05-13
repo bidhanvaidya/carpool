@@ -3,6 +3,7 @@ has_many :friends
 has_one :profile
 after_create :save_friends
 has_many :posts
+has_many :educations
 def self.create_with_omniauth(auth)
   create! do |user|
     user.provider = auth["provider"]
@@ -27,10 +28,20 @@ def save_friends
       :user_id =>self.id,
       :email => user.email
       )
-	  user.friends.each do |friend| 
- Friend.create(:user_id=> self.id, :uid=> friend.identifier, :name => friend.name) 
- 
-end 
+	user.friends.each do |friend| 
+		Friend.create(:user_id=> self.id, :uid=> friend.identifier, :name => friend.name) 
+	end 
+	if !user.education.nil?
+			user.education.each do |education|
+			if !education.year.nil?
+				Education.create(user_id: self.id, type: education.type, name: education.school.name, year: education.year.name)
+			else
+				Education.create(user_id: self.id, type: education.type, name: education.school.name, year: nil)
+			end
+		end
+	end
+
+
 end
 
 end

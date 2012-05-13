@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  profile_id: 1
+  type: 
+  year: MyString
+  name: MyString
+
+two:
+  profile_id: 1
+  type: 
+  year: MyString
+  name: MyString
