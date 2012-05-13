@@ -16,7 +16,7 @@
 										//<![CDATA[
 										jQuery(document).ready(function(){jQuery('#date').datepicker({"dateFormat":"yy-mm-dd",
 										 minDate: -0, autoSize: true
-											
+	
 										})});
 										//]]>
 					</script>
@@ -30,39 +30,29 @@
 
 <% end %>
 
-<div class= "row">
-	<div class= "span4">
-		<%= link_to 'Post a new ride', new_post_path, :class => 'btn btn-primary' %>
-	</div>
-	<div class= "span4" >
-	</div>
-	
-<!- Search Filter---------------------------->
-
-<div class= "span4" align= "right">
-	<%if params[:is_driving]== 'false'%>
-		<%= link_to "Passenger", posts_path(is_driving: false), class: 'btn btn-success' %>
-		<%= link_to "Driving", posts_path(is_driving: true), class: 'btn' %>
-		<%= link_to "Show All", posts_path, class: 'btn'%>
-	<%elsif params[:is_driving]== 'true'%>
-		<%= link_to "Passenger", posts_path(is_driving: false), class: 'btn' %>
-		<%= link_to "Driving", posts_path(is_driving: true), class: 'btn btn-success' %>
-		<%= link_to "Show All", posts_path, class: 'btn'%>
-	<%else%>
-		<%= link_to "Passenger", posts_path(is_driving: false), class: 'btn' %>
-		<%= link_to "Driving", posts_path(is_driving: true), class: 'btn ' %>
-		<%= link_to "Show All", posts_path, class: 'btn btn-success'%>
-	<%end%>
-	</div>
+	<!- Search Filter---------------------------->
+	<div class= "filters">
+		<%if params[:is_driving]== 'false'%>
+			<%= link_to "Passenger", posts_path(is_driving: false), class: 'btn btn-success', :style=>'margin-left:15px;'%>
+			<%= link_to "Driving", posts_path(is_driving: true), class: 'btn' %>
+			<%= link_to "All", posts_path, class: 'btn'%>
+		<%elsif params[:is_driving]== 'true'%>
+			<%= link_to "Passenger", posts_path(is_driving: false), class: 'btn', :style=>'margin-left:15px;' %>
+			<%= link_to "Driving", posts_path(is_driving: true), class: 'btn btn-success' %>
+			<%= link_to "All", posts_path, class: 'btn'%>
+		<%else%>
+			<%= link_to "Passenger", posts_path(is_driving: false), class: 'btn', :style=>'margin-left:15px;' %>
+			<%= link_to "Driving", posts_path(is_driving: true), class: 'btn ' %>
+			<%= link_to "All", posts_path, class: 'btn btn-success'%>
+		<%end%>
+		</div>
 	<!-----------End OF Search Filter----------->
 	
 	
-</div><br>
-	
-	
-	<table class="table table-striped" style="width:700px;">
+	<table class="table table-striped" style="width:700px; float:left;">
   	    	<tbody>
-  	    	<%if params[:is_driving].nil?%><!- For Show all---------------------->
+  	    	<%if params[:is_driving].nil?%>
+					<!-------- For Show all---------------------->
   	    <% Post.where(id: @searchresults).each do |post| %>
     		<a>
 						<tr height="80px;">

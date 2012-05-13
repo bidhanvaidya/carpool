@@ -29,9 +29,9 @@
         </a>
         <div class="brand"><%= link_to "Ozride", root_path %></div>
         <div class="nav-collapse">
-          <ul class="nav pull-right">
-           
-            <li><%= link_to "Posts", posts_path %></li>
+<%= link_to 'Post a new ride', new_post_path, :class => 'btn btn-primary', :style =>'display:inline;', :style=>'font-family:Cuprum;', :style=> 'text-align:right;', :style=>'margin-top:70px;', :style=>'float:right;'%>
+<ul class="nav pull-right">
+
             <li><%= link_to "About" %></li>
             <li><%= link_to "Search", posts_path %></li>
                   
@@ -53,7 +53,6 @@
             <%else%>
               <li><%= link_to "Log in with Facebook", "/auth/facebook" %></li> 
             <%end%>
-         
           </ul>
         </div>
       </div>
