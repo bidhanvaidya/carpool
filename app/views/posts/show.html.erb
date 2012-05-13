@@ -67,25 +67,30 @@
 			</div>
 		</td>
 		<td width="17px"></td>
-		<td>
+		<td rowspan="2" style="vertical-align:top;width:240px;">
 			<div style="display:inline;">
-				<div class="panelprofile" style="height:392px;">
-
-				<!- profile picture   edit the link with correct facebook user ID ->
-				<div class="circle-image-one-fourth" style="margin-left:10px;">
+				<div class="circle-image-one-fourth">
+					<%if @post.is_driving == true%>
+						$<%=@post.contribution%>.00 per seat.
+					<%else%>
+						Willing to pay $<%=@post.contribution%>.00.
+					<%end%>
+				</div>
+				<div class="circle-image-one-fourth">
 					<img class="aligncenter" src=<%= "http://graph.facebook.com/"+@post.user.uid+"/picture&type=large"%>>
-				</div>			
-				  <%= @post.user.name %><br>
+					<div style="margin-top:17px;">		
+				  <%= @post.user.name %> is <%if @post.is_driving == true%>driving.<%else%>a passenger.<%end%><br>
+				
           <!- if post belongs to oneself, edit and destroy option->
           <%if @post.user == current_user%>
-            <div class="form-actions">
-              <%= link_to 'Edit', edit_post_path(@post), :class => 'btn' %>
-              <%= link_to 'Delete', post_path(@post), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+            <div class="form-actions1">
+              <%= link_to 'Edit', edit_post_path(@post), :class => 'btn', :style=>'width:69px;'%>
+              <%= link_to 'Delete', post_path(@post), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger',:style=>'width:69px;margin-left:1px;' %>
             </div>
           <%else%>
             <!- orelse send message modal starts here ->
             
-            <a data-toggle="modal" href=#send_message class="btn btn-primary">Send Message</a><br>
+            <a data-toggle="modal" href=#send_message class="btn btn-primary" style="width:165px;margin-top:17px;">Send Message</a><br>
             <div class="modal hide fade" id="send_message">
               <div class="modal-header">
                 <a class="close" data-dismiss="modal">×</a>
@@ -107,35 +112,34 @@
           <!- End of send Message->
         <%end%>
 			</div>
+		</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div class = "controls">
+				<h3><%=@post.start.city%>, <%=@post.start.state%>
+			<%= image_tag "arrow_right.png" %> <%=" " +@post.finish.city%>, <%=@post.finish.state%></h3>
+
+			<%result=Geocoder.search(@post.start.address)  %>
+			<%= result.first.address%>
+			<p>
+			  <b>Departs at </b>
+			  <%= @post.startdate %> at <%= @post.time%>
+			</p>
+
+			<p>
+			 <strong>This ride goes through the following places</strong><br>
+
+			  <% @post.stops.each do |stop|  %>
+			  	<%= stop.city %>, <%= stop.state %> <br>
+				<%end%>
+			</p>
+			</div>
 		</td>
 	</tr>
 </table>
 
-
-<div class = "controls">
-	<h3><%=@post.start.city%>, <%=@post.start.state%>
-<%= image_tag "arrow_right.png" %> <%=" " +@post.finish.city%>, <%=@post.finish.state%></h3>
-
-<%result=Geocoder.search(@post.start.address)  %>
-<%= result.first.address%>
-<p>
-  <b>Departs at </b>
-  <%= @post.startdate %> at <%= @post.time%>
-</p>
-
-<p>
- <strong>This ride goes through the following places</strong><br>
-
-  <% @post.stops.each do |stop|  %>
-  	<%= stop.city %>, <%= stop.state %> <br>
-	<%end%>
-</p>
-
-
-
-
-</div>
 </div>	
 <!------------Note and Contribution Here---Find a plcae for this--->
-<b>Note:<%= @post.note%><br>
-Expected Contribution <%=@post.contribution%></b>
+Note:<%= @post.note%>

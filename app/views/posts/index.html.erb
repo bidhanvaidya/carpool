@@ -31,43 +31,54 @@
 	
 <!- Search Filter---------------------------->
 <div class= "filters">
+	<div class="filterHeader">
+		Filters
+	</div>
+	<div style="margin-top:15px;">
 	<%if params[:is_driving]== 'false'%>
 		<%= link_to "Passenger", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: false), class: 'btn btn-success', :style=>'margin-left:15px;' %>
 		<%= link_to "Driving", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: true), class: 'btn' %>
 		<%= link_to "All", posts_path(start: params[:start],finish: params[:finish],date: params[:date],), class: 'btn'%>
+		
 	<%elsif params[:is_driving]== 'true'%>
 		<%= link_to "Passenger", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: false), class: 'btn', :style=>'margin-left:15px;' %>
 		<%= link_to "Driving", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: true), class: 'btn btn-success' %>
 		<%= link_to "All", posts_path(start: params[:start],finish: params[:finish],date: params[:date],), class: 'btn'%>
+		
 	<%else%>
 		<%= link_to "Passenger", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: false), class: 'btn', :style=>'margin-left:15px;' %>
 		<%= link_to "Driving", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: true), class: 'btn ' %>
 		<%= link_to "All", posts_path(start: params[:start],finish: params[:finish],date: params[:date]), class: 'btn btn-success'%>
 	<%end%>
 	</div>
-
+</div>
 	<table class="table table-striped" style="width:700px; float:left;">
   	<tbody>
 			<!-------- For Show all---------------------->
   		<%if params[:is_driving].nil?%>
-				<% Post.where(id: @searchresults).each do |post| %>
-    		<a>
-						<tr height="80px;">
-        			<td width="80px;">
-								<img src=<%= "http://graph.facebook.com/"+post.user.uid+"/picture&type=square"%> class="postindexProfilepic">
-							</td>
-        			<td>
-								<div style="font-size:20px;margin-top:8px;">
-									<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
+				<%  Post.where(id: @searchresults).each do |post| %>
+
+				<a>
+					<tr height="80px;">
+        		<td width="80px;">
+							<img src=<%= "http://graph.facebook.com/"+post.user.uid+"/picture&type=square"%> class="postindexProfilepic">
+						</td>
+        		<td>
+							<div style="font-size:20px;margin-top:8px;">
+								<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
+							</div>
+							<br>Departs <%= link_to post.time, post_path(post) %>, <%= link_to post.startdate, post_path(post) %>
+						</td>
+        		<td width="80px;">
+							<%if post.is_driving == true%> 
+								<div style="margin-top:7.5px;text-align:center;">
+									<%= image_tag "isDriver.png" %> <br>$<%= post.contribution%> per seat
 								</div>
-								<br><%= link_to post.startdate, post_path(post) %>
-								<br><%= link_to post.time, post_path(post) %>
-							</td>
-        			<td width="80px;">
-								<%if post.is_driving == true%> 
-									<div style="margin-top:7.5px;text-align:center;"><%= image_tag "isDriver.png" %> <br>$<%= post.contribution%> per seat</div>
-								<%else%>
-									<div style="margin-top:7.5px;text-align:center;"><%= image_tag "isPassenger.png" %> <br>is passenger <%end%></div>
+							<%else%>
+								<div style="margin-top:7.5px;text-align:center;">
+									<%= image_tag "isPassenger.png" %> <br>is passenger 
+							<%end%>
+								</div>
 							</td>
       			</tr>
 					</a>
@@ -77,27 +88,30 @@
 <!--For is_driving-->
 
    <% Post.where(id: @searchresults).where(is_driving: params[:is_driving]).each do |post| %>
-      	  		<a>
-						<tr height="80px;">
-        			<td width="80px;">
-								<img src=<%= "http://graph.facebook.com/"+post.user.uid+"/picture&type=square"%> class="postindexProfilepic">
-							</td>
-        			<td>
-								<div style="font-size:20px;margin-top:8px;">
-									<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
-								</div>
-								<br><%= link_to post.startdate, post_path(post) %>
-								<br><%= link_to post.time, post_path(post) %>
-							</td>
-        			<td width="80px;">
-									<%if post.is_driving == true%> 
-										<div style="margin-top:7.5px;text-align:center;"><%= image_tag "isDriver.png" %> <br>$<%= post.contribution%> per seat</div>
-									<%else%>
-										<div style="margin-top:7.5px;text-align:center;"><%= image_tag "isPassenger.png" %> <br>is passenger <%end%></div>
-								</td>
-      			</tr>
-					</a>
-				</tbody> 
+   	<a>
+			<tr height="80px;">
+      	<td width="80px;">
+					<img src=<%= "http://graph.facebook.com/"+post.user.uid+"/picture&type=square"%> class="postindexProfilepic">
+				</td>
+        <td>
+					<div style="font-size:20px;margin-top:8px;">
+						<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
+					</div>
+					<br><%= link_to post.startdate, post_path(post) %>
+					<br><%= link_to post.time, post_path(post) %>
+				</td>
+        <td width="80px;">
+					<%if post.is_driving == true%> 
+						<div style="margin-top:7.5px;text-align:center;">
+							<%= image_tag "isDriver.png" %> <br>$<%= post.contribution%> per seat</div>
+					<%else%>
+						<div style="margin-top:7.5px;text-align:center;"><%= image_tag "isPassenger.png" %> <br>is passenger 
+					<%end%>
+						</div>
+					</td>
+      	</tr>
+			</a>
+		</tbody> 
  			
   	<%end%>
   	<%end%>
