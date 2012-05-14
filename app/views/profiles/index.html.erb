@@ -1,96 +1,52 @@
 <script src="http://d2o0t5hpnwv4c1.cloudfront.net/001_Tabbed/site/scripts/jquery-1.2.3.min.js"></script>
-<script>
-	
+<script>	
 	  // When the document loads do everything inside here ...
-	  $(document).ready(function(){
-		
+	  $(document).ready(function(){	
 		// When a link is clicked
-		$("a.tab").click(function () {
-			
-			
+		$("a.tab").click(function () {			
 			// switch all tabs off
-			$(".active").removeClass("active");
-			
+			$(".active").removeClass("active");			
 			// switch this tab on
-			$(this).addClass("active");
-			
+			$(this).addClass("active");			
 			// slide all content up
-			$(".content").slideUp();
-			
+			$(".content").slideUp();		
 			// slide this content up
 			var content_show = $(this).attr("title");
-			$("#"+content_show).slideDown();
-		  
-		});
-	
+			$("#"+content_show).slideDown();		  
+		});	
 	  });
   </script>
-
-
-
-
-
-
-
-
-
-<div id="midcontainer">
-	
-	
-	
-<br />
-
-<br />
+<div id="midcontainer">	
+<br /><br />
 
 <table border="0">
 	<tr>
-		<td width="230px" rowspan="2">
-			
+		<td width="230px" rowspan="3">	
 			<div class="circle-image-one-fourth" style="margin-left:0px;">
 				<img class="aligncenter" style="width:188px;" src=<%= photo=@page.picture + "&type=large"%>>
 				<table>
 					<tr height="21px;">
-						<td>
-							<%= image_tag "house.png" %>
-						</td>
-						<td>
-							<%=@user.hometown%>
-						</td>
+						<td><%= image_tag "house.png" %></td>
+						<td><%=@user.hometown%></td>
 					</tr>
 					<tr height="21px;">
-						<td>
-							<%= image_tag "crosshair.png" %>
-						</td>
-						<td>
-							<%=@user.current_location%>
-						</td>
+						<td><%= image_tag "crosshair.png" %></td>
+						<td><%=@user.current_location%></td>
 					</tr>
 					<tr height="21px;">
-						<td>
-							<%= image_tag "vcard.png" %>
-						</td>
-						<td style="line-height:21px;">
-							 Member since<%=@user.created_at.strftime("%b %Y")%>
-						</td>
+						<td><%= image_tag "vcard.png" %></td>
+						<td style="line-height:21px;">Member since<%=@user.created_at.strftime("%b %Y")%></td>
 					</tr>
 					<tr height="21px;">
-						<td>
-							<%= image_tag "check_alt.png" %>
-						</td>
-						<td>
-							<a href=<%=@user.link%>>Facebook verified</a></td></tr>
-						<tr>
-							<td>
-								<%= image_tag "heart.png" %>
-							</td>
-							<td>
-								<%=@user.user.friends.count%> friends
-							</td>
-						</tr>
+						<td><%= image_tag "check_alt.png" %></td>
+						<td><a href=<%=@user.link%>>Facebook verified</a></td>
+					</tr>
+					<tr>
+						<td><%= image_tag "heart.png" %></td>
+						<td><%=@user.user.friends.count%> friends</td>
+					</tr>
 				</table>
-
 			</div>
-
 		</td>
 		<td width="700px" height="60px">
 			<div class="profileName"> <%=@user.first_name%> <%=@user.last_name%></div>
@@ -98,7 +54,6 @@
 	</tr>
 	<tr>
 		<td>
-			
 			<table>
 				<tr height="40px;">
 					<td colspan="2">About me</td>
@@ -125,100 +80,104 @@
 					</td>
 				</tr>
 			</table>
-	
 		</td>
 	</tr>
 	<tr>
+		<td rowspan="2">
+			<div><b>My rides</b></div>
+			<table class="table table-striped" style="width:700px;">
+			  <tbody>
+			  <%@user.user.posts.each do |ride|%>
+			  	<a>
+					<tr height="80px;">
+			    	<td width="80px;"><img src=<%=@page.picture%>></td>
+			      <td>
+							<div style="font-size:20px;margin-top:8px;">
+								<%=ride.start.city%>  <%= image_tag "arrow_right.png" %> <%=ride.finish.city%>
+								<br>
+								<div style="font-size:14px; color:#16949c"><%= image_tag "calendar.png" %> Departs at <%= ride.startdate %></div>
+							</div>
+						</td>
+			      <td>
+			 				<%= link_to 'Edit', edit_post_path(ride), :class => 'btn' %>
+							<%= link_to 'Delete', post_path(ride), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+			      </td>
+			    </tr>
+					</a>
+				</tbody>   
+				<% end %>
+			</table>
+		</td>	
+	</tr>
+	<tr>
 		<td style="vertical-align:top;">
-			
-			
-			
-
-
 			<div id="tabbed_box_1" class="tabbed_box">
-			    <div class="tabbed_area">
+				<div class="tabbed_area">
 				<%if current_user == @user.user%>
-			        <ul class="tabs">
-			            <li><a href="#" title="content_1" class="tab active">Inbox</a></li>
-			            <li><a href="#" title="content_2" class="tab" style="margin-left:1px;">Sent</a></li>
-			            <li><a href="#" title="content_3" class="tab" style="margin-left:1px;">Trash</a></li>
-			        </ul>
-			        <div id="content_1" class="content">
-							
-			        	<ul>
-				<% @inbox.each do |receipt|%>
-			          	<li><a data-toggle="modal" href=#<%=receipt.hash%> ><%= receipt.message.subject%><br>
-									          <div class="modal hide fade" id=<%=receipt.hash%>>
-									            <div class="modal-header">
-									              <a class="close" data-dismiss="modal">×</a>
-									              <h3><%= receipt.message.subject%></h3>
-									            </div>
-									            <div class="modal-body">
-									              <p>
-									                <%=receipt.message.body%></p>
-
-									                 <%=form_tag reply_message_user_profiles_path(@user.user), method: :get do %>
-									                <%= hidden_field_tag 'receipt', receipt.id%> 
-
-									            </div>
-									            <div class = "modal-header">
-									            <h3>Reply</h3>
-									            </div>
-									            <div class = "modal-body">
-									         <%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br> </p>
-
-
-
-									            </div>
-									            <div class="modal-footer">
-									              <%= link_to 'Move To Trash', trash_user_profiles_path(@user.user, :receipt=> receipt), :method => 'get', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
-									              <a href="#" class="btn", data-dismiss="modal">Close</a>
-									              <%= submit_tag "Reply", :name => nil, class: "btn btn-primary" %>
-									               <%end%>
-									             </div>
-
-									          </div>
-
-									</a></li><%end%>
-						</ul>
-			        </div>
-			        <div id="content_2" class="content">
-			        	<ul>
+			  	<ul class="tabs">
+			    	<li><a href="#" title="content_1" class="tab active">Inbox</a></li>
+			      <li><a href="#" title="content_2" class="tab" style="margin-left:1px;">Sent</a></li>
+			      <li><a href="#" title="content_3" class="tab" style="margin-left:1px;">Trash</a></li>
+			    </ul>
+			  <div id="content_1" class="content">
+					<ul>
+					<% @inbox.each do |receipt|%>
+			    	<li><a data-toggle="modal" href=#<%=receipt.hash%> ><%= receipt.message.subject%><br>
+								<div class="modal hide fade" id=<%=receipt.hash%>>
+									<div class="modal-header">
+										<a class="close" data-dismiss="modal">×</a>
+									  <h3><%= receipt.message.subject%></h3>
+									</div>
+								<div class="modal-body">
+									<p><%=receipt.message.body%></p>
+					<%=form_tag reply_message_user_profiles_path(@user.user), method: :get do %>
+									<%= hidden_field_tag 'receipt', receipt.id%> 
+								</div>
+								<div class = "modal-header">
+									<h3>Reply</h3>
+								</div>
+								<div class = "modal-body">
+									<%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br> </p>
+								</div>
+								<div class="modal-footer">
+									<%= link_to 'Move To Trash', trash_user_profiles_path(@user.user, :receipt=> receipt), :method => 'get', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
+									<a href="#" class="btn", data-dismiss="modal">Close</a>
+									<%= submit_tag "Reply", :name => nil, class: "btn btn-primary" %>
+					<%end%>
+									</div>
+								</div>
+							</a></li>
+					<%end%>
+					</ul>
+			   </div>
+			   <div id="content_2" class="content">
+			   <ul>
 				<% @sentbox.each do |receipt|%>
-			          	<li>
-									<a data-toggle="modal" href=#<%=receipt.hash%> ><%= receipt.message.subject %><br>
-									          <div class="modal hide fade" id=<%=receipt.hash%>>
-									            <div class="modal-header">
-									              <a class="close" data-dismiss="modal">×</a>
-									              <h3><%= receipt.message.subject%></h3>
-									            </div>
-									            <div class="modal-body">
-									              <p>
-									                <%=receipt.message.body%></p>
-
-									            </div>
-									            <div class="modal-footer">
-									              <a href="#" class="btn", data-dismiss="modal">Close</a>
-
-									             </div>
-
-									          </div></a></li><%end%>
-						</ul>
-			        </div>
-			        <div id="content_3" class="content">
-			        	<ul>
-									<% @trash.each do |receipt|%>
-									
-			          	<li><a href=""><%= receipt.message.subject%></a></li><%end%>
-			          	<li><a href="">message<small> text</small></a></li>
-						</ul>
-			        </div>
-
-			    </div>
-		
-			
-			
-			
+			      <li>
+							<a data-toggle="modal" href=#<%=receipt.hash%> ><%= receipt.message.subject %><br>
+								<div class="modal hide fade" id=<%=receipt.hash%>>
+									<div class="modal-header">
+										<a class="close" data-dismiss="modal">×</a>
+									  <h3><%= receipt.message.subject%></h3>
+									</div>
+								<div class="modal-body">
+								<p><%=receipt.message.body%></p>
+							</div>
+							<div class="modal-footer">
+								<a href="#" class="btn", data-dismiss="modal">Close</a>
+							</div>
+						</div></a></li>
+				<%end%>
+					</ul>
+			   </div>
+			   <div id="content_3" class="content">
+			     <ul>
+				<% @trash.each do |receipt|%>
+					<li><a href=""><%= receipt.message.subject%></a></li>
+				<%end%>
+					</ul>
+			  </div>
+			</div>			
 <%else%>
 <a data-toggle="modal" href=#send_message class="btn btn-primary">Send a message</a><br>
 <div class="modal hide fade" id="send_message">
@@ -236,72 +195,14 @@
           <%= submit_tag "Send", :name => nil, class: "btn" %>
         </div>
       <%end%>
- </div>
+ 		</div>
 
-</div>
+	</div>
 <%end%>			
-			
-			
-		</td>
-		<td>
-			<div><b>My rides</b></div>
-
-			<table class="table table-striped" style="width:700px;">
-			  	<tbody>
-			  		<%@user.user.posts.each do |ride|%>
-			    		<a>
-								<tr height="80px;">
-			      			<td width="80px;">
-										<!- EDIT this with correct facebook profile pictures from ride's poster's id->
-
-
-										<img src=<%=@page.picture%>>
-									</td>
-			      			<td>
-										<div style="font-size:20px;margin-top:8px;">
-											<%=ride.start.city%>  <%= image_tag "arrow_right.png" %> <%=ride.finish.city%>
-											<br><div style="font-size:14px; color:#16949c"><%= image_tag "calendar.png" %> Departs at <%= ride.startdate %></div>
-										</div>
-									</td>
-			      			<td>
-			 							<%= link_to 'Edit', edit_post_path(ride), :class => 'btn' %>
-										<%= link_to 'Delete', post_path(ride), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
-			      			</td>
-			    			</tr>
-							</a>
-						</tbody>   
-					<% end %>
-			</table>
 		</td>
 	</tr>
-
 </table>
-
-
-
-<br>
-<br>
-<br>
-<p>content below are for references,will delete later.</p>
-
-<%=@user.first_name%><br>
-<%=@user.last_name%><br>
-<%=@user.gender%><br>
-<%=@user.link%><br>
-<%=@user.verified%><br>
-<%=@user.date_of_birth%><br>
 </div>
-
-
-
-
-
-
-
-
-
-
-
 </div>
 
 
