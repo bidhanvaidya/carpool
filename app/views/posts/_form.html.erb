@@ -1,122 +1,166 @@
+<script type="text/javascript">
+function showonlyone(thechosenone) {
+      var newboxes = document.getElementsByTagName("div");
+            for(var x=0; x<newboxes.length; x++) {
+                  name = newboxes[x].getAttribute("name");
+                  if (name == 'newboxes') {
+                        if (newboxes[x].id == thechosenone) {
+                        newboxes[x].style.display = 'block';
+                  }
+                  else {
+                        newboxes[x].style.display = 'none';
+                  }
+            }
+      }
+}</script>
 
 <%= form_for @post, :html => { :class => 'form-horizontal' } do |f| %>
+
   <fieldset>
-    <legend>Post a <%= controller.action_name.capitalize %> ride</legend>
-		
-		<div class ="row">
-    <div class = "span4">
-				<div class="control-group">
-				 		 <%= f.label :date, :class => 'control-label' %>
+	<legend>Post a <%= controller.action_name.capitalize %> ride(MORE WORK TO BE DONE.)</legend>
+<div id="midcontainer" style="text-align:center;">
+
+	<table style="width:754px;margin-left:auto;margin-right:auto;margin-top:50px;">
+	   <tr>
+	      <td>
+	         <div style="border: 1px solid blue; background-color: #99CCFF; padding: 5px;">
+	            <a id="myHeader1" href="javascript:showonlyone('newboxes1');" >WHEN</a>
+	         </div>   
+	      </td>
+	      <td>
+	         <div style="border: 1px solid blue; background-color: #99CCFF; padding: 5px;">
+	            <a id="myHeader2" href="javascript:showonlyone('newboxes2');" >WHERE</a>
+	         </div>
+	         
+	      </td>
+	      <td>
+	         <div style="border: 1px solid blue; background-color: #99CCFF; padding: 5px;">
+	            <a id="myHeader3" href="javascript:showonlyone('newboxes3');" >EXTRA</a>
+	         </div>
+	         
+	      </td>
+	   </tr>
+		<tr>
+			<td colspan="3">
+				<!-      div no.1     -!>
+				<div name="newboxes" id="newboxes1" style="border: 1px solid #DDD; display: block;padding: 5px;">
+					<!-date-!>
+					<div class="control-group">
+						<%= f.label :date, :class => 'control-label' %>
 						<div class="controls">
-						  <%= f.datepicker :startdate, :dateFormat => "yy-mm-dd" %>
-						  
+							<%= f.datepicker :startdate, :dateFormat => "yy-mm-dd" %>
 						</div>
 					</div>
-		</div>
-		<div class = "span4">
-					<div class = "control-group">
-					<%= f.label :time, :class => 'control-label' %> 
-					<div class = "controls">
-					<%= f.select :time, options_for_select([
-					['Anytime','Anytime'],
-					['Early','Early'],					['Morning','Morning'],
-					['Evening','Evening'],					['Night','Night'],
-					['1 am','0100'],					['2 am','0200'],
-					['3 am','0300'],					['4 am','0400'],
-					['5 am','0500'],					['6 am','0600'],
-					['7 am','0700'],					['8 am','0800'],
-					['9 am','0900'],					['10 am','1000'],
-					['11 am','1100'],					['12 pm','1200'],
-					['1 pm','1300'],					['2 pm','1400'],
-					['3 pm','1500'],					['4 pm','1600'],
-					['5 pm','1700'],					['6 pm','1800'],
-					['7 pm','1900'],					['8 pm','2000'],
-					['9 pm','2100'],					['10 pm','2200'],
-					['11 pm','2300'],					['12 am','2400']			]) %>
+
+					<!-time-!>
+						<div class = "control-group">
+						<%= f.label :time, :class => 'control-label' %> 
+							<div class = "controls">
+						<%= f.select :time, options_for_select([
+						['Anytime','Anytime'],
+						['Early','Early'],					['Morning','Morning'],
+						['Evening','Evening'],					['Night','Night'],
+						['1 am','0100'],					['2 am','0200'],
+						['3 am','0300'],					['4 am','0400'],
+						['5 am','0500'],					['6 am','0600'],
+						['7 am','0700'],					['8 am','0800'],
+						['9 am','0900'],					['10 am','1000'],
+						['11 am','1100'],					['12 pm','1200'],
+						['1 pm','1300'],					['2 pm','1400'],
+						['3 pm','1500'],					['4 pm','1600'],
+						['5 pm','1700'],					['6 pm','1800'],
+						['7 pm','1900'],					['8 pm','2000'],
+						['9 pm','2100'],					['10 pm','2200'],
+						['11 pm','2300'],					['12 am','2400']			]) %>
+						</div>
 					</div>
+				</div>
+				<!-      div no.2     -!>
+				<div name="newboxes" id="newboxes2" style="border: 1px solid black; display: none;padding: 5px;">
+					<!-is driver or passenger-!>
+			 		<div class = "control-group">
+			 			<div class = "row">
+			 				<div class = "span2" style="width:140px;">
+			 					<%= f.label :are_You, :class => 'control-label' %> 
+			 				</div>
+			 				<div class = "controls">
+			 					<div class = "span2edit" id="selectDriver">
+			 						<p style="margin-top:70px;">Driving <%=f.radio_button :is_driving, true%></p>
+			 					</div>
+			 					<div class = "span2edit" id="selectPassenger">
+			 						<p style="margin-top:70px;">Passenger <%=f.radio_button :is_driving, false%></p>
+			 					</div>
+			 				</div>
+			 			</div>
+			    	<%= f.fields_for :start do |builder| %>
+			        <%= render "start_fields", :f => builder %>
+			    	<% end %>
+
+			    	<%= f.fields_for :finish do |builder| %>
+			      	<%= render "finish_fields", :f => builder %>
+			    	<% end %>
+
+						
+			    </div>
+			
+
+				</div>
+				<!-      div no.3     -!>
+				<div name="newboxes" id="newboxes3" style="border: 1px solid black; display: none;padding: 5px;">
+					<!-add stops popup window-!>
+			    <div class="control-group">
+						<!-add stops-!>
+			    	<%= f.fields_for :stops do |builder| %>
+			      	<%= render "stop_fields", :f => builder %>
+			    	<% end %> 
+			    	<div class = "controls">       
+			     		<a class="btn btn-info" data-toggle="modal" href="#myModal" >Add stop</a>
+						</div>         
+			    </div>         
+					<div class="modal hide" id="myModal" style="display: none; " >
+						<div class="modal-header">
+			    		<a class="close" data-dismiss="modal">×</a>
+			    		<h3>Stops</h3>
+			  		</div>
+			  		<div class="modal-body">
+			    		<em>Click on add stop to list all the places your journey will go through. this will help us improve the search. 
+							<br><strong> Press enter once you are done.</strong></em>
+			   			<div>
+			    			<%= link_to_add_association 'Add Stop', f, :stops , class: 'btn'%>
+			   			</div>
+			     	</div>
 					</div>
-		</div>
-		</div>
- 		<div class = "control-group">
- 		<div class = "row">
- 				<div class = "span2" style="width:140px;">
- 		<%= f.label :are_You, :class => 'control-label' %> 
- 		
- 		</div>
- 			<div class = "controls">
- 				
- 				<div class = "span2edit" id="selectDriver">
- 					<p style="margin-top:70px;">Driving <%=f.radio_button :is_driving, true%></p>
- 				</div>
- 				<div class = "span2edit" id="selectPassenger">
- 					<p style="margin-top:70px;">Passenger <%=f.radio_button :is_driving, false%></p>
- 				</div>
- 				</div>
- 		</div>
-    <%= f.fields_for :start do |builder| %>
-        <%= render "start_fields", :f => builder %>
-    <% end %>
-   
-    <%= f.fields_for :finish do |builder| %>
-      <%= render "finish_fields", :f => builder %>
-    <% end %>
+					<!-notes-!>
+					<div class="control-group">
+						<%= f.label :note, "Notes", :class => 'control-label'%>
+						<div class="controls">
+							<%= f.text_area :note, class: 'input text-large', rows: '5', cols: '35' %>
+						</div>
+					</div>
 
-    <%= f.fields_for :stops do |builder| %>
-      <%= render "stop_fields", :f => builder %>
-    <% end %>
-    
-		
-     <div class="control-group">   
-     <div class = "controls">       
-     <a class="btn btn-info" data-toggle="modal" href="#myModal" >Add stop</a>
-</div>         
-    
-</div>         
-<div class="modal hide" id="myModal" style="display: none; " >
-       
-
-
-
-<div class="modal-header">
-    <a class="close" data-dismiss="modal">×</a>
-    <h3>Stops</h3>
-  </div>
-  <div class="modal-body">
-    
-    <em>Click on add stop to list all the places your journey will go through. this will help us improve the search. <strong> Press enter once you are done.</strong></em>
-    
-  
- 
-    <div>
-    <%= link_to_add_association 'Add Stop', f, :stops , class: 'btn'%>
-   </div>
-   
-    
-    
-  </div>
-
-</div>
-<div class="control-group">
-			<%= f.label :note, "Notes", :class => 'control-label'%>
-			<div class="controls">
-				<%= f.text_area :note, class: 'input text-large', rows: '5', cols: '35' %>
-			</div>
-		</div>
-		<div class="control-group">
-			<%= f.label :contribution, "Contribution", :class => 'control-label'%>
-			<div class="controls">
-			<div class="input-prepend input-append">
-							<span class="add-on">$</span>
-                <%= f.text_field :contribution, class: "span1" %>
-                <span class="add-on">.00</span>
-              </div>
-				
-			</div>
-		</div>
-    <div class="form-actions">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel', posts_path, :class => 'btn' %>
-    </div>
-  
+					<!-contribution-!>
+					<div class="control-group">
+						<%= f.label :contribution, "Contribution", :class => 'control-label'%>
+						<div class="controls">
+							<div class="input-prepend input-append">
+								<span class="add-on">$</span>
+			          <%= f.text_field :contribution, class: "span1" %>
+			          <span class="add-on">.00</span>
+			        </div>	
+						</div>
+					</div>
+					<!-actions submit cancel-!>
+			    <div class="form-actions">
+			      <%= f.submit nil, :class => 'btn btn-primary' %>
+			      <%= link_to 'Cancel', posts_path, :class => 'btn' %>
+			    </div>
+				</div>
+			</td>
+		</tr>
+	</table>
+	
+	
+	
+</div>	
   </fieldset>
 <% end %>
