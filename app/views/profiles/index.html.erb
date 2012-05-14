@@ -1,8 +1,48 @@
+<script src="http://d2o0t5hpnwv4c1.cloudfront.net/001_Tabbed/site/scripts/jquery-1.2.3.min.js"></script>
+<script>
+	
+	  // When the document loads do everything inside here ...
+	  $(document).ready(function(){
+		
+		// When a link is clicked
+		$("a.tab").click(function () {
+			
+			
+			// switch all tabs off
+			$(".active").removeClass("active");
+			
+			// switch this tab on
+			$(this).addClass("active");
+			
+			// slide all content up
+			$(".content").slideUp();
+			
+			// slide this content up
+			var content_show = $(this).attr("title");
+			$("#"+content_show).slideDown();
+		  
+		});
+	
+	  });
+  </script>
+
+
+
+
+
+
+
+
 
 <div id="midcontainer">
+	
+	
+	
 <br />
+
 <br />
-<table border="1">
+
+<table border="0">
 	<tr>
 		<td width="230px" rowspan="2">
 			
@@ -89,7 +129,101 @@
 		</td>
 	</tr>
 	<tr>
-		<td>test content</td>
+		<td>
+			
+			
+			
+
+<%if current_user == @user.user%>
+<h3>test, more work to be done.</h3>
+			<div id="tabbed_box_1" class="tabbed_box">
+			    <div class="tabbed_area">
+			        <ul class="tabs">
+			            <li><a href="#" title="content_1" class="tab active">Inbox</a></li>
+			            <li><a href="#" title="content_2" class="tab">Sent</a></li>
+			            <li><a href="#" title="content_3" class="tab">Trash</a></li>
+			        </ul>
+			        <div id="content_1" class="content">
+							
+			        	<ul>
+				<% @inbox.each do |receipt|%>
+			          	<li><a href=""><%= receipt.message.subject%><a data-toggle="modal" href=#<%=receipt.hash%> class="btn btn-primary">show</a><br>
+									          <div class="modal hide fade" id=<%=receipt.hash%>>
+									            <div class="modal-header">
+									              <a class="close" data-dismiss="modal">×</a>
+									              <h3><%= receipt.message.subject%></h3>
+									            </div>
+									            <div class="modal-body">
+									              <p>
+									                <%=receipt.message.body%></p>
+
+									                 <%=form_tag reply_message_user_profiles_path(@user.user), method: :get do %>
+									                <%= hidden_field_tag 'receipt', receipt.id%> 
+
+									            </div>
+									            <div class = "modal-header">
+									            <h3>Reply</h3>
+									            </div>
+									            <div class = "modal-body">
+									         <%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br> </p>
+
+
+
+									            </div>
+									            <div class="modal-footer">
+									              <%= link_to 'Move To Trash', trash_user_profiles_path(@user.user, :receipt=> receipt), :method => 'get', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
+									              <a href="#" class="btn", data-dismiss="modal">Close</a>
+									              <%= submit_tag "Reply", :name => nil, class: "btn btn-primary" %>
+									               <%end%>
+									             </div>
+
+									          </div>
+
+									</a></li><%end%>
+						</ul>
+			        </div>
+			        <div id="content_2" class="content">
+			        	<ul>
+				<% @sentbox.each do |receipt|%>
+			          	<li><a href=""><%= receipt.message.subject %>
+									<a data-toggle="modal" href=#<%=receipt.hash%> class="btn btn-primary">show</a><br>
+									          <div class="modal hide fade" id=<%=receipt.hash%>>
+									            <div class="modal-header">
+									              <a class="close" data-dismiss="modal">×</a>
+									              <h3><%= receipt.message.subject%></h3>
+									            </div>
+									            <div class="modal-body">
+									              <p>
+									                <%=receipt.message.body%></p>
+
+									            </div>
+									            <div class="modal-footer">
+									              <a href="#" class="btn", data-dismiss="modal">Close</a>
+
+									             </div>
+
+									          </div></a></li><%end%>
+			          	<li><a href="">message<small> text</small></a></li>
+						</ul>
+			        </div>
+			        <div id="content_3" class="content">
+			        	<ul>
+									<% @trash.each do |receipt|%>
+									
+			          	<li><a href=""><%= receipt.message.subject%></a></li><%end%>
+			          	<li><a href="">message<small> text</small></a></li>
+						</ul>
+			        </div>
+
+			    </div>
+<%end%>			
+			
+			
+			
+			
+			
+			
+		</td>
 		<td>
 			<div><b>My rides</b></div>
 
@@ -126,6 +260,8 @@
 	
 	
 </table>
+
+
 
 <%if current_user == @user.user%>
 
@@ -238,4 +374,25 @@
 
 <br>
 
+
+
+
+
 </div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
