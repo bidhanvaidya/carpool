@@ -44,6 +44,9 @@ GEM
     arel (2.2.3)
     attr_required (0.0.5)
     bcrypt-ruby (3.0.1)
+    best_in_place (1.1.0)
+      jquery-rails
+      rails (~> 3.1)
     builder (3.0.0)
     carrierwave (0.5.8)
       activesupport (~> 3.0)
@@ -167,6 +170,8 @@ GEM
       json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rest_in_place (2.0.1)
+      rails (>= 3.1)
     rubyzip (0.9.7)
     sass (3.1.15)
     sass-rails (3.1.6)
@@ -196,6 +201,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  best_in_place
   cocoon
   coffee-rails (~> 3.1.0)
   execjs
@@ -211,6 +217,7 @@ DEPENDENCIES
   omniauth-facebook
   pg
   rails (= 3.1.0)
+  rest_in_place
   sass-rails (~> 3.1.0)
   therubyracer
   turn

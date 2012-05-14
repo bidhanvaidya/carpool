@@ -1,0 +1,117 @@
+
+<%= csrf_meta_tags %>
+
+	
+<div id="midcontainer">	
+<br /><br />
+
+<table border="0">
+	<tr>
+		<td width="230px" rowspan="3">	
+			<div class="circle-image-one-fourth" style="margin-left:0px;">
+				<img class="aligncenter" style="width:188px;" src=<%= photo=@page.picture + "&type=large"%>>
+				<table>
+					<tr height="21px;">
+						<td><%= image_tag "house.png" %></td>
+						<td><%= best_in_place @profile,:hometown, :path => user_profile_path%></td>
+					</tr>
+					<tr height="21px;">
+						<td><%= image_tag "crosshair.png" %></td>
+						<td><%=@profile.current_location%></td>
+					</tr>
+					<tr height="21px;">
+						<td><%= image_tag "vcard.png" %></td>
+						<td style="line-height:21px;">Member since<%=@profile.created_at.strftime("%b %Y")%></td>
+					</tr>
+					<tr height="21px;">
+						<td><%= image_tag "check_alt.png" %></td>
+						<td><a href=<%=@profile.link%>>Facebook verified</a></td>
+					</tr>
+					<tr>
+						<td><%= image_tag "heart.png" %></td>
+						<td><%=@profile.user.friends.count%> friends</td>
+					</tr>
+				</table>
+			</div>
+		</td>
+		<td width="700px" height="60px">
+			<div class="profileName"> <%=@profile.first_name%> <%=@profile.last_name%></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table>
+				<tr height="40px;">
+					<td colspan="2">About me</td>
+				</tr>
+				<tr height="40px;">
+					<td width="100px;">Music</td> 
+					<td>
+						<%=best_in_place @profile, :music, :path => user_profile_path, type: :textarea,:nil => "Click me to add content!",:activator => "#Music"%>
+					</td>
+					<td>
+					<a id="Music" href="#">(edit)</a>
+					</td>
+				</tr>
+				<tr height="40px;">
+					<td width="100px;">Interests</td>
+					<td>
+						<%=best_in_place @profile, :interest, :path => user_profile_path, type: :textarea, :nil => "Click me to add content!",:activator => "#Interest"%>
+					</td>
+						<td>
+					<a id="Interest" href="#">(edit)</a>
+					</td>
+				</tr>
+				<tr height="40px;">
+			
+					<td>Work</td>
+					<td>	<%=best_in_place @profile, :work, :path => user_profile_path, type: :textarea,:nil => "Click me to add content!",:activator => "#Work"%>
+					</td>
+						<td>
+					<a id="Work" href="#">(edit)</a>
+					</td>
+				</tr>
+				<tr height="40px;">
+			
+					<td>Home Town</td>
+					<td>	<%=best_in_place @profile, :hometown, :path => user_profile_path,:nil => "Click me to add content!",:activator => "#Home"%>
+					</td><td>
+					<a id="Home" href="#">(edit)</a>
+					</td>
+				</tr>
+					<tr height="40px;">
+			
+					<td>Current Location</td>
+					<td>	<%=best_in_place @profile, :work, :path => user_profile_path,:nil => "Click me to add content!",:activator => "#Curr"%>
+					</td>
+					<td>
+					<a id="Curr" href="#">(edit)</a>
+					</td>
+				</tr>
+					<tr height="40px;">
+					<td width="100px;">Prefer Smoking?</td>
+					<td>
+						<%= best_in_place @profile, :smoking, :path => user_profile_path, type: :checkbox, collection: %w[No Yes],:activator => "#smoking"%>
+					</td>
+					<td>
+					<a id="smoking" href="#">(Change)</a>
+					</td>
+				</tr>
+				<tr height="40px;">
+					<td>Education</td>
+					<td>
+							<% @profile.user.educations.each do |education|%>
+							<%=education.name%>
+							<%=education.year %><br>
+							<%end%>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+<%user=FbGraph::User.me(current_user.token).fetch%>
+<%=@page.permissions%>
+<%= user.birthday%>
+
+
+

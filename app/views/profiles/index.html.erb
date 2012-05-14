@@ -1,3 +1,4 @@
+<%= csrf_meta_tags %>
 <script src="http://d2o0t5hpnwv4c1.cloudfront.net/001_Tabbed/site/scripts/jquery-1.2.3.min.js"></script>
 <script>	
 	  // When the document loads do everything inside here ...
@@ -57,18 +58,22 @@
 			<table>
 				<tr height="40px;">
 					<td colspan="2">About me</td>
+					<%if @user.user==current_user%>
+					<td align =right><%=link_to "Edit Profile", user_profile_path(@user.user,@user ), class: "btn btn-success"%></td>
+					<%end%>
 				</tr>
 				<tr height="40px;">
 					<td width="100px;">Music</td>
-					<td>data</td>
+					<td><%=@user.music%></td>
 				</tr>
 				<tr height="40px;">
 					<td>Interests</td>
-					<td>data</td>
+					<td><%=@user.interest%></td>
 				</tr>
 				<tr height="40px;">
+			
 					<td>Work</td>
-					<td>data</td>
+					<td><%=@user.work%></td>
 				</tr>
 				<tr height="40px;">
 					<td>Education</td>
@@ -204,8 +209,10 @@
 </table>
 </div>
 </div>
-
-
+<%=best_in_place @profile, :interest, :path => user_profiles_path,:nil => "Click me to add content!"%>
+<%user=FbGraph::User.me(current_user.token).fetch%>
+<%=@page.permissions%>
+<%= user.birthday%>
 
 
 

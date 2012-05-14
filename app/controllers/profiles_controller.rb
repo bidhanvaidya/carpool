@@ -1,12 +1,15 @@
 class ProfilesController < ApplicationController
 def index
   @user= User.find(params[:user_id]).profile
-  @page = FbGraph::Page.fetch(@user.user.uid)
+ @profile= User.find(params[:user_id]).profile
+  @page = FbGraph::User.me(@user.user.token).fetch
   if current_user == @user.user
     @inbox=@user.receipts.inbox.where(trashed: false)
     @sentbox=  @user.receipts.sentbox.where(trashed: false) 
     @trash= @user.receipts.trash
   end
+  
+   
 end
 def send_message
    body=params[:body]
@@ -26,4 +29,37 @@ body=params[:body]
 receipt.move_to_trash
  redirect_to user_profiles_path(current_user)
 end
+ 
+def show
+@profile= User.find(params[:user_id]).profile
+ @page = FbGraph::User.me(@profile.user.token).fetch
+  @user= User.find(params[:user_id]).profile
+ if current_user == @user.user
+    @inbox=@user.receipts.inbox.where(trashed: false)
+    @sentbox=  @user.receipts.sentbox.where(trashed: false) 
+    @trash= @user.receipts.trash
+  end
+respond_to do |type|
+      type.html
+      type.json {render :json => @profile}
+    end
+end
+  def update
+    
+  @profile= User.find(params[:user_id]).profile
+    if @profile.update_attributes!(params[:profile])
+      respond_to do |format|
+       
+        format.json { render :json => @profile }
+      end
+    else
+      respond_to do |format|
+        
+        format.json { render :nothing =>  true }
+      end
+    end
+     def edit
+    @profile= User.find(params[:user_id]).profile
+  end
+  end
 end
