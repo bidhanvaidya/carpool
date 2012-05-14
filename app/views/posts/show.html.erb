@@ -77,7 +77,7 @@
 					<%end%>
 				</div>
 				<div class="circle-image-one-fourth">
-					<img class="aligncenter" src=<%= "http://graph.facebook.com/"+@post.user.uid+"/picture&type=large"%>>
+					<img class="aligncenter" style="width:188px;" src=<%= "http://graph.facebook.com/"+@post.user.uid+"/picture&type=large"%>>
 					<div style="margin-top:17px;">		
 				  <%= @post.user.name %> is <%if @post.is_driving == true%>driving.<%else%>a passenger.<%end%><br>
 				

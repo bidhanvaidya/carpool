@@ -36,7 +36,7 @@
 	<div class="frontpageText" style="color:#333;padding-left:0px;padding-top:25px;padding-bottom:25px;">Latest Rides</div>
 	<table class="table table-striped" style="width:550px; float:left;">
 		<tbody>
-	<% Post.last(4).each do |post| %>
+	<% Post.last(4).reverse.each do |post| %>
 		<a>
 			<tr height="80px;">
     		<td width="80px;">
