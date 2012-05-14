@@ -78,7 +78,7 @@
 							<%= image_tag "check_alt.png" %>
 						</td>
 						<td>
-							Facebook verified</td></tr>
+							<a href=<%=@user.link%>>Facebook verified</a></td></tr>
 						<tr>
 							<td>
 								<%= image_tag "heart.png" %>
@@ -274,10 +274,7 @@
 			</table>
 		</td>
 	</tr>
-	
-	
-	
-	
+
 </table>
 
 
@@ -293,9 +290,6 @@
 <%=@user.link%><br>
 <%=@user.verified%><br>
 <%=@user.date_of_birth%><br>
-<%=@user.current_location%><br>
-<%=@user.hometown%><br>
-
 </div>
 
 
