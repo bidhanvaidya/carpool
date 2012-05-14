@@ -134,9 +134,10 @@
 			
 			
 
-<%if current_user == @user.user%>
+
 			<div id="tabbed_box_1" class="tabbed_box">
 			    <div class="tabbed_area">
+				<%if current_user == @user.user%>
 			        <ul class="tabs">
 			            <li><a href="#" title="content_1" class="tab active">Inbox</a></li>
 			            <li><a href="#" title="content_2" class="tab" style="margin-left:1px;">Sent</a></li>
@@ -146,7 +147,7 @@
 							
 			        	<ul>
 				<% @inbox.each do |receipt|%>
-			          	<li><a href=""><%= receipt.message.subject%><a data-toggle="modal" href=#<%=receipt.hash%> class="btn btn-primary">show</a><br>
+			          	<li><a data-toggle="modal" href=#<%=receipt.hash%> ><%= receipt.message.subject%><br>
 									          <div class="modal hide fade" id=<%=receipt.hash%>>
 									            <div class="modal-header">
 									              <a class="close" data-dismiss="modal">×</a>
@@ -184,8 +185,8 @@
 			        <div id="content_2" class="content">
 			        	<ul>
 				<% @sentbox.each do |receipt|%>
-			          	<li><a href=""><%= receipt.message.subject %>
-									<a data-toggle="modal" href=#<%=receipt.hash%> class="btn btn-primary">show</a><br>
+			          	<li>
+									<a data-toggle="modal" href=#<%=receipt.hash%> ><%= receipt.message.subject %><br>
 									          <div class="modal hide fade" id=<%=receipt.hash%>>
 									            <div class="modal-header">
 									              <a class="close" data-dismiss="modal">×</a>
@@ -202,7 +203,6 @@
 									             </div>
 
 									          </div></a></li><%end%>
-			          	<li><a href="">message<small> text</small></a></li>
 						</ul>
 			        </div>
 			        <div id="content_3" class="content">
@@ -215,11 +215,31 @@
 			        </div>
 
 			    </div>
+		
+			
+			
+			
+<%else%>
+<a data-toggle="modal" href=#send_message class="btn btn-primary">Send a message</a><br>
+<div class="modal hide fade" id="send_message">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+     <h3>Send Message</h3>
+  </div>
+  <div class="modal-body">
+    <p><%=form_tag send_message_user_profiles_path(@user.user), method: :get do %>
+
+         <%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br> </p>
+  
+        <div class="modal-footer">
+          <a href="#" class="btn", data-dismiss="modal">Close</a>
+          <%= submit_tag "Send", :name => nil, class: "btn" %>
+        </div>
+      <%end%>
+ </div>
+
+</div>
 <%end%>			
-			
-			
-			
-			
 			
 			
 		</td>
@@ -262,105 +282,10 @@
 
 
 
-<%if current_user == @user.user%>
-
-<b>Inbox</b><br>
-<% @inbox.each do |receipt|%>
-<%= receipt.message.subject%><a data-toggle="modal" href=#<%=receipt.hash%> class="btn btn-primary">show</a><br>
-          <div class="modal hide fade" id=<%=receipt.hash%>>
-            <div class="modal-header">
-              <a class="close" data-dismiss="modal">×</a>
-              <h3><%= receipt.message.subject%></h3>
-            </div>
-            <div class="modal-body">
-              <p>
-                <%=receipt.message.body%></p>
-
-                 <%=form_tag reply_message_user_profiles_path(@user.user), method: :get do %>
-                <%= hidden_field_tag 'receipt', receipt.id%> 
-
-            </div>
-            <div class = "modal-header">
-            <h3>Reply</h3>
-            </div>
-            <div class = "modal-body">
-         <%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br> </p>
-    
-        
-     
-            </div>
-            <div class="modal-footer">
-              <%= link_to 'Move To Trash', trash_user_profiles_path(@user.user, :receipt=> receipt), :method => 'get', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
-              <a href="#" class="btn", data-dismiss="modal">Close</a>
-              <%= submit_tag "Reply", :name => nil, class: "btn btn-primary" %>
-               <%end%>
-             </div>
-
-          </div>
-    
-<%end%><br>
-<b>Sent Item</b><br>
-<% @sentbox.each do |receipt|%>
-<%= receipt.message.subject %>
-<a data-toggle="modal" href=#<%=receipt.hash%> class="btn btn-primary">show</a><br>
-          <div class="modal hide fade" id=<%=receipt.hash%>>
-            <div class="modal-header">
-              <a class="close" data-dismiss="modal">×</a>
-              <h3><%= receipt.message.subject%></h3>
-            </div>
-            <div class="modal-body">
-              <p>
-                <%=receipt.message.body%></p>
-
-            </div>
-            <div class="modal-footer">
-              <a href="#" class="btn", data-dismiss="modal">Close</a>
-           
-             </div>
-
-          </div>
-<%end%><br>
-
-<br>
-<strong>Trash</strong><br>
-
-<% @trash.each do |receipt|%>
-<%= receipt.message.subject%><br>
-<%end%>
-
-
-
-<%else%>
-<a data-toggle="modal" href=#send_message class="btn btn-primary">show</a><br>
-<div class="modal hide fade" id="send_message">
-  <div class="modal-header">
-    <a class="close" data-dismiss="modal">×</a>
-     <h3>Send Message</h3>
-  </div>
-  <div class="modal-body">
-    <p><%=form_tag send_message_user_profiles_path(@user.user), method: :get do %>
-
-         <%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br> </p>
-  
-        <div class="modal-footer">
-          <a href="#" class="btn", data-dismiss="modal">Close</a>
-          <%= submit_tag "Send", :name => nil, class: "btn" %>
-        </div>
-      <%end%>
- </div>
-
-</div>
-<%end%>
-
-
-
-
 <br>
 <br>
 <br>
 <p>content below are for references,will delete later.</p>
-
-
 
 <%=@user.first_name%><br>
 <%=@user.last_name%><br>
@@ -370,12 +295,6 @@
 <%=@user.date_of_birth%><br>
 <%=@user.current_location%><br>
 <%=@user.hometown%><br>
-
-<br>
-
-
-
-
 
 </div>
 
