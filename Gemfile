@@ -29,7 +29,7 @@ gem 'fb_graph'
 gem 'jquery_datepicker'
 gem "cocoon"
 gem 'best_in_place'
-
+gem 'koala'
 # Deploy with Capistrano
 # gem 'capistrano'
 

@@ -1,7 +1,6 @@
 
 <%= csrf_meta_tags %>
 
-	
 <div id="midcontainer">	
 <br /><br />
 
@@ -35,15 +34,25 @@
 			</div>
 		</td>
 		<td width="700px" height="60px">
-			<div class="profileName"> <%=@profile.first_name%> <%=@profile.last_name%></div>
+			<div class="profileName"> <%=@profile.name%> </div>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<table>
-				<tr height="40px;">
-					<td colspan="2">About me</td>
+					<tr height="40px;">
+					<td width="100px;">Name</td> 
+					<td>
+						<%=best_in_place @profile, :name, :path => user_profile_path, :nil => "add content!",:activator => "#Name"%>
+					</td>
+					<td>
+					<a id="Name" href="#">(edit)</a>
+					</td>
 				</tr>
+				<tr height="40px;">
+					<td colspan="2"><b>About me</b></td>
+				</tr>
+				
 				<tr height="40px;">
 					<td width="100px;">Music</td> 
 					<td>
@@ -56,7 +65,7 @@
 				<tr height="40px;">
 					<td width="100px;">Interests</td>
 					<td>
-						<%=best_in_place @profile, :interest, :path => user_profile_path, type: :textarea, :nil => "Click me to add content!",:activator => "#Interest"%>
+						<%=best_in_place @profile, :interest, :path => user_profile_path, type: :textarea, :nil => "Add content!",:activator => "#Interest"%>
 					</td>
 						<td>
 					<a id="Interest" href="#">(edit)</a>
@@ -82,7 +91,7 @@
 					<tr height="40px;">
 			
 					<td>Current Location</td>
-					<td>	<%=best_in_place @profile, :work, :path => user_profile_path,:nil => "Click me to add content!",:activator => "#Curr"%>
+					<td>	<%=best_in_place @profile, :current_location, :path => user_profile_path,:nil => "Add content!",:activator => "#Curr"%>
 					</td>
 					<td>
 					<a id="Curr" href="#">(edit)</a>
@@ -109,9 +118,6 @@
 			</table>
 		</td>
 	</tr>
-<%user=FbGraph::User.me(current_user.token).fetch%>
-<%=@page.permissions%>
-<%= user.birthday%>
 
 
 

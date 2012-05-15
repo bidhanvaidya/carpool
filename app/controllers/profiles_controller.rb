@@ -1,4 +1,6 @@
 class ProfilesController < ApplicationController
+
+before_filter :editing, :only=> [:update, :show]
 def index
   @user= User.find(params[:user_id]).profile
  @profile= User.find(params[:user_id]).profile
@@ -34,11 +36,7 @@ def show
 @profile= User.find(params[:user_id]).profile
  @page = FbGraph::User.me(@profile.user.token).fetch
   @user= User.find(params[:user_id]).profile
- if current_user == @user.user
-    @inbox=@user.receipts.inbox.where(trashed: false)
-    @sentbox=  @user.receipts.sentbox.where(trashed: false) 
-    @trash= @user.receipts.trash
-  end
+
 respond_to do |type|
       type.html
       type.json {render :json => @profile}
@@ -58,8 +56,14 @@ end
         format.json { render :nothing =>  true }
       end
     end
-     def edit
-    @profile= User.find(params[:user_id]).profile
+     
   end
-  end
+  		def editing
+		@profile= User.find(params[:user_id]).profile
+		if current_user == @profile.user
+		true
+		else
+	redirect_to posts_path
+		end
+		end
 end

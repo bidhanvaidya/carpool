@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
 before_filter :authenticate_user, :except=> [:show, :index, :search, :new, :create]
+before_filter :facebook
+before_filter :editing, :only=> [:edit, :update]
   def index
     @posts = Post.where('startdate >?', Date.yesterday).order("startdate").all
 		@searchresults= []
@@ -124,5 +126,20 @@ end
   redirect_to root_path, class: "alert alert-success", :notice => "You need to sign in before you can make a post"
   end
   end
+    
+		def facebook
+		  
+			if current_user
+				@graph = Koala::Facebook::API.new(current_user.token)
+			end
+		end
+		def editing
+		@post= Post.find(params[:id])
+		if current_user == @post.user
+		true
+		else
+	redirect_to root_path
+		end
+		end
   
 end

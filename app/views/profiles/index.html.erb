@@ -30,10 +30,12 @@
 						<td><%= image_tag "house.png" %></td>
 						<td><%=@user.hometown%></td>
 					</tr>
+					<%if @user.current_location?%>
 					<tr height="21px;">
 						<td><%= image_tag "crosshair.png" %></td>
 						<td><%=@user.current_location%></td>
 					</tr>
+					<%end%>
 					<tr height="21px;">
 						<td><%= image_tag "vcard.png" %></td>
 						<td style="line-height:21px;">Member since <%=@user.created_at.strftime("%b %Y")%></td>
@@ -50,33 +52,43 @@
 			</div>
 		</td>
 		<td width="700px" height="60px">
-			<div class="profileName"> <%=@user.first_name%> <%=@user.last_name%></div>
+			<div class="profileName"> <%=@user.name%></div>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<table>
-				<tr height="40px;">
-					<td colspan="2">About me</td>
+					
 					<%if @user.user==current_user%>
 					<td align =right><%=link_to "Edit Profile", user_profile_path(@user.user,@user ), class: "btn btn-success"%></td>
 					<%end%>
+					<%if @user.music? || @user.interest? || @user.work?%>
+				<tr height="40px;">
+			
+					
+					<td colspan="10" bgcolor="F1F1F1">About me</td>
 				</tr>
+				<%if @user.music?%>
 				<tr height="40px;">
 					<td width="100px;">Music</td>
 					<td><%=@user.music%></td>
 				</tr>
+				<%end%>
+				<%if @user.interest?%>
 				<tr height="40px;">
 					<td>Interests</td>
 					<td><%=@user.interest%></td>
 				</tr>
+				<%end%>
+				<%if @user.work?%>
 				<tr height="40px;">
 			
 					<td>Work</td>
 					<td><%=@user.work%></td>
 				</tr>
+				<%end%>
 				<tr height="40px;">
-					<td>Education</td>
+					<td>Education </td>
 					<td>
 							<% @user.user.educations.each do |education|%>
 							<%=education.name%>
@@ -84,6 +96,7 @@
 							<%end%>
 					</td>
 				</tr>
+				<%end%>
 			</table>
 		</td>
 	</tr>
@@ -210,9 +223,7 @@
 </div>
 </div>
 <%=best_in_place @profile, :interest, :path => user_profiles_path,:nil => "Click me to add content!"%>
-<%user=FbGraph::User.me(current_user.token).fetch%>
-<%=@page.permissions%>
-<%= user.birthday%>
+
 
 
 
