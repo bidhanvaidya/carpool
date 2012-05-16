@@ -5,12 +5,19 @@ resources :profiles do
         get 'send_message'
         get 'reply_message'
         get 'trash'
+        get 'accept'
+        get 'reject'
+        get 'accept_and_close'        
       end
 end
 end
   resources :posts do
       collection do
         get 'myposts'
+        
+      end
+      member do
+      	get 'make_booking'
       end
   end
 

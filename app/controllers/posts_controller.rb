@@ -3,7 +3,7 @@ before_filter :authenticate_user, :except=> [:show, :index, :search, :new, :crea
 before_filter :facebook
 before_filter :editing, :only=> [:edit, :update]
   def index
-    @posts = Post.where('startdate >?', Date.yesterday).order("startdate").all
+    @posts = Post.where('startdate >? AND closed=?', Date.yesterday, false).order("startdate").all
 		@searchresults= []
 		@matches = 0
 if params[:start].present? && params[:finish].present?
@@ -140,6 +140,12 @@ end
 		else
 	redirect_to root_path
 		end
+		end
+		
+		def make_booking
+			 @post = Post.find(params[:id])
+			 Booking.create(post_id: @post.id, user_id: current_user. p8id, accepted: false, rejected: false)
+			 redirect_to @post
 		end
   
 end

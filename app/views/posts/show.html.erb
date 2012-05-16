@@ -52,6 +52,12 @@
 			calcRoute('<%=@post.start.address%>', '<%=@post.finish.address%>', 'DRIVING');
 		});
 	</script>
+	<%if @post.closed%>
+	<%= content_tag :div, "This Ride has been closed by the creater but you may still send them a message", :class => "alert alert-block alert-error fade in" %>
+	<%elsif @post.startdate < Date.today%>
+	
+	<%= content_tag :div, "This Ride has passed but you may still send a message", :class => "alert alert-block alert-error fade in" %>
+	<%end %>
 
 <div id="midcontainer">
 	<div id="postShowStripe"><%=@post.start.city%> <%= image_tag "arrow_right.png" %> <%=@post.finish.city%></div>
@@ -91,6 +97,13 @@
             <!- orelse send message modal starts here ->
             
             <a data-toggle="modal" href=#send_message class="btn btn-primary" style="width:165px;margin-top:17px;">Send Message</a><br>
+            
+					<br>
+					<%if @post.closed  and @post.startdate > Date.today%>
+						<%=link_to "Book this Ride" , make_booking_post_path, method: :get, class: "btn btn-warning", rel:"popover", title: "hello", "data-content" => "If the Booking is accepted you will be able to see " + @post.user.name+"s contact detail in their profile page"%>
+						<%end%>
+            
+            
             <div class="modal hide fade" id="send_message">
               <div class="modal-header">
                 <a class="close" data-dismiss="modal">×</a>

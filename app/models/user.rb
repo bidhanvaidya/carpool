@@ -3,6 +3,7 @@ has_many :friends
 has_one :profile
 after_create :save_friends
 has_many :posts
+has_many :bookings
 has_many :educations
 def self.create_with_omniauth(auth)
   create! do |user|

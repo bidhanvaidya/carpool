@@ -4,6 +4,7 @@ class Post < ActiveRecord::Base
  belongs_to :user
   has_one :finish
   has_one :start
+  has_many :bookings
 has_many :stops, :dependent => :destroy
  accepts_nested_attributes_for :start, :reject_if => lambda { |a| a[:address].blank? }, :allow_destroy => true
 accepts_nested_attributes_for :finish, :reject_if => lambda { |a| a[:address].blank? }, :allow_destroy => true

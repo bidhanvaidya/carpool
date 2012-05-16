@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120514133639) do
+ActiveRecord::Schema.define(:version => 20120516144308) do
+
+  create_table "bookings", :force => true do |t|
+    t.integer  "post_id"
+    t.integer  "user_id"
+    t.boolean  "accepted"
+    t.boolean  "rejected"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "conversations", :force => true do |t|
     t.string   "subject",    :default => ""
@@ -77,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20120514133639) do
     t.string   "time"
     t.string   "note"
     t.integer  "contribution"
+    t.boolean  "closed",        :default => false
   end
 
   create_table "profiles", :force => true do |t|

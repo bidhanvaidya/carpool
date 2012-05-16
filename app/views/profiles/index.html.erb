@@ -28,69 +28,69 @@
 				<table>
 					<tr height="21px;">
 						<td><%= image_tag "house.png" %></td>
-						<td><%=@user.hometown%></td>
+						<td><%=@profile.hometown%></td>
 					</tr>
-					<%if @user.current_location?%>
+					<%if @profile.current_location?%>
 					<tr height="21px;">
 						<td><%= image_tag "crosshair.png" %></td>
-						<td><%=@user.current_location%></td>
+						<td><%=@profile.current_location%></td>
 					</tr>
 					<%end%>
 					<tr height="21px;">
 						<td><%= image_tag "vcard.png" %></td>
-						<td style="line-height:21px;">Member since <%=@user.created_at.strftime("%b %Y")%></td>
+						<td style="line-height:21px;">Member since <%=@profile.created_at.strftime("%b %Y")%></td>
 					</tr>
 					<tr height="21px;">
 						<td><%= image_tag "check_alt.png" %></td>
-						<td><a href=<%=@user.link%>>Facebook verified</a></td>
+						<td><a href=<%=@profile.link%>>Facebook verified</a></td>
 					</tr>
 					<tr>
 						<td><%= image_tag "heart.png" %></td>
-						<td><%=@user.user.friends.count%> friends</td>
+						<td><%=@user.friends.count%> friends</td>
 					</tr>
 				</table>
 			</div>
 		</td>
 		<td width="700px" height="60px">
-			<div class="profileName"> <%=@user.name%></div>
+			<div class="profileName"> <%=@profile.name%></div>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<table>
 					
-					<%if @user.user==current_user%>
-					<td align =right><%=link_to "Edit Profile", user_profile_path(@user.user,@user ), class: "btn btn-success"%></td>
+					<%if @user==current_user%>
+					<td align =right><%=link_to "Edit Profile", user_profile_path(@user,@profile ), class: "btn btn-success"%></td>
 					<%end%>
-					<%if @user.music? || @user.interest? || @user.work?%>
+					<%if @profile.music? || @profile.interest? || @profile.work?%>
 				<tr height="40px;">
 			
 					
 					<td colspan="10" bgcolor="F1F1F1">About me</td>
 				</tr>
-				<%if @user.music?%>
+				<%if @profile.music?%>
 				<tr height="40px;">
 					<td width="100px;">Music</td>
-					<td><%=@user.music%></td>
+					<td><%=@profile.music%></td>
 				</tr>
 				<%end%>
-				<%if @user.interest?%>
+				<%if @profile.interest?%>
 				<tr height="40px;">
 					<td>Interests</td>
-					<td><%=@user.interest%></td>
+					<td><%=@profile.interest%></td>
 				</tr>
 				<%end%>
-				<%if @user.work?%>
+				<%if @profile.work?%>
 				<tr height="40px;">
 			
 					<td>Work</td>
-					<td><%=@user.work%></td>
+					<td><%=@profile.work%></td>
 				</tr>
 				<%end%>
 				<tr height="40px;">
 					<td>Education </td>
 					<td>
-							<% @user.user.educations.each do |education|%>
+							<% @user.educations.each do |education|%>
 							<%=education.name%>
 							<%=education.year %><br>
 							<%end%>
@@ -103,9 +103,9 @@
 	<tr>
 		<td rowspan="2">
 			<div><b>My rides</b></div>
-			<table class="table table-striped" style="width:700px;">
+			<table class="table table-striped" style="width:700px;" border>
 			  <tbody>
-			  <%@user.user.posts.each do |ride|%>
+			  <% @posts.each do |ride|%>
 			  	<a>
 					<tr height="80px;">
 			    	<td width="80px;"><img src=<%=@page.picture%>></td>
@@ -126,12 +126,52 @@
 				<% end %>
 			</table>
 		</td>	
+		<!---------------------Booking Table------------------------------------------------------------------------------------
+		------------------------------------------------------------------------------------------------------------------------
+		------------------------------------------------------------------------------------------------------------------------
+		------------------------------------------------------------------------------------------------------------------------
+		------------------------------------------------------------------------------------------------------------------------
+		------------------------------------------------------------------------------------------------------------------------
+		-------->
+		
+		<b> Bookings offers</b>
+		
+				<%@booking_offers.each do |offer|%>
+					<%=offer.post.start.city%>
+					<%=offer.post.finish.city%> by
+					<%=offer.user.name%>
+					<%if offer.rejected?%>
+					<%=link_to "Accept Offer", accept_user_profiles_path(:booking=>offer), class: "btn", :confirm => "Are you sure you want to accept this booking"%>
+					<%=link_to "Accept Offer And Close the ride", accept_and_close_user_profiles_path(:booking=>offer), class: "btn", :confirm => "Are you sure you want to accept this booking and close the ride"%>
+					<%else%>
+					<%=link_to "Reject Offer", reject_user_profiles_path(:booking=>offer), class: "btn btn-fail", :confirm => "Are you sure you want to reject this booking", %>
+				<%end%>
+				<%end%>
+		<b>Booking Request</b>
+		
+			<%@booking_requests.each do |offer|%>
+					<%=offer.post.start.city%>
+					<%=offer.post.finish.city%> by
+					<%=offer.post.user.name%>
+					<b>Status:</b><% if offer.rejected?%>
+					Rejected
+					<%elsif offer.accepted? %>
+					Accepted
+					<%else%>
+					Pending
+					<%end%>
+				<%end%>
+		<!------------------------------End of Booking----------------------------------------------
+		---------------------------------------------------------------------------------------------------------------------
+		-----------------------------------------------------------------------------------------------------------------------
+		------------------------------------------------------------------------------------------------------------------------
+		---------------------------------------------------------------------------------------------------------------------->
 	</tr>
 	<tr>
 		<td style="vertical-align:top;">
 			<div id="tabbed_box_1" class="tabbed_box">
 				<div class="tabbed_area">
-				<%if current_user == @user.user%>
+				<%if current_user == @user%>
 			  	<ul class="tabs">
 			    	<li><a href="#" title="content_1" class="tab active">Inbox</a></li>
 			      <li><a href="#" title="content_2" class="tab" style="margin-left:1px;">Sent</a></li>
@@ -148,7 +188,7 @@
 									</div>
 								<div class="modal-body">
 									<p><%=receipt.message.body%></p>
-					<%=form_tag reply_message_user_profiles_path(@user.user), method: :get do %>
+					<%=form_tag reply_message_user_profiles_path(@profile), method: :get do %>
 									<%= hidden_field_tag 'receipt', receipt.id%> 
 								</div>
 								<div class = "modal-header">
@@ -158,7 +198,7 @@
 									<%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br> </p>
 								</div>
 								<div class="modal-footer">
-									<%= link_to 'Move To Trash', trash_user_profiles_path(@user.user, :receipt=> receipt), :method => 'get', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
+									<%= link_to 'Move To Trash', trash_user_profiles_path(@profile, :receipt=> receipt), :method => 'get', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
 									<a href="#" class="btn", data-dismiss="modal">Close</a>
 									<%= submit_tag "Reply", :name => nil, class: "btn btn-primary" %>
 					<%end%>
@@ -204,7 +244,7 @@
      <h3>Send Message</h3>
   </div>
   <div class="modal-body">
-    <p><%=form_tag send_message_user_profiles_path(@user.user), method: :get do %>
+    <p><%=form_tag send_message_user_profiles_path(@profile), method: :get do %>
 
          <%= text_area_tag :body, params[:body], class:"input-xxlarge", placeholder: "Message", rows:"7",  %><br> </p>
   
@@ -222,8 +262,4 @@
 </table>
 </div>
 </div>
-<%=best_in_place @profile, :interest, :path => user_profiles_path,:nil => "Click me to add content!"%>
-
-
-
 

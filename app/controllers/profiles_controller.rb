@@ -1,16 +1,18 @@
 class ProfilesController < ApplicationController
 
-before_filter :editing, :only=> [:update, :show]
+before_filter :editing, :only=> [:update, :show, :accept, :reject, :accept_and_close]
 def index
-  @user= User.find(params[:user_id]).profile
- @profile= User.find(params[:user_id]).profile
-  @page = FbGraph::User.me(@user.user.token).fetch
-  if current_user == @user.user
-    @inbox=@user.receipts.inbox.where(trashed: false)
-    @sentbox=  @user.receipts.sentbox.where(trashed: false) 
-    @trash= @user.receipts.trash
+  @user= User.find(params[:user_id])
+ @profile= @user.profile
+ @posts= @user.posts
+  @page = FbGraph::User.me(@user.token).fetch
+  if current_user == @user
+    @inbox=@profile.receipts.inbox.where(trashed: false)
+    @sentbox=  @profile.receipts.sentbox.where(trashed: false) 
+    @trash= @profile.receipts.trash
   end
-  
+  @booking_offers= Booking.where(post_id: @posts)
+  @booking_requests= Booking.where(user_id: @user)
    
 end
 def send_message
@@ -59,11 +61,28 @@ end
      
   end
   		def editing
-		@profile= User.find(params[:user_id]).profile
-		if current_user == @profile.user
-		true
-		else
-	redirect_to posts_path
+				@profile= User.find(params[:user_id]).profile
+					if current_user == @profile.user
+						true
+					else
+						redirect_to posts_path
+				end
 		end
+		def accept #accept bookings
+		@booking= Booking.find(params[:booking])
+		@booking.update_attributes(accepted: true, rejected: false)
+		redirect_to :back
+		end
+		def reject #reject bookings
+				@booking= Booking.find(params[:booking])
+		@booking.update_attributes(rejected: true, accepted: false)
+		redirect_to :back
+		end
+		def accept_and_close #accept bookings and close post
+						@booking= Booking.find(params[:booking])
+						@post= @booking.post
+		@booking.update_attributes(rejected: false, accepted: true)
+		@post.update_attributes(close: true)
+		redirect_to :back
 		end
 end
