@@ -105,6 +105,15 @@
 					<td>
 					<a id="smoking" href="#">(Change)</a>
 					</td>
+									<tr height="40px;">
+			
+					<td>Work</td>
+					<td>	<%=best_in_place @profile, :email, :path => user_profile_path, type: :textarea,:nil => "add content!",:activator => "#email"%>
+					</td>
+						<td>
+					<a id="email" href="#">(edit)</a>
+					</td>
+				</tr>
 				</tr>
 				<tr height="40px;">
 					<td>Education</td>

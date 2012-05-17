@@ -93,7 +93,7 @@
               <%= link_to 'Edit', edit_post_path(@post), :class => 'btn', :style=>'width:69px;'%>
               <%= link_to 'Delete', post_path(@post), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger',:style=>'width:69px;margin-left:1px;' %>
             </div>
-          <%else%>
+          <%elsif current_user%>
             <!- orelse send message modal starts here ->
             
             <a data-toggle="modal" href=#send_message class="btn btn-primary" style="width:165px;margin-top:17px;">Send Message</a><br>

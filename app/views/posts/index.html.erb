@@ -68,8 +68,9 @@
 								<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
 							</div>
 							<br>Departs <%= link_to post.time, post_path(post) %>, <%= link_to post.startdate, post_path(post) %>
-						<br><% a = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
-								<%if a>0 and post.user != current_user %> <%= a%> Mutual friends<%end%> 
+						<br>
+						<%if current_user %><% a = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
+								<%if a>0 and post.user != current_user %> <%= a%> Mutual friends<%end%> <%end%>
 						</td>
 						
         		<td width="80px;">
@@ -102,9 +103,9 @@
 					</div>
 					<br><%= link_to post.startdate, post_path(post) %>
 					<br><%= link_to post.time, post_path(post) %>
-					<br><% a = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
+					<br><%if current_user %><% a = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
 								<%if a>0 and post.user != current_user %> <%= a%> Mutual friends<%end%> 
-						
+						<%end%>
 				</td>
         <td width="80px;">
 					<%if post.is_driving == true%> 
