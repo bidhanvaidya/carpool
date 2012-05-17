@@ -1,12 +1,11 @@
-
 <%= csrf_meta_tags %>
 
-<div id="midcontainer">	
+<div id="midcontainer"> 
 <br /><br />
 
 <table border="0">
 	<tr>
-		<td width="230px" rowspan="3">	
+		<td width="230px" rowspan="3" style="vertical-align:top;">	
 			<div class="circle-image-one-fourth" style="margin-left:0px;">
 				<img class="aligncenter" style="width:188px;" src=<%= photo=@page.picture + "&type=large"%>>
 				<table>
@@ -34,21 +33,22 @@
 			</div>
 		</td>
 		<td width="700px" height="60px">
-			<div class="profileName"> <%=@profile.name%> </div>
+			<div class="profileName"> <%=@profile.name%></div>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<table>
-					<tr height="40px;">
+				<tr height="40px;">
 					<td width="100px;">Name</td> 
 					<td>
 						<%=best_in_place @profile, :name, :path => user_profile_path, :nil => "add content!",:activator => "#Name"%>
 					</td>
 					<td>
-					<a id="Name" href="#">(edit)</a>
+						<a id="Name" href="#">(edit)</a>
 					</td>
 				</tr>
+				
 				<tr height="40px;">
 					<td colspan="2"><b>About me</b></td>
 				</tr>
@@ -62,58 +62,63 @@
 					<a id="Music" href="#">(edit)</a>
 					</td>
 				</tr>
+				
 				<tr height="40px;">
 					<td width="100px;">Interests</td>
 					<td>
 						<%=best_in_place @profile, :interest, :path => user_profile_path, type: :textarea, :nil => "Add content!",:activator => "#Interest"%>
 					</td>
-						<td>
-					<a id="Interest" href="#">(edit)</a>
+					<td>
+						<a id="Interest" href="#">(edit)</a>
 					</td>
 				</tr>
+				
 				<tr height="40px;">
 			
 					<td>Work</td>
 					<td>	<%=best_in_place @profile, :work, :path => user_profile_path, type: :textarea,:nil => "Click me to add content!",:activator => "#Work"%>
 					</td>
-						<td>
-					<a id="Work" href="#">(edit)</a>
+					<td>
+						<a id="Work" href="#">(edit)</a>
 					</td>
 				</tr>
 				<tr height="40px;">
 			
 					<td>Home Town</td>
-					<td>	<%=best_in_place @profile, :hometown, :path => user_profile_path,:nil => "Click me to add content!",:activator => "#Home"%>
-					</td><td>
-					<a id="Home" href="#">(edit)</a>
-					</td>
-				</tr>
-					<tr height="40px;">
-			
-					<td>Current Location</td>
-					<td>	<%=best_in_place @profile, :current_location, :path => user_profile_path,:nil => "Add content!",:activator => "#Curr"%>
+					<td>
+						<%=best_in_place @profile, :hometown, :path => user_profile_path,:nil => "Click me to add content!",:activator => "#Home"%>
 					</td>
 					<td>
-					<a id="Curr" href="#">(edit)</a>
+						<a id="Home" href="#">(edit)</a>
 					</td>
 				</tr>
-					<tr height="40px;">
+				<tr height="40px;">
+			
+					<td>Current Location</td>
+					<td>
+						<%=best_in_place @profile, :current_location, :path => user_profile_path,:nil => "Add content!",:activator => "#Curr"%>
+					</td>
+					<td>
+						<a id="Curr" href="#">(edit)</a>
+					</td>
+				</tr>
+				<tr height="40px;">
 					<td width="100px;">Prefer Smoking?</td>
 					<td>
 						<%= best_in_place @profile, :smoking, :path => user_profile_path, type: :checkbox, collection: %w[No Yes],:activator => "#smoking"%>
 					</td>
 					<td>
-					<a id="smoking" href="#">(Change)</a>
-					</td>
-									<tr height="40px;">
-			
-					<td>Work</td>
-					<td>	<%=best_in_place @profile, :email, :path => user_profile_path, type: :textarea,:nil => "add content!",:activator => "#email"%>
-					</td>
-						<td>
-					<a id="email" href="#">(edit)</a>
+						<a id="smoking" href="#">(Change)</a>
 					</td>
 				</tr>
+				<tr height="40px;">
+					<td>Work</td>
+					<td>
+						<%=best_in_place @profile, :email, :path => user_profile_path, type: :textarea,:nil => "add content!",:activator => "#email"%>
+					</td>
+					<td>
+						<a id="email" href="#">(edit)</a>
+					</td>
 				</tr>
 				<tr height="40px;">
 					<td>Education</td>
@@ -128,3 +133,5 @@
 		</td>
 	</tr>
 
+</table>
+</div>

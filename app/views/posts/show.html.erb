@@ -4,28 +4,23 @@
 <script type="text/javascript">
 		//Variable for holding map object
 		var map;
-
 		//Variable for direction objects map object
 		var directionsDisplay = new google.maps.DirectionsRenderer();
 		var directionsService = new google.maps.DirectionsService();
-
 		jQuery(document).ready(function(){
 			/*Map initialization*/
 			function initialize() {
 				//Create a location object with latitude and longitudes
 				var startLoc = new google.maps.LatLng(<%=@post.start.latitude%>, <%=@post.start.longitude%>);
-
 				//Create options for the map object
 				var myOptions = {
 					zoom:10,
 					mapTypeId: google.maps.MapTypeId.ROADMAP,
 					center: startLoc
 				}
-
 				//Create our map
 				map = new google.maps.Map(document.getElementById("map"), myOptions);
 			}
-
 			/*Function for creating the roadmap*/
 			function calcRoute(start, end, mode) {
 				var request = {
@@ -47,7 +42,6 @@
 
 				directionsDisplay.setMap(map);
 			}
-
 			initialize();
 			calcRoute('<%=@post.start.address%>', '<%=@post.finish.address%>', 'DRIVING');
 		});
@@ -80,6 +74,10 @@
 						$<%=@post.contribution%>.00 per seat.
 					<%else%>
 						Willing to pay $<%=@post.contribution%>.00.
+					<%end%>
+					<br>
+					<%if @post.user.profile.smoking == false%>
+						<%= image_tag "nosmk.png"%> <%= @post.user.name%> is not smoking.
 					<%end%>
 				</div>
 				<div class="circle-image-one-fourth">
