@@ -34,7 +34,7 @@
         	<div class="nav-collapse">
 						<%= link_to 'Post a new ride', new_post_path, :class => 'btn btn-primary', :style =>'display:inline;', :style=>'font-family:Cuprum;', :style=> 'text-align:right;', :style=>'margin-top:70px;', :style=>'float:right;'%>
 						<ul class="nav pull-right">
-            	<li><%= link_to "About" %></li>
+            	<li><%= link_to "About" , info_about_path %></li>
             	<li><%= link_to "Search", posts_path %></li>      
             	<%if current_user%> 
               <li class="dropdown pull-left" id="menu1">
@@ -64,7 +64,8 @@
 		<!-bottom bar-!>
 		<div style="clear: both"></div>
 		<div class="bottomBar">
-			ABOUT ||  HELP  ||  TERMS&PRIVACY  ||
+			<%= link_to "About" , info_about_path %><%= link_to "Help" , info_faq_path %><%= link_to "Terms of Service" , info_terms_path %><%= link_to "Privacy Policy" , info_privacy_path %><%= link_to "Jobs" , info_jobs_path %><%= link_to "Contact us" , info_contact_path %>
+			<a href="http://www.facebook.com/ozride"><%= image_tag "fbicon.jpg"%></a>
 			<g:plusone></g:plusone>
 			<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.ozride.com.au&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
 			<br>

@@ -1,4 +1,16 @@
 Ozride::Application.routes.draw do
+  get "info/jobs"
+
+  get "info/faq"
+
+  get "info/privacy"
+
+  get "info/terms"
+
+  get "info/contact"
+
+  get "info/about"
+
 resources :users do  
 resources :profiles do
   collection do
