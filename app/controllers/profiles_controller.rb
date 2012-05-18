@@ -13,7 +13,7 @@ def index
   end
   @booking_offers= Booking.where(post_id: @posts)
   @booking_requests= Booking.where(user_id: @user)
-   
+   @rev= @profile.reviews
 end
 def send_message
    body=params[:body]
@@ -84,5 +84,11 @@ end
 		@booking.update_attributes(rejected: false, accepted: true)
 		@post.update_attributes(close: true)
 		redirect_to :back
+		end
+		def review_create
+		@profile= User.find(params[:user_id]).profile
+		@review = Review.create(review: params[:review], rating: params[:rating], user_id: current_user, profile_id: @profile.id )
+		redirect_to :back
+		 
 		end
 end

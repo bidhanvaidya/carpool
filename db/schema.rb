@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120516144308) do
+ActiveRecord::Schema.define(:version => 20120518031454) do
 
   create_table "bookings", :force => true do |t|
     t.integer  "post_id"
@@ -123,6 +123,15 @@ ActiveRecord::Schema.define(:version => 20120516144308) do
   end
 
   add_index "receipts", ["notification_id"], :name => "index_receipts_on_notification_id"
+
+  create_table "reviews", :force => true do |t|
+    t.integer  "profile_id"
+    t.integer  "user_id"
+    t.text     "review"
+    t.integer  "rating"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "starts", :force => true do |t|
     t.string   "address"

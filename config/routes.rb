@@ -19,7 +19,8 @@ resources :profiles do
         get 'trash'
         get 'accept'
         get 'reject'
-        get 'accept_and_close'        
+        get 'accept_and_close' 
+        post 'review_create'       
       end
 end
 end
