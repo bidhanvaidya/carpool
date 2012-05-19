@@ -45,6 +45,7 @@
 			initialize();
 			calcRoute('<%=@post.start.address%>', '<%=@post.finish.address%>', 'DRIVING');
 		});
+		
 	</script>
 	<%if @post.closed%>
 	<%= content_tag :div, "This Ride has been closed by the creater but you may still send them a message", :class => "alert alert-block alert-error fade in" %>
@@ -76,14 +77,14 @@
 						Willing to pay $<%=@post.contribution%>.00.
 					<%end%>
 					<br>
-					<%if @post.user.profile.smoking == false%>
-						<%= image_tag "nosmk.png"%> <%= @post.user.name%> is not smoking.
+					<%if !@post.user.profile.smoking%>
+						<%= image_tag "nosmk.png"%> <%= @post.user.profile.name%> prefers not smoking.
 					<%end%>
 				</div>
 				<div class="circle-image-one-fourth">
 					<img class="aligncenter" style="width:188px;" src=<%= "http://graph.facebook.com/"+@post.user.uid+"/picture&type=large"%>>
 					<div style="margin-top:17px;">		
-				  <%= @post.user.name %> is <%if @post.is_driving == true%>driving.<%else%>a passenger.<%end%><br>
+				  <%= link_to @post.user.name, user_profiles_path(@post.user) %> is <%if @post.is_driving%>driving.<%else%>a passenger.<%end%><br>
 				
           <!- if post belongs to oneself, edit and destroy option->
           <%if @post.user == current_user%>
@@ -97,8 +98,20 @@
             <a data-toggle="modal" href=#send_message class="btn btn-primary" style="width:165px;margin-top:17px;">Send Message</a><br>
             
 					<br>
-					<%if @post.closed  and @post.startdate > Date.today%>
+					<%if !@post.closed  and @post.startdate > Date.today%>
+					<%present_booking= Booking.where(user_id: current_user.id, post_id: @post.id)%>
+					<%if present_booking.empty?%>
 						<%=link_to "Book this Ride" , make_booking_post_path, method: :get, class: "btn btn-warning", rel:"popover", title: "hello", "data-content" => "If the Booking is accepted you will be able to see " + @post.user.name+"s contact detail in their profile page"%>
+					
+					<%else%>
+					<b>Your Booking status:</b><% if present_booking.first.rejected?%>
+					Rejected
+					<%elsif present_booking.first.accepted? %>
+					Accepted
+					<%else%>
+					Pending
+					<%end%>
+						<%end%>
 						<%end%>
             
             

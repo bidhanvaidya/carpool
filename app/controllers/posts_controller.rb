@@ -144,7 +144,7 @@ end
 		
 		def make_booking
 			 @post = Post.find(params[:id])
-			 Booking.create(post_id: @post.id, user_id: current_user. p8id, accepted: false, rejected: false)
+			 Booking.create(post_id: @post.id, user_id: current_user.id, accepted: false, rejected: false)
 			 redirect_to @post
 		end
   

@@ -3,7 +3,7 @@
 	<%= form_tag posts_path, :class => 'well form-search', :method => :get do%>
   <div class= "row">
     <div class= "span3">
-      <%= text_field_tag :start, params[:start], class: 'input-long search-query span3', placeholder: "From"%> 
+      <%= text_field_tag :start, params[:start], class: 'input-long search-query span3', placeholder: "From","data-provide"=>"typeahead"%> 
      </div>
     <div class= "span3">
       <%= text_field_tag :finish, params[:finish], class: 'input-long search-query span3', placeholder: "To" %>
@@ -19,6 +19,7 @@
 	
 										})});
 										//]]>
+										
 					</script>
 					 </div>
 					<div class= "span1 offset1">

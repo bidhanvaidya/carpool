@@ -3,6 +3,7 @@
 <script>	
 	  // When the document loads do everything inside here ...
 	  $(document).ready(function(){	
+	  
 		// When a link is clicked
 		$("a.tab").click(function () {			
 			// switch all tabs off
@@ -16,6 +17,10 @@
 			$("#"+content_show).slideDown();		  
 		});	
 	  });
+	  
+$(document).ready(funtion(){
+
+});
   </script>
 <div id="midcontainer">	
 <br /><br />
@@ -147,11 +152,12 @@
 					<%=offer.post.start.city%>
 					<%=offer.post.finish.city%> by
 					<%=offer.user.name%>
-					<%if offer.rejected?%>
+					<%if offer.accepted?%>
+					<%=link_to "Reject Offer", reject_user_profiles_path(:booking=>offer), class: "btn btn-fail", :confirm => "Are you sure you want to reject this booking", %>
+					
+					<%else%>
 					<%=link_to "Accept Offer", accept_user_profiles_path(:booking=>offer), class: "btn", :confirm => "Are you sure you want to accept this booking"%>
 					<%=link_to "Accept Offer And Close the ride", accept_and_close_user_profiles_path(:booking=>offer), class: "btn", :confirm => "Are you sure you want to accept this booking and close the ride"%>
-					<%else%>
-					<%=link_to "Reject Offer", reject_user_profiles_path(:booking=>offer), class: "btn btn-fail", :confirm => "Are you sure you want to reject this booking", %>
 				<%end%>
 				<%end%>
 		<b>Booking Request</b>
@@ -273,18 +279,33 @@
 <!-----------------------Review------------------------------------------------>
 <b> My Review List</b>
 <%@rev.each do |review|%>
-<br><b>Review:</b> <%=review.review%>
+
+<br>
+<%=review.profile.name%><b>Review:</b> <%=review.review%>
 <b>Rating</b> <%=review.rating%>
 <%end%>
-
+<%if !Booking.where(user_id: current_user, post_id: @user.posts, accepted:true).empty?%>
+<div class= "row">
+<div class = "span4">
+<div class= "well">
 <%=form_tag review_create_user_profiles_path,:html => { :class => 'form-horizontal' } do%>
 <div class="control-group">
 <div class="controls">
-  <%= text_field_tag :review, %>
-	  <%= text_field_tag :rating %>
+ Review: <br><%= text_area_tag :review,nil, :size => "25x5" %><br>
+	 
+  	Rating:<%= select_tag :rating, options_for_select([
+						
+						['1','1'],					['2','2'],
+						['3','3'],					['4','4'],
+						['5','5']			]) %> <br />
+
 
 </div>
 </div>
 <%=submit_tag %>
+<%end%>
+</div>
+</div>
+</div>
 <%end%>
 
