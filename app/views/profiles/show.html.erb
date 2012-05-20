@@ -76,7 +76,8 @@
 				<tr height="40px;">
 			
 					<td>Work</td>
-					<td>	<%=best_in_place @profile, :work, :path => user_profile_path, type: :textarea,:nil => "Click me to add content!",:activator => "#Work"%>
+					<td>
+						<%=best_in_place @profile, :work, :path => user_profile_path, type: :textarea,:nil => "Click me to add content!",:activator => "#Work"%>
 					</td>
 					<td>
 						<a id="Work" href="#">(edit)</a>
