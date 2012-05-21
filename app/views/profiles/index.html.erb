@@ -265,41 +265,43 @@
 		<%end%>
 	</div>
 	<!-end of booking-!>
-</div>
+	
+	<!-Review-!>
+	<div>
+		<b> My Review List</b>
+		<%@rev.each do |review|%>
+			<br>
+			<%=review.profile.name%><b>Review:</b><%=review.review%><b>Rating:</b><%=review.rating%>
+		<%end%>
+
+		<%if !Booking.where(user_id: current_user, post_id: @user.posts, accepted:true).empty?%>
+		<div class= "row">
+			<div class = "span4">
+				<div class= "well">
+					<%=form_tag review_create_user_profiles_path,:html => { :class => 'form-horizontal' } do%>
+						<div class="control-group">
+							<div class="controls">
+	 							Review: <br><%= text_area_tag :review,nil, :size => "25x5" %><br>
+	  						Rating:<%= select_tag :rating, options_for_select([
+
+							['1','1'],					['2','2'],
+							['3','3'],					['4','4'],
+							['5','5']			]) %> <br />
 
 
-
-
-<!-Review-!>
-<div>
-	<b> My Review List</b>
-	<%@rev.each do |review|%>
-		<br>
-		<%=review.profile.name%><b>Review:</b><%=review.review%><b>Rating:</b><%=review.rating%>
-	<%end%>
-
-	<%if !Booking.where(user_id: current_user, post_id: @user.posts, accepted:true).empty?%>
-	<div class= "row">
-		<div class = "span4">
-			<div class= "well">
-				<%=form_tag review_create_user_profiles_path,:html => { :class => 'form-horizontal' } do%>
-					<div class="control-group">
-						<div class="controls">
- 							Review: <br><%= text_area_tag :review,nil, :size => "25x5" %><br>
-  						Rating:<%= select_tag :rating, options_for_select([
-						
-						['1','1'],					['2','2'],
-						['3','3'],					['4','4'],
-						['5','5']			]) %> <br />
-
-
+							</div>
 						</div>
-					</div>
-				<%=submit_tag %>
-				<%end%>
+					<%=submit_tag %>
+					<%end%>
+				</div>
 			</div>
 		</div>
+		<%end%>
 	</div>
-	<%end%>
 </div>
+
+
+
+
+
 
