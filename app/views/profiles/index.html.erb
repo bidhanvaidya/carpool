@@ -206,8 +206,29 @@
 	</div>
 	
 	<!-ride-!>
+	
 	<div>
-		<b>ride</b>
+		<b>My rides</b>
+		<%if @posts.empty?%>
+		<table class="table table-striped" style="width:700px;">
+		  <tbody>
+		   	<a>
+				<tr height="80px;">
+		    	<td width="80px;"></td>
+		      <td>
+						<div style="font-size:20px;margin-top:8px;">
+							No Rides
+							<br>
+							<div style="font-size:14px; color:#16949c"></div>
+						</div>
+					</td>
+		      <td>
+		      </td>
+		    </tr>
+				</a>
+			</tbody>   
+		</table>
+		<%else%>
 		<table class="table table-striped" style="width:700px;">
 		  <tbody>
 		  <% @posts.each do |ride|%>
@@ -230,6 +251,7 @@
 			</tbody>   
 			<% end %>
 		</table>
+		<%end%>
 	</div>
 	
 	<!-Booking Table-!>
@@ -299,9 +321,4 @@
 		<%end%>
 	</div>
 </div>
-
-
-
-
-
 
