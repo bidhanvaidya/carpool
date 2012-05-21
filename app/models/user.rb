@@ -28,7 +28,8 @@ def save_friends
       :current_location=>user.location.try(:name),
       :hometown=>user.hometown.try(:name),
       :user_id =>self.id,
-      :email => user.email
+      :email => user.email,
+      :interest =>user.interests.map(&:name).to_sentence
       )
 	user.friends.each do |friend| 
 		Friend.create(:user_id=> self.id, :uid=> friend.identifier, :name => friend.name) 
