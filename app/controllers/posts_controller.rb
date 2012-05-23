@@ -6,6 +6,7 @@ before_filter :editing, :only=> [:edit, :update]
     @posts = Post.where('startdate >? AND closed=?', Date.yesterday, false).order("startdate").all
 		@searchresults= []
 		@matches = 0
+		@educations = current_user.educations if current_user
 if params[:start].present? && params[:finish].present?
       #@post_with_location= Post.find_by_sql("select * from posts inner join locations on locations.post_id=posts.id")
       

@@ -1,5 +1,4 @@
 <div id="midcontainer">
-<%= params[:is_driving]%>
 	<%= form_tag posts_path, :class => 'well form-search', :method => :get do%>
   <div class= "row">
     <div class= "span3">
@@ -62,16 +61,35 @@
 				<a>
 					<tr height="80px;">
         		<td width="80px;">
+							<a href=<%=url_for(user_profiles_path(post.user))%>>
 							<img src=<%= "http://graph.facebook.com/"+post.user.uid+"/picture&type=square"%> class="postindexProfilepic">
+							</a>
 						</td>
         		<td>
 							<div style="font-size:20px;margin-top:8px;">
-								<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
+								<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %> <br>
+								<% post.stops.each do |stop|  %>
+				  		<span class="st_tag"><a><%= stop.city %></a></span>
+						<%end%> 
 							</div>
 							<br>Departs <%= link_to post.time, post_path(post) %>, <%= link_to post.startdate, post_path(post) %>
 						<br>
-						<%if current_user %><% a = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
-								<%if a>0 and post.user != current_user %> <%= a%> Mutual friends<%end%> <%end%>
+						<%if current_user and post.user != current_user%>
+							<%= "Friend" if !current_user.friends.find_by_uid(post.user.uid).nil?%>
+							<% mutual_friends = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
+								
+								<%if mutual_friends > 0 %>
+									 <%= mutual_friends%> Mutual friends
+								<%end%>
+								<!---check for same uni--->
+								<%@educations.each do |inst|%>
+								<%if !post.user.educations.where(:name => inst.name).empty?%>
+						<a href="#" rel="tooltip" data-original-title= "You and <%=post.user.name%>  went to <%=inst.name%>">
+						<%=image_tag("University.png", size: "30x30") %>
+					</a>
+					<%end%>
+						<%end%>
+						 <%end%>
 						</td>
 						
         		<td width="80px;">
@@ -103,10 +121,26 @@
 						<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
 					</div>
 					<br><%= link_to post.startdate, post_path(post) %>
-					<br><%= link_to post.time, post_path(post) %>
-					<br><%if current_user %><% a = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
-								<%if a>0 and post.user != current_user %> <%= a%> Mutual friends<%end%> 
+					<%= link_to post.time, post_path(post) %>
+					<br>
+					
+					<%if current_user %>
+					<%= "Friend" if !current_user.friends.find_by_uid(post.user.uid).nil?%>
+					<% mutual_friends = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
+								<%if mutual_friends > 0 and post.user != current_user %> <%= mutual_friends%> Mutual friends
+						
+						<%end%> 
+							<!---check for same uni--->
+										<%@educations.each do |inst|%>
+								<%if !post.user.educations.where(:name => inst.name).empty?%>
+						<a href="#" rel="tooltip" data-original-title= "You and <%=post.user.name%>  went to <%=inst.name%>">
+						<%=image_tag("University.png", size: "30x30") %>
+					</a>
+					<%end%>
 						<%end%>
+						<%end%>
+						
+						
 				</td>
         <td width="80px;">
 					<%if post.is_driving == true%> 
