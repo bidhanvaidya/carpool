@@ -125,8 +125,10 @@
 					<td>Education</td>
 					<td>
 							<% @profile.user.educations.each do |education|%>
-							<%=education.name%>
-							<%=education.year %><br>
+							Institute: <%=best_in_place education,:name, :path => user_profile_path%>
+							<br>
+							Year: <%=best_in_place education,:year, :path => user_profile_path %>
+														<br>
 							<%end%>
 					</td>
 				</tr>

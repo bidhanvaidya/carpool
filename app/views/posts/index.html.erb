@@ -72,15 +72,17 @@
 				  		<span class="st_tag"><a><%= stop.city %></a></span>
 						<%end%> 
 							</div>
-							<br>Departs <%= link_to post.time, post_path(post) %>, <%= link_to post.startdate, post_path(post) %>
+							<br>Departs <%= link_to post.time, post_path(post) %>, 
+							<%=  time_ago_in_words(post.startdate) %> i.e <%= post.startdate.strftime "%A, %B %d,%Y"%>
+					
 						<br>
 						<%if current_user and post.user != current_user%>
-							<%= "Friend" if !current_user.friends.find_by_uid(post.user.uid).nil?%>
-							<% mutual_friends = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
-								
-								<%if mutual_friends > 0 %>
-									 <%= mutual_friends%> Mutual friends
-								<%end%>
+							<% if !current_user.friends.find_by_uid(post.user.uid).nil?%>
+						<a href="#" rel="tooltip" data-original-title= "Facebook Friend">
+							<%=image_tag("friends_icon.png", size: "30x30")%>
+							</a>
+							<%end%>
+							
 								<!---check for same uni--->
 								<%@educations.each do |inst|%>
 								<%if !post.user.educations.where(:name => inst.name).empty?%>
@@ -89,6 +91,10 @@
 					</a>
 					<%end%>
 						<%end%>
+						<% mutual_friends = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
+								<%if mutual_friends > 0 and post.user != current_user %> <%= mutual_friends%> Mutual friends
+						
+						<%end%> 
 						 <%end%>
 						</td>
 						
@@ -105,8 +111,84 @@
 							</td>
       			</tr>
 					</a>
-				</tbody> 		
+					
+					
+			
   	<%end%>
+  	<%if !Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).empty?%>
+  	<!---------------Rest of the results------------------------------------------------------------------->
+  	
+  	<a>
+					<tr height="20px;" bgcolor = grey>
+        		<td width="80px;">
+							
+						</td>
+        		<td>
+							<div style="font-size:20px;margin-top:8px;">
+								Rest of the results
+							
+							</div>
+					
+						</td>
+      			</tr>
+					</a>
+  		<%  Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).each do |post| %>
+
+				<a>
+					<tr height="80px;">
+        		<td width="80px;">
+							<a href=<%=url_for(user_profiles_path(post.user))%>>
+							<img src=<%= "http://graph.facebook.com/"+post.user.uid+"/picture&type=square"%> class="postindexProfilepic">
+							</a>
+						</td>
+        		<td>
+							<div style="font-size:20px;margin-top:8px;">
+								<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %> <br>
+								<% post.stops.each do |stop|  %>
+				  		<span class="st_tag"><a><%= stop.city %></a></span>
+						<%end%> 
+							</div>
+							<br>Departs <%= link_to post.time, post_path(post) %>,
+							<%=  time_ago_in_words(post.startdate) %> i.e <%= post.startdate.strftime "%A, %B %d,%Y"%>
+					
+						<br>
+						<%if current_user and post.user != current_user%>
+							<% if !current_user.friends.find_by_uid(post.user.uid).nil?%>
+						<a href="#" rel="tooltip" data-original-title= "Facebook Friend">
+							<%=image_tag("friends_icon.png", size: "30x30")%>
+							</a>
+							<%end%>
+								<%@educations.each do |inst|%>
+								<%if !post.user.educations.where(:name => inst.name).empty?%>
+						<a href="#" rel="tooltip" data-original-title= "You and <%=post.user.name%>  went to <%=inst.name%>">
+						<%=image_tag("University.png", size: "30x30") %>
+					</a>
+					<%end%>
+						<%end%>
+						<% mutual_friends = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
+								<%if mutual_friends > 0 and post.user != current_user %> <%= mutual_friends%> Mutual friends
+						
+						<%end%> 
+					
+						<%end%> 
+						</td>
+						
+        		<td width="80px;">
+							<%if post.is_driving == true%> 
+								<div style="margin-top:7.5px;text-align:center;">
+									<%= image_tag "isDriver.png" %> <br>$<%= post.contribution%> per seat
+								</div>
+							<%else%>
+								<div style="margin-top:7.5px;text-align:center;">
+									<%= image_tag "isPassenger.png" %> <br>is passenger 
+							<%end%>
+								</div>
+							</td>
+      			</tr>
+					</a>
+			
+  	<%end%>
+ 		<%end%>
   	<%else%>
 <!--For is_driving-->
 
@@ -118,18 +200,23 @@
 				</td>
         <td>
 					<div style="font-size:20px;margin-top:8px;">
-						<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
+						<%= link_to post.start.city, post_path(post) %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
 					</div>
-					<br><%= link_to post.startdate, post_path(post) %>
-					<%= link_to post.time, post_path(post) %>
+					<br>
+					<% post.stops.each do |stop|  %>
+				  		<span class="st_tag"><a><%= stop.city %></a></span>
+						<%end%> 
+					<br><%=  post.time %>,
+					<%=  time_ago_in_words(post.startdate) %> i.e <%= post.startdate.strftime "%A, %B %d,%Y"%>
+					
 					<br>
 					
 					<%if current_user %>
-					<%= "Friend" if !current_user.friends.find_by_uid(post.user.uid).nil?%>
-					<% mutual_friends = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
-								<%if mutual_friends > 0 and post.user != current_user %> <%= mutual_friends%> Mutual friends
-						
-						<%end%> 
+					<% if !current_user.friends.find_by_uid(post.user.uid).nil?%>
+						<a href="#" rel="tooltip" data-original-title= "Facebook Friend">
+							<%=image_tag("friends_icon.png", size: "30x30")%>
+							</a>
+							<%end%>
 							<!---check for same uni--->
 										<%@educations.each do |inst|%>
 								<%if !post.user.educations.where(:name => inst.name).empty?%>
@@ -138,6 +225,10 @@
 					</a>
 					<%end%>
 						<%end%>
+						<% mutual_friends = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
+								<%if mutual_friends > 0 and post.user != current_user %> <%= mutual_friends%> Mutual friends
+						
+						<%end%> 
 						<%end%>
 						
 						
@@ -157,6 +248,81 @@
 		</tbody> 
  			
   	<%end%>
+  	<%if !Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).where(is_driving: params[:is_driving]).empty?%>
+  	<!---------------Rest of the results------------------------------------------------------------------->
+  	
+  	<a>
+					<tr height="20px;" bgcolor = "449192">
+        		<td width="80px;">
+							
+						</td>
+        		<td>
+							<div style="font-size:20px;margin-top:8px;">
+							<!-----------plz make this nicer--------------->
+								Rest of the results
+							
+							</div>
+					
+						</td>
+      			</tr>
+					</a>
+  		<%  Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).where(is_driving: params[:is_driving]).each do |post| %>
+
+				<a>
+					<tr height="80px;">
+        		<td width="80px;">
+							<a href=<%=url_for(user_profiles_path(post.user))%>>
+							<img src=<%= "http://graph.facebook.com/"+post.user.uid+"/picture&type=square"%> class="postindexProfilepic">
+							</a>
+						</td>
+        		<td>
+							<div style="font-size:20px;margin-top:8px;">
+								<%=link_to post.start.city, post_path(post) %>
+								 <%= image_tag "arrow_right.png" %> <%= post.finish.city %> <br>
+								<% post.stops.each do |stop|  %>
+				  		<span class="st_tag"><a><%= stop.city %></a></span>
+						<%end%> 
+							</div>
+							<br>Departs <%= link_to post.time, post_path(post) %>, 
+							<%=  time_ago_in_words(post.startdate) %> i.e <%= post.startdate.strftime "%A, %B %d,%Y"%>
+						<br>
+						<%if current_user and post.user != current_user%>
+						<% if !current_user.friends.find_by_uid(post.user.uid).nil?%>
+						<a href="#" rel="tooltip" data-original-title= "Facebook Friend">
+							<%=image_tag("friends_icon.png", size: "30x30")%>
+							</a>
+							<%end%>
+								<%@educations.each do |inst|%>
+								<%if !post.user.educations.where(:name => inst.name).empty?%>
+						<a href="#" rel="tooltip" data-original-title= "You and <%=post.user.name%>  went to <%=inst.name%>">
+						<%=image_tag("University.png", size: "30x30") %>
+					</a>
+					<%end%>
+						<%end%>
+						<% mutual_friends = @graph.get_connections("me", "mutualfriends/#{post.user.uid}").count%>
+								<%if mutual_friends > 0 and post.user != current_user %> <%= mutual_friends%> Mutual friends
+						
+						<%end%> 
+						
+						 <%end%>
+						</td>
+						
+        		<td width="80px;">
+							<%if post.is_driving == true%> 
+								<div style="margin-top:7.5px;text-align:center;">
+									<%= image_tag "isDriver.png" %> <br>$<%= post.contribution%> per seat
+								</div>
+							<%else%>
+								<div style="margin-top:7.5px;text-align:center;">
+									<%= image_tag "isPassenger.png" %> <br>is passenger 
+							<%end%>
+								</div>
+							</td>
+      			</tr>
+					</a>
+			
+  	<%end%>
+ 		<%end%>
   	<%end%>
     
 	</table>

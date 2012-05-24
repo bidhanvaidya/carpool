@@ -54,6 +54,7 @@ if params[:start].present? && params[:finish].present?
   
    @searchresults= @posts
    @searchresults
+   
   end
       
   end
