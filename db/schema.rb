@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120518031454) do
+ActiveRecord::Schema.define(:version => 20120525093012) do
 
   create_table "bookings", :force => true do |t|
     t.integer  "post_id"
@@ -89,6 +89,8 @@ ActiveRecord::Schema.define(:version => 20120518031454) do
     t.boolean  "closed",        :default => false
   end
 
+  add_index "posts", ["startdate"], :name => "index_posts_on_startdate"
+
   create_table "profiles", :force => true do |t|
     t.string   "name"
     t.string   "first_name"
@@ -108,6 +110,9 @@ ActiveRecord::Schema.define(:version => 20120518031454) do
     t.text     "music"
     t.text     "work"
     t.text     "interest"
+    t.integer  "phone"
+    t.boolean  "accept_paypal",       :default => false
+    t.string   "paypal_email"
   end
 
   create_table "receipts", :force => true do |t|

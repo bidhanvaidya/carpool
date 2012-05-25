@@ -56,7 +56,7 @@
   	<tbody>
 			<!-------- For Show all---------------------->
   		<%if params[:is_driving].nil?%>
-				<%  Post.where(id: @searchresults).each do |post| %>
+				<%  Post.where(id: @searchresults).order("startdate").each do |post| %>
 
 				<a>
 					<tr height="80px;">
@@ -67,14 +67,13 @@
 						</td>
         		<td>
 							<div style="font-size:20px;margin-top:8px;">
-								<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %> <br>
+								<%=link_to post.start.city, post_path(post) %> <%= image_tag "arrow_right.png" %> <%= link_to post.finish.city, post_path(post) %> <br>
 								<% post.stops.each do |stop|  %>
 				  		<span class="st_tag"><a><%= stop.city %></a></span>
 						<%end%> 
 							</div>
-							<br>Departs <%= link_to post.time, post_path(post) %>, 
-							<%=  time_ago_in_words(post.startdate) %> i.e <%= post.startdate.strftime "%A, %B %d,%Y"%>
-					
+							<br>Departs in <%=  time_ago_in_words(post.startdate) %> (<%= post.startdate.strftime "%A, %B %d,%Y"%>)
+					<%= "at "+ post.time if post.time != "Anytime" %>
 						<br>
 						<%if current_user and post.user != current_user%>
 							<% if !current_user.friends.find_by_uid(post.user.uid).nil?%>
@@ -115,7 +114,7 @@
 					
 			
   	<%end%>
-  	<%if !Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).empty?%>
+  	<%if !Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).order("startdate").empty?%>
   	<!---------------Rest of the results------------------------------------------------------------------->
   	
   	<a>
@@ -143,13 +142,14 @@
 						</td>
         		<td>
 							<div style="font-size:20px;margin-top:8px;">
-								<%= post.start.city %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %> <br>
+								<%= link_to post.start.city, post_path(post) %> <%= image_tag "arrow_right.png" %> <%= link_to post.finish.city, post_path(post) %> <br>
 								<% post.stops.each do |stop|  %>
 				  		<span class="st_tag"><a><%= stop.city %></a></span>
 						<%end%> 
 							</div>
-							<br>Departs <%= link_to post.time, post_path(post) %>,
-							<%=  time_ago_in_words(post.startdate) %> i.e <%= post.startdate.strftime "%A, %B %d,%Y"%>
+							<br>Departs in 
+							<%=  time_ago_in_words(post.startdate) %>  (<%= post.startdate.strftime "%A, %B %d,%Y"%>)
+							<%= "at"+post.time if post.time !="Anytime" %>
 					
 						<br>
 						<%if current_user and post.user != current_user%>
@@ -192,7 +192,7 @@
   	<%else%>
 <!--For is_driving-->
 
-   <% Post.where(id: @searchresults).where(is_driving: params[:is_driving]).each do |post| %>
+   <% Post.where(id: @searchresults).where(is_driving: params[:is_driving]).order("startdate").each do |post| %>
    	<a>
 			<tr height="80px;">
       	<td width="80px;">
@@ -200,15 +200,15 @@
 				</td>
         <td>
 					<div style="font-size:20px;margin-top:8px;">
-						<%= link_to post.start.city, post_path(post) %> <%= image_tag "arrow_right.png" %> <%= post.finish.city %>  
+						<%= link_to post.start.city, post_path(post) %> <%= image_tag "arrow_right.png" %> <%= link_to post.finish.city, post_path(post) %>  
 					</div>
 					<br>
 					<% post.stops.each do |stop|  %>
 				  		<span class="st_tag"><a><%= stop.city %></a></span>
 						<%end%> 
-					<br><%=  post.time %>,
-					<%=  time_ago_in_words(post.startdate) %> i.e <%= post.startdate.strftime "%A, %B %d,%Y"%>
-					
+					<br>Departs in
+					<%= time_ago_in_words(post.startdate) %> (<%= post.startdate.strftime "%A, %B %d,%Y"%>)
+					<%= "at"+post.time if post.time !="Anytime" %>
 					<br>
 					
 					<%if current_user %>
@@ -248,7 +248,7 @@
 		</tbody> 
  			
   	<%end%>
-  	<%if !Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).where(is_driving: params[:is_driving]).empty?%>
+  	<%if !Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).where(is_driving: params[:is_driving]).order("startdate").empty?%>
   	<!---------------Rest of the results------------------------------------------------------------------->
   	
   	<a>
@@ -278,13 +278,14 @@
         		<td>
 							<div style="font-size:20px;margin-top:8px;">
 								<%=link_to post.start.city, post_path(post) %>
-								 <%= image_tag "arrow_right.png" %> <%= post.finish.city %> <br>
+								 <%= image_tag "arrow_right.png" %> <%= link_to post.finish.city, post_path(post) %> <br>
 								<% post.stops.each do |stop|  %>
 				  		<span class="st_tag"><a><%= stop.city %></a></span>
 						<%end%> 
 							</div>
-							<br>Departs <%= link_to post.time, post_path(post) %>, 
-							<%=  time_ago_in_words(post.startdate) %> i.e <%= post.startdate.strftime "%A, %B %d,%Y"%>
+							<br>Departs in 
+							<%=  time_ago_in_words(post.startdate) %>(<%= post.startdate.strftime "%A, %B %d,%Y"%>)
+							<%= "at"+post.time if post.time !="Anytime" %>
 						<br>
 						<%if current_user and post.user != current_user%>
 						<% if !current_user.friends.find_by_uid(post.user.uid).nil?%>

@@ -51,8 +51,14 @@
 			</tr>
 			<tr>
 				<td><%= image_tag "rating.png" %></td>
-				<td>Average rating: x.x</td>
+				<td>Average rating: <%= @rev.average("rating")%></td>
 			</tr>
+			<%if @profile.accept_paypal%>
+				<tr>
+				<td><%= image_tag "check_alt.png" %></td>
+				<td><%= image_tag("payment_icon.gif", size: "120x30") %></td>
+			</tr>
+			<%end%>
 		</table>
 	</div>
 
@@ -169,6 +175,12 @@
 				<td>Email</td>
 				<td><%=@profile.email%></td>
 			</tr>
+			<%if !@profile.phone.nil?%>
+				<tr height="40px;">
+					<td>Phone</td>
+					<td><%=number_to_phone(@profile.phone)%></td>
+				</tr>
+			<%end%>
 			<%end%>			
 			<%if @profile.music? || @profile.interest? || @profile.work?%>
 			<tr height="40px;">	

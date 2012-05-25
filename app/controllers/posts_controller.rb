@@ -3,7 +3,7 @@ before_filter :authenticate_user, :except=> [:show, :index, :search, :new, :crea
 before_filter :facebook
 before_filter :editing, :only=> [:edit, :update]
   def index
-    @posts = Post.where('startdate >? AND closed=?', Date.yesterday, false).order("startdate").all
+    @posts = Post.where('startdate >? AND closed=?', Date.yesterday, false).all
 		@searchresults= []
 		@matches = 0
 		@educations = current_user.educations if current_user
