@@ -48,7 +48,7 @@ function showonlyone(thechosenone) {
 					<div class="control-group">
 						<%= f.label :date, :class => 'control-labelDate' %>
 						<div class="controls">
-							<%= f.datepicker :startdate, :dateFormat => "yy-mm-dd", :class => 'controlsDate' %>
+							<%= f.datepicker :startdate, :dateFormat => "yy-mm-dd", :class => 'controlsDate', :minDate => "1" %>
 						</div>
 					</div>
 
