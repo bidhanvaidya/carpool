@@ -349,7 +349,19 @@ function showonlyone(thechosenone) {
 			<ul>
 			<%@rev.each do |review|%>
 				<li><a>
-					<%=review.profile.name%><b>Review:</b><%=review.review%><b>Rating:</b><%=review.rating%>
+					<%if review.rating==1%>
+						<%=image_tag "rating.png"%><%=image_tag "unrating.png"%><%=image_tag "unrating.png"%><%=image_tag "unrating.png"%><%=image_tag "unrating.png"%>
+					<%elsif review.rating==2%>
+						<%=image_tag "rating.png"%><%=image_tag "rating.png"%><%=image_tag "unrating.png"%><%=image_tag "unrating.png"%><%=image_tag "unrating.png"%>
+					<%elsif review.rating==3%>
+						<%=image_tag "rating.png"%><%=image_tag "rating.png"%><%=image_tag "rating.png"%><%=image_tag "unrating.png"%><%=image_tag "unrating.png"%>
+					<%elsif review.rating==4%>
+						<%=image_tag "rating.png"%><%=image_tag "rating.png"%><%=image_tag "rating.png"%><%=image_tag "rating.png"%><%=image_tag "unrating.png"%>
+					<%elsif review.rating==5%>
+						<%=image_tag "rating.png"%><%=image_tag "rating.png"%><%=image_tag "rating.png"%><%=image_tag "rating.png"%><%=image_tag "rating.png"%>
+					<%end%>
+					<b>Notes:</b><%=review.review%>
+					
 				</a></li>
 			<%end%>
 			</ul>
@@ -357,29 +369,17 @@ function showonlyone(thechosenone) {
 	</div>				
 
 	<!-Review-!>
-	<div>
+	<div class="tabbed_area" style="margin-top:8px;">
 		<%if !Booking.where(user_id: current_user, post_id: @user.posts, accepted:true).empty?%>
-		<div class= "row">
-			<div class = "span4">
-				<div class= "well">
-					<%=form_tag review_create_user_profiles_path,:html => { :class => 'form-horizontal' } do%>
-						<div class="control-group">
-							<div class="controls">
-	 							Review: <br><%= text_area_tag :review,nil, :size => "25x5" %><br>
-	  						Rating:<%= select_tag :rating, options_for_select([
-
-							['1','1'],					['2','2'],
-							['3','3'],					['4','4'],
-							['5','5']			]) %> <br />
-
-
-							</div>
-						</div>
-					<%=submit_tag %>
-					<%end%>
+			<%=form_tag review_create_user_profiles_path,:html => { :class => 'form-horizontal' } do%>
+				<div class="control-group">
+					<div class="controls">
+	 					Review: <br><%= text_area_tag :review,nil, :size => "225x5" %><br>
+	  				Rating:<%= select_tag :rating, options_for_select([['1','1'],['2','2'],['3','3'],['4','4'],['5','5']]) %>
+					</div>
 				</div>
-			</div>
-		</div>
+				<%=submit_tag %>
+			<%end%>
 		<%end%>
 	</div>
 </div>
