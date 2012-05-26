@@ -2,8 +2,7 @@
 <script src="http://d2o0t5hpnwv4c1.cloudfront.net/001_Tabbed/site/scripts/jquery-1.2.3.min.js"></script>
 <script>	
 	  // When the document loads do everything inside here ...
-	  $(document).ready(function(){	
-	  
+	  $(document).ready(function(){		  
 		// When a link is clicked
 		$("a.tab").click(function () {			
 			// switch all tabs off
@@ -19,6 +18,21 @@
 		});	
 	  });
 </script>
+<script type="text/javascript">
+function showonlyone(thechosenone) {
+			var newboxes = document.getElementsByTagName("div");
+						for(var x=0; x<newboxes.length; x++) {
+									name = newboxes[x].getAttribute("name");
+									if (name == 'newboxes') {
+												if (newboxes[x].id == thechosenone) {
+												newboxes[x].style.display = 'block';
+									}
+									else {
+												newboxes[x].style.display = 'none';
+									}
+						}
+			}
+}</script>
 <div id="midcontainer">	
 <br /><br />
 <!-left panel with inbox-!>
@@ -135,7 +149,9 @@
 		  	</div>
 		</div>			
 		<%else%>
-		<a data-toggle="modal" href=#send_message class="btn btn-primary">Send a message</a><br>
+		<div class="circle-image-one-fourth" style="margin-left:0px;">
+		<a data-toggle="modal" href=#send_message class="btn btn-primary" style="width:165px;">Send a message</a><br>
+		</div>
 		<div class="modal hide fade" id="send_message">
 			<div class="modal-header">
   			<a class="close" data-dismiss="modal">×</a>
@@ -152,8 +168,7 @@
 			</div>
     </div>
 		<%end%>
-	</div>
-	
+	</div>	
 </div>
 
 
@@ -271,42 +286,76 @@
 	</div>
 	
 	<!-Booking Table-!>
-	<!-move to ride table?-!>
-	<div>
-		<%if @user==current_user%>	
-			<b>Bookings offers</b>
+	<div class="tabbed_area">
+		<!-tabs-!>
+		<ul class="tabs">
+			<%if @user==current_user%>
+			<li><a id="myHeader1" href="javascript:showonlyone('newboxes1');" style="color: GRAY">Booking Offers</a></li>	
+			<li><a id="myHeader2" href="javascript:showonlyone('newboxes2');" style="color: GRAY">Request Requests</a></li>
+			<%end%>				 
+			<li><a id="myHeader3" href="javascript:showonlyone('newboxes3');" style="color: GRAY">My Reviews</a></li>
+		</ul>
+		<!-contents-!>				 
+		<!-			 div no.1	 BOOKING OFFERS		-!>
+		<%if @user==current_user%>
+		<div name="newboxes" id="newboxes1" style="display: block;" class="content">
+			<ul>
 			<%@booking_offers.each do |offer|%>
-				<%=offer.post.start.city%>
-				<%=offer.post.finish.city%> by
-				<%=offer.user.name%>
-				<%if offer.accepted?%>
-					<%=link_to "Reject Offer", reject_user_profiles_path(:booking=>offer), class: "btn btn-fail", :confirm => "Are you sure you want to reject this booking", %>
-				<%else%>
-					<%=link_to "Accept Offer", accept_user_profiles_path(:booking=>offer), class: "btn", :confirm => "Are you sure you want to accept this booking"%>
-					<%=link_to "Accept Offer And Close the ride", accept_and_close_user_profiles_path(:booking=>offer), class: "btn", :confirm => "Are you sure you want to accept this booking and close the ride"%>
-				<%end%>
-			<%end%>
-			<b>Booking Request</b>
-			<%@booking_requests.each do |offer|%>
-				<%=offer.post.start.city%>
-				<%=offer.post.finish.city%> by
-				<%=offer.post.user.name%>
-				<b>Status:</b>
-				<% if offer.rejected?%>
-					Rejected
-					<%elsif offer.accepted? %>
-					Accepted
+				<li><a>
+					<%=offer.post.start.city%>
+					<%=offer.post.finish.city%> by
+					<%=offer.user.name%>
+					<%if offer.accepted?%>
+						<%=link_to "Reject Offer", reject_user_profiles_path(:booking=>offer), class: "btn btn-fail", :confirm => "Are you sure you want to reject this booking", %>
 					<%else%>
-					Pending
+						<%=link_to "Accept Offer", accept_user_profiles_path(:booking=>offer), class: "btn", :confirm => "Are you sure you want to accept this booking"%>
+						<%=link_to "Accept Offer And Close the ride", accept_and_close_user_profiles_path(:booking=>offer), class: "btn", :confirm => "Are you sure you want to accept this booking and close the ride"%>
+					<%end%>
 				<%end%>
-			<%end%>
+				</a></li>
+			</ul>
+		</div>
+		<!-			 div no.2			-!>
+		<div name="newboxes" id="newboxes2" style="display: none;" class="content">
+			<ul>
+			<%@booking_requests.each do |offer|%>
+				<li><a>
+					<%=offer.post.start.city%>
+					<%=offer.post.finish.city%> by
+					<%=offer.post.user.name%>
+					<b>Status:</b>
+					<% if offer.rejected?%>
+						Rejected
+						<%elsif offer.accepted? %>
+						Accepted
+						<%else%>
+						Pending
+					<%end%>
+				</a></li>
+				<%end%>	
+			</ul>
+		</div>
 		<%end%>
-	</div>
-	<!-end of booking-!>
-	
+		<!-end of booking-!>
+		<!-			 div no.3			-!>
+		<%if @user==current_user%>
+		<div name="newboxes" id="newboxes3" style="display: none;" class="content">
+		<%end%>
+		<%if @user!=current_user%>
+		<div name="newboxes" id="newboxes3" style="display: block;" class="content">
+		<%end%>
+			<ul>
+			<%@rev.each do |review|%>
+				<li><a>
+					<%=review.profile.name%><b>Review:</b><%=review.review%><b>Rating:</b><%=review.rating%>
+				</a></li>
+			<%end%>
+			</ul>
+		</div>
+	</div>				
+
 	<!-Review-!>
 	<div>
-		<b> My Review List</b>
 		<%@rev.each do |review|%>
 			<br>
 			<%=review.profile.name%><b>Review:</b><%=review.review%><b>Rating:</b><%=review.rating%>
@@ -337,5 +386,5 @@
 		<%end%>
 	</div>
 </div>
-<%=@rev.average(:rating)%>
+
 
