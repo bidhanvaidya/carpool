@@ -7,29 +7,27 @@
     <div class= "span3">
       <%= text_field_tag :finish, params[:finish], class: 'input-long search-query span3', placeholder: "To" %>
      </div>
-     <div class= "span3">
-				 <div class= "row">
-					 <div class = "span1 ">
-						<%= text_field_tag :date, params[:date], class: 'input-medium search-query',placeholder: Date.today %>
-				<script type="text/javascript">
-										//<![CDATA[
-										jQuery(document).ready(function(){jQuery('#date').datepicker({"dateFormat":"yy-mm-dd",
-										 minDate: -0, autoSize: true
-	
-										})});
-										//]]>
-										
+    <div class= "span3">
+			<div class= "row">
+				<div class = "span1 ">
+					<%= text_field_tag :date, params[:date], class: 'input-medium search-query',placeholder: Date.today %>
+					<script type="text/javascript">
+					//<![CDATA[
+						jQuery(document).ready(function(){jQuery('#date').datepicker({"dateFormat":"yy-mm-dd",
+							minDate: -0, autoSize: true	
+						})});
+					//]]>					
 					</script>
-					 </div>
-					<div class= "span1 offset1">
-						<%= submit_tag "Search Near", :name => nil, class:'btn' %>
-					</div>
-				</div>	
+				</div>
+				<div class= "span1 offset1">
+					<%= submit_tag "Search Near", :name => nil, class:'btn' %>
+				</div>
+			</div>	
    </div> 
    </div> 
 <% end %>
 	
-<!- Search Filter---------------------------->
+<!- Search Filter-!>
 <div class= "filters">
 	<div class="filterHeader">
 		Filters
@@ -38,13 +36,11 @@
 	<%if params[:is_driving]== 'false'%>
 		<%= link_to "Passenger", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: false), class: 'btn btn-success', :style=>'margin-left:15px;' %>
 		<%= link_to "Driving", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: true), class: 'btn' %>
-		<%= link_to "All", posts_path(start: params[:start],finish: params[:finish],date: params[:date],), class: 'btn'%>
-		
+		<%= link_to "All", posts_path(start: params[:start],finish: params[:finish],date: params[:date],), class: 'btn'%>		
 	<%elsif params[:is_driving]== 'true'%>
 		<%= link_to "Passenger", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: false), class: 'btn', :style=>'margin-left:15px;' %>
 		<%= link_to "Driving", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: true), class: 'btn btn-success' %>
-		<%= link_to "All", posts_path(start: params[:start],finish: params[:finish],date: params[:date],), class: 'btn'%>
-		
+		<%= link_to "All", posts_path(start: params[:start],finish: params[:finish],date: params[:date],), class: 'btn'%>		
 	<%else%>
 		<%= link_to "Passenger", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: false), class: 'btn', :style=>'margin-left:15px;' %>
 		<%= link_to "Driving", posts_path(start: params[:start],finish: params[:finish],date: params[:date],is_driving: true), class: 'btn ' %>
@@ -52,12 +48,16 @@
 	<%end%>
 	</div>
 </div>
+<!-end of Filter-!>
+<!-Search Results-!>
+<div class="filterHeader" style="width:700px;padding-left:0px;text-align:center;">
+Search Results
+</div>
 	<table class="table table-striped" style="width:700px; float:left;">
   	<tbody>
-			<!-------- For Show all---------------------->
+			<!- For Show all->
   		<%if params[:is_driving].nil?%>
 				<%  Post.where(id: @searchresults).order("startdate").each do |post| %>
-
 				<a>
 					<tr height="80px;">
         		<td width="80px;">
@@ -79,10 +79,10 @@
 							<% if !current_user.friends.find_by_uid(post.user.uid).nil?%>
 						<a href="#" rel="tooltip" data-original-title= "Facebook Friend">
 							<%=image_tag("friends_icon.png", size: "30x30")%>
-							</a>
-							<%end%>
+						</a>
+						<%end%>
 							
-								<!---check for same uni--->
+								<!-check for same uni-!>
 								<%@educations.each do |inst|%>
 								<%if !post.user.educations.where(:name => inst.name).empty?%>
 						<a href="#" rel="tooltip" data-original-title= "You and <%=post.user.name%>  went to <%=inst.name%>">
@@ -115,22 +115,14 @@
 			
   	<%end%>
   	<%if !Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).order("startdate").empty?%>
-  	<!---------------Rest of the results------------------------------------------------------------------->
-  	
-  	<a>
-					<tr height="20px;" bgcolor = grey>
-        		<td width="80px;">
-							
-						</td>
-        		<td>
-							<div style="font-size:20px;margin-top:8px;">
-								Rest of the results
-							
-							</div>
-					
-						</td>
-      			</tr>
-					</a>
+  	<!-Rest of the results->
+		</tbody>
+		</table>
+		<div style="clear: both"></div>
+		<div class="filterHeader" style="width:700px;padding-left:0px;text-align:center;">
+			Rest of the Search Results
+		</div>
+		<table class="table table-striped" style="width:700px; float:left;">
   		<%  Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).each do |post| %>
 
 				<a>
@@ -190,8 +182,7 @@
   	<%end%>
  		<%end%>
   	<%else%>
-<!--For is_driving-->
-
+<!-For is_driving-!>
    <% Post.where(id: @searchresults).where(is_driving: params[:is_driving]).order("startdate").each do |post| %>
    	<a>
 			<tr height="80px;">
@@ -217,7 +208,7 @@
 							<%=image_tag("friends_icon.png", size: "30x30")%>
 							</a>
 							<%end%>
-							<!---check for same uni--->
+							<!-check for same uni-!>
 										<%@educations.each do |inst|%>
 								<%if !post.user.educations.where(:name => inst.name).empty?%>
 						<a href="#" rel="tooltip" data-original-title= "You and <%=post.user.name%>  went to <%=inst.name%>">
@@ -249,23 +240,14 @@
  			
   	<%end%>
   	<%if !Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).where(is_driving: params[:is_driving]).order("startdate").empty?%>
-  	<!---------------Rest of the results------------------------------------------------------------------->
-  	
-  	<a>
-					<tr height="20px;" bgcolor = "449192">
-        		<td width="80px;">
-							
-						</td>
-        		<td>
-							<div style="font-size:20px;margin-top:8px;">
-							<!-----------plz make this nicer--------------->
-								Rest of the results
-							
-							</div>
-					
-						</td>
-      			</tr>
-					</a>
+  	<!-Rest of the results-!>
+	</tbody>
+	</table>
+	<div style="clear: both"></div>
+	<div class="filterHeader" style="width:700px;padding-left:0px;text-align:center;">
+		Rest of the Search Results
+	</div>
+	<table class="table table-striped" style="width:700px; float:left;">
   		<%  Post.where('id NOT IN (?) and startdate > ?', @searchresults, Date.today).where(is_driving: params[:is_driving]).each do |post| %>
 
 				<a>
