@@ -29,6 +29,7 @@ def save_friends
       :hometown=>user.hometown.try(:name),
       :user_id =>self.id,
       :email => user.email,
+      :paypal_email => user.email,
       :interest =>user.interests.map(&:name).to_sentence
       )
 	user.friends.each do |friend| 

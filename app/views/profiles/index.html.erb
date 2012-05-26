@@ -51,8 +51,14 @@
 			</tr>
 			<tr>
 				<td><%= image_tag "rating.png" %></td>
-				<td>Average rating: x.x</td>
+				<td>Average rating: <%= @rev.average("rating")%></td>
 			</tr>
+			<%if @profile.accept_paypal%>
+				<tr>
+				<td><%= image_tag "check_alt.png" %></td>
+				<td><%= image_tag("payment_icon.gif", size: "120x30") %></td>
+			</tr>
+			<%end%>
 		</table>
 	</div>
 
@@ -163,7 +169,19 @@
 	
 	<!-user data-!>
 	<div>
-		<table>				
+		<table>	
+					<%if !@booking_offers.where(user_id: current_user, accepted: true).empty? or @user==current_user%>
+			<tr height="40px;">
+				<td>Email</td>
+				<td><%=@profile.email%></td>
+			</tr>
+			<%if !@profile.phone.nil?%>
+				<tr height="40px;">
+					<td>Phone</td>
+					<td><%=number_to_phone(@profile.phone)%></td>
+				</tr>
+			<%end%>
+			<%end%>			
 			<%if @profile.music? || @profile.interest? || @profile.work?%>
 			<tr height="40px;">	
 				<td><h3>About me</h3></td>
@@ -186,12 +204,7 @@
 				<td><%=@profile.work%></td>
 			</tr>
 			<%end%>
-			<%if !@booking_offers.where(user_id: current_user, accepted: true).empty? or @user==current_user%>
-			<tr height="40px;">
-				<td>Email</td>
-				<td><%=@profile.email%></td>
-			</tr>
-			<%end%>
+			<%if !@user.educations.nil?%>
 			<tr height="40px;">
 				<td>Education </td>
 				<td>
@@ -201,6 +214,7 @@
 						<%end%>
 				</td>
 			</tr>
+			<%end%>
 			<%end%>
 		</table>			
 	</div>
@@ -243,8 +257,10 @@
 						</div>
 					</td>
 		      <td>
+		      <%if @user== current_user%>
 		 				<%= link_to 'Edit', edit_post_path(ride), :class => 'btn' %>
 						<%= link_to 'Delete', post_path(ride), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+						<%end%>
 		      </td>
 		    </tr>
 				</a>
@@ -321,4 +337,5 @@
 		<%end%>
 	</div>
 </div>
+<%=@rev.average(:rating)%>
 

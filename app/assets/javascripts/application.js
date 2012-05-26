@@ -13,9 +13,6 @@
 //= require twitter/bootstrap
 //= require_tree .
 //= require cocoon
+//= require rails.validations
 
-
-
-
-$('#review').hide();
 

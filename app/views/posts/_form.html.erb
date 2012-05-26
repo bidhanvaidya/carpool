@@ -14,7 +14,7 @@ function showonlyone(thechosenone) {
 			}
 }</script>
 
-<%= form_for @post, :html => { :class => 'form-horizontal' } do |f| %>
+<%= form_for @post, :validate => true, :html => { :class => 'form-horizontal' } do |f| %>
 	<fieldset>
 	<legend><%= controller.action_name.capitalize %> ride</legend>
 <div id="midcontainer" style="text-align:center;">
@@ -48,7 +48,7 @@ function showonlyone(thechosenone) {
 					<div class="control-group">
 						<%= f.label :date, :class => 'control-labelDate' %>
 						<div class="controls">
-							<%= f.datepicker :startdate, :dateFormat => "yy-mm-dd", :class => 'controlsDate' %>
+							<%= f.datepicker :startdate, :dateFormat => "yy-mm-dd", :class => 'controlsDate', :minDate => "1" %>
 						</div>
 					</div>
 
@@ -88,7 +88,7 @@ function showonlyone(thechosenone) {
 							<%= f.label :are_You, :class => 'control-label' %> 
 							<div class = "controls">
 								<div class = "span2edit" id="selectDriver">
-									<p style="margin-top:70px;">Driving <%=f.radio_button :is_driving, true%></p>
+									<p style="margin-top:70px;">Driving <%=f.radio_button :is_driving, true, option={checked: "checked"}%></p>
 								</div>
 								<div class = "span2edit" id="selectPassenger">
 									<p style="margin-top:70px;">Passenger <%=f.radio_button :is_driving, false%></p>

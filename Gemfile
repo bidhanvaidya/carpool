@@ -30,6 +30,7 @@ gem 'jquery_datepicker'
 gem "cocoon"
 gem 'best_in_place'
 gem 'koala'
+gem 'client_side_validations'
 # Deploy with Capistrano
 # gem 'capistrano'
 

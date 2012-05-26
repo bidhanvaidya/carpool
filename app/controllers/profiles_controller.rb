@@ -28,8 +28,9 @@ current_user.profile.reply_to_sender(receipt, body)
  redirect_to user_profiles_path(current_user)
 end
 def trash
+user= User.find(params[:user_id]).profile
 body=params[:body]
-    receipt= userReceipt.find(params[:receipt])
+    receipt= user.receipts.find(params[:receipt])
 receipt.move_to_trash
  redirect_to user_profiles_path(current_user)
 end

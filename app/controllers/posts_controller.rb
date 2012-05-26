@@ -3,9 +3,10 @@ before_filter :authenticate_user, :except=> [:show, :index, :search, :new, :crea
 before_filter :facebook
 before_filter :editing, :only=> [:edit, :update]
   def index
-    @posts = Post.where('startdate >? AND closed=?', Date.yesterday, false).order("startdate").all
+    @posts = Post.where('startdate >? AND closed=?', Date.yesterday, false).all
 		@searchresults= []
 		@matches = 0
+		@educations = current_user.educations if current_user
 if params[:start].present? && params[:finish].present?
       #@post_with_location= Post.find_by_sql("select * from posts inner join locations on locations.post_id=posts.id")
       
@@ -53,6 +54,7 @@ if params[:start].present? && params[:finish].present?
   
    @searchresults= @posts
    @searchresults
+   
   end
       
   end

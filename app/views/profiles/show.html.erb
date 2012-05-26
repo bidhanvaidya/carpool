@@ -33,7 +33,7 @@
 			</div>
 		</td>
 		<td width="700px" height="60px">
-			<div class="profileName"> <%=@profile.name%></div>
+			<div class="profileName"> <%=link_to @profile.name, user_profiles_path(@user)%></div>
 		</td>
 	</tr>
 	<tr>
@@ -48,7 +48,46 @@
 						<a id="Name" href="#">(edit)</a>
 					</td>
 				</tr>
-				
+				<tr height="40px;">
+					<td>Email</td>
+					<td>
+						<%=best_in_place @profile, :email, :path => user_profile_path,:nil => "add content!",:activator => "#email"%>
+					</td>
+					<td>
+						<a id="email" href="#">(edit)</a>
+					</td>
+				</tr>
+				<tr height="40px;">
+					<td>Phone</td>
+					<td>
+						<%=best_in_place @profile, :phone, :path => user_profile_path,:nil => "Add Your phone Number!",:activator => "#phone"%>
+					</td>
+					<td>
+						<a id="phone" href="#">(edit)</a>
+					</td>
+				</tr>
+				<tr height="40px;">
+					<td colspan="2"><b>Payment Details</b></td>
+				</tr>
+				<tr height="40px;">
+					<td>Accept Paypal</td>
+					<td>
+						<%=best_in_place @profile, :accept_paypal, :path => user_profile_path, type: :checkbox, collection: %w[No Yes],:nil => "Change",:activator => "#paypal"%>
+					</td>
+					<td>
+						<a id="paypal" href="#">(edit)</a>
+					</td>
+				</tr>
+					<tr height="40px;">
+					<td> Paypal Email<a href="#" rel="popover" data-content="If you agree to recieve money through paypal the money you recieved from your carpooling buddy will be transfered to this email." data-original-title="Paypal Money transfer"><i class="icon-question-sign"></i></a></td>
+					<td>
+						<%=best_in_place @profile, :paypal_email, :path => user_profile_path, :nil => "Change",:activator => "#pEmail"%>
+					</td>
+					<td>
+						<a id="pEmail" href="#">(edit)</a>
+					</td>
+				</tr>
+
 				<tr height="40px;">
 					<td colspan="2"><b>About me</b></td>
 				</tr>
@@ -112,21 +151,15 @@
 						<a id="smoking" href="#">(Change)</a>
 					</td>
 				</tr>
-				<tr height="40px;">
-					<td>Email</td>
-					<td>
-						<%=best_in_place @profile, :email, :path => user_profile_path, type: :textarea,:nil => "add content!",:activator => "#email"%>
-					</td>
-					<td>
-						<a id="email" href="#">(edit)</a>
-					</td>
-				</tr>
+				
 				<tr height="40px;">
 					<td>Education</td>
 					<td>
 							<% @profile.user.educations.each do |education|%>
-							<%=education.name%>
-							<%=education.year %><br>
+							Institute: <%=best_in_place education,:name, :path => user_profile_path%>
+							<br>
+							Year: <%=best_in_place education,:year, :path => user_profile_path %>
+														<br>
 							<%end%>
 					</td>
 				</tr>
