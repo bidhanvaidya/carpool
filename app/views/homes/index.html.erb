@@ -42,11 +42,12 @@
 <% end %>
 
 <div id="midcontainer">
-	<!-latest rides-!>
-	<div class="frontpageText" style="color:#333;padding-left:0px;padding-top:25px;padding-bottom:25px;">Latest Rides</div>
+	<!-latest 3 rides-!>
+	<div class="frontpageText" style="color:#333;padding-left:0px;padding-top:25px;padding-bottom:25px;width:562px;float:left;">Latest Rides</div>
+	<div class="frontpageText" style="color:#333;padding-left:0px;padding-top:25px;padding-bottom:25px;">User Savings to Date</div>
 		<table class="table table-striped" style="width:550px;float:left;">
 			<tbody>
-				<% Post.last(4).reverse.each do |post| %>
+				<% Post.last(3).reverse.each do |post| %>
 					<a>
 						<tr height="80px;">
     					<td width="80px;">
@@ -76,10 +77,12 @@
 		</table>		
 	
 	<!-user savings-!>
+	
 	<div class="userSaving">
-		USER SAVINGS TO DATE (place holder)
 		<%= image_tag "saving.jpg" %>
-		$xxx,xxx   ||  xxxxx tonnes  ||  travel xxxxxx m
+		<div class="frontpageTextsav">$260,893</div>
+		<div class="frontpageTextsav">47830 tonnes</div>
+		<div class="frontpageTextsav">192843 km</div>
 	</div>
 	
 </div>
