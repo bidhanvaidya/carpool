@@ -237,7 +237,7 @@ function showonlyone(thechosenone) {
 	<!-ride-!>
 	
 	<div>
-		<b>My rides</b>
+		<b>Rides</b>
 		<%if @posts.empty?%>
 		<table class="table table-striped" style="width:700px;">
 		  <tbody>
@@ -262,19 +262,20 @@ function showonlyone(thechosenone) {
 		  <tbody>
 		  <% @posts.each do |ride|%>
 		  	<a>
-				<tr height="80px;">
-		    	<td width="80px;"><img src=<%=@page.picture%>></td>
+				<tr>
 		      <td>
-						<div style="font-size:20px;margin-top:8px;">
-							<%=ride.start.city%>  <%= image_tag "arrow_right.png" %> <%=ride.finish.city%>
-							<br>
-							<div style="font-size:14px; color:#16949c"><%= image_tag "calendar.png" %> Departs at <%= ride.startdate %></div>
+						<div style="font-size:20px;margin-top:2px;margin-bottom:2px;float:left;">
+							<%=ride.start.city%> <%= image_tag "arrow_right.png" %> <%=ride.finish.city%>
+							
+						</div>
+						<div class="ridesDate">
+							<%= image_tag "calendar.png" %> Departs at <%= ride.startdate %>
 						</div>
 					</td>
-		      <td>
+		      <td style="text-align:right;">
 		      <%if @user== current_user%>
-		 				<%= link_to 'Edit', edit_post_path(ride), :class => 'btn' %>
-						<%= link_to 'Delete', post_path(ride), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+		 				<%= link_to image_tag("settings.png")+ "Edit", edit_post_path(ride), :class=> 'ridesEdit' %>
+						<%= link_to image_tag("cross.png") + 'Delete', post_path(ride), :method => 'delete', :confirm => 'Are you sure?', :class => 'ridesDelete' %>
 						<%end%>
 		      </td>
 		    </tr>
@@ -293,7 +294,7 @@ function showonlyone(thechosenone) {
 			<li><a id="myHeader1" href="javascript:showonlyone('newboxes1');" style="color: GRAY">Booking Offers</a></li>	
 			<li><a id="myHeader2" href="javascript:showonlyone('newboxes2');" style="color: GRAY">Request Requests</a></li>
 			<%end%>				 
-			<li><a id="myHeader3" href="javascript:showonlyone('newboxes3');" style="color: GRAY">My Reviews</a></li>
+			<li><a id="myHeader3" href="javascript:showonlyone('newboxes3');" style="color: GRAY">Reviews</a></li>
 		</ul>
 		<!-contents-!>				 
 		<!-			 div no.1	 BOOKING OFFERS		-!>
@@ -337,6 +338,7 @@ function showonlyone(thechosenone) {
 		</div>
 		<%end%>
 		<!-end of booking-!>
+		<!-Ratings-!>
 		<!-			 div no.3			-!>
 		<%if @user==current_user%>
 		<div name="newboxes" id="newboxes3" style="display: none;" class="content">
@@ -356,11 +358,6 @@ function showonlyone(thechosenone) {
 
 	<!-Review-!>
 	<div>
-		<%@rev.each do |review|%>
-			<br>
-			<%=review.profile.name%><b>Review:</b><%=review.review%><b>Rating:</b><%=review.rating%>
-		<%end%>
-
 		<%if !Booking.where(user_id: current_user, post_id: @user.posts, accepted:true).empty?%>
 		<div class= "row">
 			<div class = "span4">
