@@ -184,7 +184,7 @@ function showonlyone(thechosenone) {
 	
 	<!-user data-!>
 	<div>
-		<table>	
+		<table class="table table-striped">	
 					<%if !@booking_offers.where(user_id: current_user, accepted: true).empty? or @user==current_user%>
 			<tr height="40px;">
 				<td>Email</td>
@@ -197,7 +197,7 @@ function showonlyone(thechosenone) {
 				</tr>
 			<%end%>
 			<%end%>			
-			<%if @profile.music? || @profile.interest? || @profile.work?%>
+			<%if @profile.music? || @profile.interest? || @profile.work? || !@user.education.nil?%>
 			<tr height="40px;">	
 				<td><h3>About me</h3></td>
 			</tr>
@@ -258,7 +258,10 @@ function showonlyone(thechosenone) {
 			</tbody>   
 		</table>
 		<%else%>
+		
+			
 		<table class="table table-striped" style="width:700px;">
+		<%= will_paginate @posts, class:"pager"%>
 		  <tbody>
 		  <% @posts.each do |ride|%>
 		  	<a>
